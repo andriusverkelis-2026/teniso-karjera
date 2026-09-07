@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1E4D36">
+<title>Teniso karjera</title>
+<style>
+:root{
+  --bg:#F4F3EC; --card:#FFFFFF; --ink:#18261F; --mute:#6B7A72; --line:#DDDCD2;
+  --court:#1E4D36; --court2:#2B6B4B; --win:#2E7D4F; --loss:#B8432F; --ball:#D8DE2F; --plan:#2D6FB5;
+  --r:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font:16px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%}
+body{padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+.num{font-variant-numeric:tabular-nums}
+
+/* header */
+header{background:var(--court);color:#fff;padding:calc(12px + env(safe-area-inset-top)) 16px 12px;position:sticky;top:0;z-index:20}
+header .row{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+header h1{font-size:20px;font-weight:700;letter-spacing:.2px}
+header .rec{font-size:13px;opacity:.85}
+header .rec b{font-size:17px;color:var(--ball)}
+header .menu{background:rgba(255,255,255,.14);border-radius:8px;padding:6px 10px;color:#fff;font-size:13px}
+
+/* tabs */
+nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:20}
+nav button{flex:1;padding:10px 1px 8px;font-size:10px;color:var(--mute);display:flex;flex-direction:column;align-items:center;gap:3px}
+nav button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav button.on{color:var(--court);font-weight:600}
+
+main{padding:12px 12px 20px;max-width:720px;margin:0 auto}
+.view{display:none}.view.on{display:block}
+
+/* filters */
+.filters{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.filters .full{grid-column:1/-1}
+select,input,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;-webkit-appearance:none;appearance:none}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7A72' stroke-width='1.8' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:30px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--court2);outline-offset:0;border-color:transparent}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:8px;-webkit-overflow-scrolling:touch}
+.chip{white-space:nowrap;padding:7px 12px;border-radius:20px;background:#fff;border:1px solid var(--line);font-size:13px;color:var(--mute)}
+.chip.on{background:var(--court);color:#fff;border-color:var(--court)}
+.count{font-size:13px;color:var(--mute);margin:4px 2px 8px}
+
+/* match rows */
+.group{margin:14px 0 6px;font-size:13px;color:var(--mute);display:flex;justify-content:space-between;align-items:baseline}
+.group b{color:var(--ink);font-size:14px}
+.m{background:var(--card);border-radius:var(--r);padding:10px 12px 10px 14px;margin-bottom:8px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;border-left:5px solid var(--line);position:relative}
+.m.W{border-left-color:var(--win)}.m.L{border-left-color:var(--loss)}.m.F{border-left-color:var(--plan)}
+.m .who{font-weight:600;font-size:16px}
+.m .sub{font-size:12px;color:var(--mute);grid-column:1}
+.m .score{grid-column:2;grid-row:1/3;display:flex;align-items:center;gap:6px;font-size:16px;font-weight:600;letter-spacing:.3px}
+.m .score>span{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:3px;max-width:190px}
+.m .score small{font-size:11px;padding:2px 6px;border-radius:5px;color:#fff;font-weight:700}
+.m.W .score small{background:var(--win)}.m.L .score small{background:var(--loss)}
+.m .score .set{padding:2px 5px;border-radius:5px}
+.m .score .set.won{background:#DDF3E1;color:var(--win)}
+.m .tag{position:absolute;right:12px;top:-7px;font-size:10px;background:var(--ball);color:var(--ink);border-radius:5px;padding:1px 6px;font-weight:700}
+
+/* future */
+.f{background:var(--card);border-radius:var(--r);padding:12px 14px;margin-bottom:10px;border-left:5px solid var(--plan)}
+.f .who{font-weight:600;font-size:16px;display:flex;justify-content:space-between;align-items:center}
+.f .who span.dl{font-size:12px;font-weight:600;padding:3px 8px;border-radius:6px;background:#E8EEF7;color:var(--plan)}
+.f .who span.dl.soon{background:#FFF0C7;color:#8A6100}
+.f .who span.dl.over{background:#F8DDD8;color:var(--loss)}
+.f .info{font-size:13px;color:var(--mute);margin-top:4px;display:flex;flex-wrap:wrap;gap:4px 14px}
+.f .info b{color:var(--ink);font-weight:600}
+.f .planned{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:14px;display:flex;flex-wrap:wrap;gap:4px 14px}
+.f .planned .none{color:var(--mute);font-style:italic;font-size:13px}
+.f .acts{display:flex;gap:8px;margin-top:10px}
+.f .acts button{flex:1;padding:8px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--line);background:#fff}
+.f .acts button.pri{background:var(--court);color:#fff;border-color:var(--court)}
+.sect{font-size:15px;font-weight:700;margin:18px 0 8px;display:flex;justify-content:space-between;align-items:center}
+.sect button{font-size:13px;font-weight:600;color:var(--court);padding:4px 8px;border-radius:8px;background:#E6EFE9}
+
+/* calendar */
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.cal-head b{font-size:17px}
+.cal-head button{width:40px;height:40px;border-radius:10px;background:#fff;border:1px solid var(--line);font-size:18px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;background:transparent}
+.cal .dow{text-align:center;font-size:11px;color:var(--mute);padding:4px 0}
+.cal .d{aspect-ratio:1;background:#fff;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:13px;position:relative;border:1px solid transparent}
+.cal .d.out{opacity:.35}
+.cal .d.today{border-color:var(--court);font-weight:700}
+.cal .d.sel{background:var(--court);color:#fff}
+.cal .dots{display:flex;gap:2px;margin-top:3px;height:6px}
+.cal .dots i{width:6px;height:6px;border-radius:50%;display:block}
+.dot-W{background:var(--win)}.dot-L{background:var(--loss)}.dot-P{background:var(--plan)}.dot-D{background:#E0A100}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--mute);margin:10px 2px;flex-wrap:wrap}
+.legend span{display:flex;align-items:center;gap:5px}.legend i{width:8px;height:8px;border-radius:50%;display:inline-block}
+
+/* stats */
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.kpi div{background:#fff;border-radius:var(--r);padding:12px 6px;text-align:center}
+.kpi b{display:block;font-size:24px;font-weight:700}
+.kpi span{font-size:11px;color:var(--mute)}
+.kpi .w b{color:var(--win)}.kpi .l b{color:var(--loss)}
+.bar{height:10px;border-radius:5px;background:var(--loss);overflow:hidden;margin:2px 0 14px}
+.bar i{display:block;height:100%;background:var(--win)}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:var(--r);overflow:hidden;font-size:14px;margin-bottom:14px}
+th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-size:12px;color:var(--mute);font-weight:600;background:#FAFAF6}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+td .pct{display:inline-block;min-width:44px;text-align:right}
+.mini{height:6px;background:#EDECE4;border-radius:3px;overflow:hidden;margin-top:4px}
+.mini i{display:block;height:100%;background:var(--win)}
+.h2{font-size:14px;font-weight:700;margin:6px 0 6px;color:var(--mute)}
+
+/* contacts */
+.c{background:#fff;border-radius:var(--r);padding:10px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.c .nm{font-weight:600}.c .st{font-size:12px;color:var(--mute)}
+.c a{color:var(--court);text-decoration:none;font-weight:600;font-size:14px;white-space:nowrap;background:#E6EFE9;padding:7px 10px;border-radius:8px}
+.c .rec{font-size:12px;font-weight:600}.c .rec .w{color:var(--win)}.c .rec .l{color:var(--loss)}
+
+/* fab */
+.fab{position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;background:var(--ball);color:var(--ink);font-size:32px;line-height:56px;text-align:center;box-shadow:0 6px 16px rgba(0,0,0,.25);z-index:19;font-weight:300}
+
+/* modal */
+.ov{position:fixed;inset:0;background:rgba(10,20,15,.55);display:none;z-index:30;align-items:flex-end;justify-content:center}
+.ov.on{display:flex}
+.md{background:var(--bg);width:100%;max-width:720px;max-height:92vh;border-radius:18px 18px 0 0;overflow:auto;padding:14px 16px calc(20px + env(safe-area-inset-bottom))}
+.md h2{font-size:18px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.md h2 button{font-size:14px;color:var(--mute);padding:6px}
+.fg{margin-bottom:10px}
+.fg label{display:block;font-size:12px;color:var(--mute);margin-bottom:4px;padding-left:2px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.seg{display:flex;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{flex:1;padding:10px 4px;font-size:14px;color:var(--mute)}
+.seg button.on{background:var(--court);color:#fff;font-weight:600}
+.seg button.on.w{background:var(--win)}.seg button.on.l{background:var(--loss)}
+.btns{display:flex;gap:8px;margin-top:14px}
+.btns button{flex:1;padding:13px;border-radius:10px;font-weight:600;font-size:15px}
+.btn-p{background:var(--court);color:#fff}.btn-s{background:#fff;border:1px solid var(--line)}.btn-d{background:#fff;color:var(--loss);border:1px solid #EBC9C2;flex:0 0 auto!important;padding:13px 16px!important}
+.hint{font-size:12px;color:var(--mute);margin-top:4px;padding-left:2px}
+.empty{text-align:center;color:var(--mute);padding:40px 16px;font-size:14px}
+.menu-list button{display:block;width:100%;text-align:left;padding:14px 12px;background:#fff;border-radius:10px;margin-bottom:8px;font-size:15px}
+.menu-list button small{display:block;color:var(--mute);font-size:12px;margin-top:2px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(86px + env(safe-area-inset-bottom));background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;z-index:40;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+@media (min-width:600px){.filters{grid-template-columns:repeat(4,1fr)}.filters .full{grid-column:span 2}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="row">
+    <div>
+      <h1>Teniso karjera</h1>
+      <div class="rec" id="hdrRec"></div>
+    </div>
+    <button class="menu" onclick="openMenu()">Meniu</button>
+  </div>
+</header>
+
+<main>
+<!-- MATCHAI -->
+<section class="view on" id="v-matchai">
+  <div class="filters">
+    <select id="fYear"></select>
+    <select id="fTurn"></select>
+        <select id="fRes"><option value="">Visi rezultatai</option><option value="W">Laimėti</option><option value="L">Pralaimėti</option></select>
+    <input class="full" id="fName" placeholder="Ieškoti žaidėjo..." autocomplete="off">
+  </div>
+  <div class="count" id="mCount"></div>
+  <div id="mList"></div>
+</section>
+
+<!-- BUSIMI -->
+<section class="view" id="v-busimi">
+  <div class="sect">Būsimi matchai <button onclick="openFuture()">+ Pridėti</button></div>
+  <div id="fList"></div>
+</section>
+
+<!-- KALENDORIUS -->
+<section class="view" id="v-kal">
+  <div class="cal-head"><button onclick="calMove(-1)">‹</button><b id="calTitle"></b><button onclick="calMove(1)">›</button></div>
+  <div class="cal" id="cal"></div>
+  <div class="legend"><span><i class="dot-W"></i>Laimėta</span><span><i class="dot-L"></i>Pralaimėta</span><span><i class="dot-P"></i>Suplanuota</span><span><i class="dot-D"></i>Deadline</span></div>
+  <div id="calDay"></div>
+</section>
+
+<!-- STATISTIKA -->
+<section class="view" id="v-stat">
+  <div class="filters">
+    <select id="sYear"></select>
+    <select id="sTurn"></select>
+      </div>
+  <div id="stats"></div>
+</section>
+
+<!-- DVEJETAI -->
+<section class="view" id="v-dvej">
+  <div class="seg" id="dMode" style="margin-bottom:12px"><button data-v="list" class="on">Matchai</button><button data-v="stat">Statistika</button></div>
+  <div class="filters">
+    <select id="dYear"></select>
+    <select id="dTurn"></select>
+    <select id="dRes"><option value="">Visi rezultatai</option><option value="W">Laimėti</option><option value="L">Pralaimėti</option></select>
+    <input id="dName" placeholder="Ieškoti varžovų..." autocomplete="off">
+  </div>
+  <div id="dListWrap"><div class="count" id="dCount"></div><div id="dList"></div></div>
+  <div id="dStats" style="display:none"></div>
+</section>
+
+<!-- KONTAKTAI -->
+<section class="view" id="v-kont">
+  <div class="filters"><input class="full" id="cSearch" placeholder="Ieškoti kontakto..." autocomplete="off"></div>
+  <div class="sect">Kontaktai <button onclick="openContact()">+ Pridėti</button></div>
+  <div id="cList"></div>
+</section>
+</main>
+
+<button class="fab" id="fab" onclick="openMatch()" title="Pridėti matchą">+</button>
+
+<nav>
+  <button class="on" data-v="matchai" onclick="showView('matchai')"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Vienetai</button>
+  <button data-v="busimi" onclick="showView('busimi')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Būsimi</button>
+  <button data-v="kal" onclick="showView('kal')"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Kalendorius</button>
+  <button data-v="stat" onclick="showView('stat')"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>Statistika</button>
+  <button data-v="dvej" onclick="showView('dvej')"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3.5"/><circle cx="16" cy="8" r="3.5"/><path d="M2 21c0-4 3-6 6-6s6 2 6 6M10 21c0-4 3-6 6-6s6 2 6 6"/></svg>Dvejetai</button>
+  <button data-v="kont" onclick="showView('kont')"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Kontaktai</button>
+</nav>
+
+<!-- MODAL: match -->
+<div class="ov" id="ovMatch"><div class="md">
+  <h2><span id="mTitle">Naujas matchas</span><button onclick="closeOv('ovMatch')">Uždaryti</button></h2>
+  <input type="hidden" id="m_id">
+    <div class="fg"><label>Vardas Pavardė</label><input id="m_varzovas" list="dlOpp" autocomplete="off" placeholder="Varžovas"></div>
+  <div class="fg"><label>Telefono numeris</label><input id="m_tel" type="tel" inputmode="tel" placeholder="370..."></div>
+  <div class="g2">
+    <div class="fg"><label>Data</label><input id="m_data" type="date"></div>
+    <div class="fg"><label>Aikštynas</label><input id="m_kortai" list="dlCourt" autocomplete="off" placeholder="SEB, M7, BT..."></div>
+  </div>
+  <div class="fg"><label>Turnyras</label><input id="m_turnyras" list="dlTurn" autocomplete="off" placeholder="pvz. TP ruduo 2026"></div>
+  <div class="g2">
+    <div class="fg"><label>Divizionas</label><input id="m_div" placeholder="3" inputmode="decimal"></div>
+    <div class="fg"><label>Etapas (jei playoff)</label><input id="m_etapas" placeholder="top16, paguoda..."></div>
+  </div>
+  <div class="fg"><label>Rezultatas (setai)</label>
+    <div class="g3"><input id="m_s1" placeholder="1 setas" inputmode="text"><input id="m_s2" placeholder="2 setas"><input id="m_s3" placeholder="3 setas / tiebreak"></div>
+    <div class="hint">Formatas 6:4, 7:6(5), 10:8. Rezultatas nustatomas automatiškai, bet galima pakeisti.</div>
+  </div>
+  <div class="fg"><div class="seg" id="m_rez"><button data-v="W" class="w">Laimėta</button><button data-v="L" class="l">Pralaimėta</button></div></div>
+  <div class="fg"><label>Pastabos</label><input id="m_pastabos" placeholder="pvz. varžovas pasitraukė"></div>
+  <div class="btns"><button class="btn-d" id="m_del" onclick="deleteMatch()">Ištrinti</button><button class="btn-p" onclick="saveMatch()">Išsaugoti</button></div>
+</div></div>
+
+<!-- MODAL: future -->
+<div class="ov" id="ovFuture"><div class="md">
+  <h2><span id="fTitle">Būsimas matchas</span><button onclick="closeOv('ovFuture')">Uždaryti</button></h2>
+  <input type="hidden" id="f_id">
+  <div class="fg"><div class="seg" id="f_tipas"><button data-v="vienetai" class="on">Vienetai</button><button data-v="dvejetai">Dvejetai</button></div></div>
+  <div class="fg"><label id="f_lblV">Vardas Pavardė</label><input id="f_varzovas" list="dlOpp" autocomplete="off" placeholder="Varžovas"></div>
+  <div class="fg" id="f_telBox"><label>Telefono numeris</label><input id="f_tel" type="tel" inputmode="tel" placeholder="370..."></div>
+  <div class="fg" id="f_partBox" style="display:none"><label>Mano partneris</label><input id="f_partneris" list="dlPartner" autocomplete="off" placeholder="V. Bražinskas"></div>
+  <div class="fg"><label>Turnyras</label><input id="f_turnyras" list="dlTurn" autocomplete="off"></div>
+  <div class="fg"><label>Galutinė data (deadline)</label><input id="f_deadline" type="date"></div>
+  <div class="sect" style="margin-top:6px">Suplanuota</div>
+  <div class="g2">
+    <div class="fg"><label>Matcho data</label><input id="f_planData" type="date"></div>
+    <div class="fg"><label>Laikas</label><input id="f_laikas" type="time"></div>
+  </div>
+  <div class="fg"><label>Aikštynas / kortas</label><input id="f_aikstynas" list="dlCourt" autocomplete="off" placeholder="SEB 21, M7, BT..."></div>
+  <div class="g2">
+    <div class="fg"><label>Kas mokėjo už kortą</label><select id="f_mokejo"><option value="">–</option><option>Aš</option><option>Varžovas</option><option>Per pusę</option><option>Nemokamai</option></select></div>
+    <div class="fg"><label>Suma (€)</label><input id="f_suma" inputmode="decimal" placeholder="0"></div>
+  </div>
+  <div class="fg"><label>Pastabos</label><input id="f_pastabos"></div>
+  <div class="btns"><button class="btn-d" id="f_del" onclick="deleteFuture()">Ištrinti</button><button class="btn-s" id="f_toRes" onclick="futureToResult()">Įvesti rezultatą</button><button class="btn-p" onclick="saveFuture()">Išsaugoti</button></div>
+</div></div>
+
+<!-- MODAL: doubles -->
+<div class="ov" id="ovDouble"><div class="md">
+  <h2><span id="dTitle">Naujas dvejetų matchas</span><button onclick="closeOv('ovDouble')">Uždaryti</button></h2>
+  <input type="hidden" id="d_id">
+  <div class="fg"><label>Varžovų pora</label><input id="d_varzovai" list="dlDOpp" autocomplete="off" placeholder="pvz. A. Kondrotas / A. Kisielis"></div>
+  <div class="fg"><label>Mano partneris</label><input id="d_partneris" list="dlPartner" autocomplete="off" placeholder="V. Bražinskas"></div>
+  <div class="fg"><label>Data</label><input id="d_data" type="date"></div>
+  <div class="fg"><label>Turnyras</label><input id="d_turnyras" list="dlDTurn" autocomplete="off" placeholder="pvz. Olybet ruduo 2026"></div>
+  <div class="g2">
+    <div class="fg"><label>Vieta</label><input id="d_vieta" list="dlVieta" autocomplete="off" placeholder="SEB arena"></div>
+    <div class="fg"><label>Danga</label><input id="d_danga" list="dlDanga" autocomplete="off" placeholder="Akrilas, Kilimas, Gruntas"></div>
+  </div>
+  <div class="fg"><label>Rezultatas (setai, mūsų taškai pirmi)</label>
+    <div class="g3"><input id="d_s1" placeholder="1 setas"><input id="d_s2" placeholder="2 setas"><input id="d_s3" placeholder="3 setas / tiebreak"></div>
+    <div class="hint">Formatas 6:4, 7:6(7:2), 10:8.</div>
+  </div>
+  <div class="fg"><div class="seg" id="d_rez"><button data-v="W" class="w">Laimėta</button><button data-v="L" class="l">Pralaimėta</button></div></div>
+  <div class="fg"><label>Pastabos</label><input id="d_pastabos" placeholder="pvz. b/ž (be žaidimo)"></div>
+  <div class="btns"><button class="btn-d" id="d_del" onclick="deleteDouble()">Ištrinti</button><button class="btn-p" onclick="saveDouble()">Išsaugoti</button></div>
+</div></div>
+
+<!-- MODAL: contact -->
+<div class="ov" id="ovContact"><div class="md">
+  <h2><span>Kontaktas</span><button onclick="closeOv('ovContact')">Uždaryti</button></h2>
+  <input type="hidden" id="c_id">
+  <div class="fg"><label>Vardas Pavardė</label><input id="c_vardas"></div>
+  <div class="fg"><label>Telefono numeris</label><input id="c_tel" type="tel" inputmode="tel"></div>
+  <div class="fg"><label>Pastabos</label><input id="c_pastabos"></div>
+  <div class="hint" id="c_hint"></div>
+  <div class="btns"><button class="btn-d" id="c_del" onclick="deleteContact()">Ištrinti</button><button class="btn-p" onclick="saveContact()">Išsaugoti</button></div>
+</div></div>
+
+<!-- MODAL: menu -->
+<div class="ov" id="ovMenu"><div class="md">
+  <h2><span>Meniu</span><button onclick="closeOv('ovMenu')">Uždaryti</button></h2>
+  <div class="menu-list">
+    <button onclick="exportData()">Eksportuoti duomenis (JSON)<small>Atsarginė kopija – išsaugok failą telefone ar debesyje</small></button>
+    <button onclick="document.getElementById('impFile').click()">Importuoti duomenis (JSON)<small>Atkurti iš atsarginės kopijos</small></button>
+    <button onclick="openRename()">Pervadinti turnyrą<small>Suvienodinti pavadinimą visuose matchuose</small></button>
+    <button onclick="resetData()">Atstatyti pradinius duomenis<small>Grąžina duomenis iš Excel failo, ištrina pakeitimus</small></button>
+  </div>
+  <input type="file" id="impFile" accept=".json,application/json" style="display:none" onchange="importData(this)">
+  <div class="hint" id="storInfo"></div>
+</div></div>
+
+<!-- MODAL: rename -->
+<div class="ov" id="ovRename"><div class="md">
+  <h2><span>Pervadinti turnyrą</span><button onclick="closeOv('ovRename')">Uždaryti</button></h2>
+  <div class="fg"><label>Esamas pavadinimas</label><select id="r_from"></select></div>
+  <div class="fg"><label>Naujas pavadinimas</label><input id="r_to" list="dlTurn" autocomplete="off"></div>
+  <div class="btns"><button class="btn-p" onclick="doRename()">Pervadinti</button></div>
+</div></div>
+
+<datalist id="dlOpp"></datalist><datalist id="dlDOpp"></datalist><datalist id="dlPartner"></datalist><datalist id="dlDTurn"></datalist><datalist id="dlVieta"></datalist><datalist id="dlDanga"></datalist><datalist id="dlTurn"></datalist><datalist id="dlCourt"></datalist>
+<div class="toast" id="toast"></div>
+
+<script>
+const SEED = {"matches":[{"id":"m1","data":"2023-12-19","kortai":"SEB","turnyras":"Olybet žiema 2023/24","etapas":"","div":"5","varzovas":"Ignas Kindaravičius","tel":"37068355247","s1":"2:6","s2":"1:6","s3":"","rez":"L","pastabos":""},{"id":"m2","data":"2023-12-23","kortai":"SEB","turnyras":"Olybet žiema 2023/24","etapas":"","div":"5","varzovas":"Denis Kostyk","tel":"37060037492","s1":"4:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m3","data":"2024-01-03","kortai":"SEB","turnyras":"Olybet žiema 2023/24","etapas":"","div":"5","varzovas":"Gabrielė Zujutė","tel":"37061286404","s1":"1:6","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"m4","data":"2024-01-15","kortai":"SEB","turnyras":"Olybet žiema 2023/24","etapas":"","div":"5","varzovas":"Sergey Kuksov","tel":"37067534395","s1":"0:6","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"m5","data":"2024-03-17","kortai":"SEB","turnyras":"Activus pavasaris 2024","etapas":"","div":"5","varzovas":"Justinas Samuolis","tel":"37061401982","s1":"4:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m6","data":"2024-03-18","kortai":"SEB","turnyras":"TP pavasaris 2024","etapas":"","div":"light","varzovas":"Ivan Chuvakhin","tel":"37061582207","s1":"6:2","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m7","data":"2024-03-25","kortai":"N-M7","turnyras":"TP pavasaris 2024","etapas":"","div":"light","varzovas":"Arvydas Baublys","tel":"37065070354","s1":"6:4","s2":"1:6","s3":"0:6","rez":"L","pastabos":""},{"id":"m8","data":"2024-04-01","kortai":"SEB","turnyras":"TP pavasaris 2024","etapas":"","div":"light","varzovas":"Gintaras Buzkys","tel":"37060088047","s1":"6:3","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"m9","data":"2024-04-02","kortai":"SEB","turnyras":"Activus pavasaris 2024","etapas":"","div":"5","varzovas":"Mindaugas Osipovas","tel":"37060392894","s1":"6:7","s2":"6:1","s3":"7:5","rez":"L","pastabos":""},{"id":"m10","data":"2024-04-08","kortai":"SEB","turnyras":"Activus pavasaris 2024","etapas":"","div":"5","varzovas":"Ignas Savosta","tel":"37064873199","s1":"4:6","s2":"5:7","s3":"","rez":"W","pastabos":""},{"id":"m11","data":"2024-04-14","kortai":"SEB","turnyras":"TP pavasaris 2024","etapas":"","div":"light","varzovas":"Ignas Zaukevičius","tel":"37061422547","s1":"1:6","s2":"0:6","s3":"","rez":"W","pastabos":""},{"id":"m12","data":"2024-04-19","kortai":"SEB","turnyras":"Activus pavasaris 2024","etapas":"","div":"5","varzovas":"Kipras Siliūnas","tel":"37069943833","s1":"6:2","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m13","data":"2024-04-30","kortai":"SEB","turnyras":"TP pavasaris 2024","etapas":"","div":"light","varzovas":"Rimantas Kadagis","tel":"37065520033","s1":"4:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m14","data":"2024-05-05","kortai":"Vingis","turnyras":"Activus pavasaris 2024","etapas":"","div":"5","varzovas":"Remigijus Savosta","tel":"37061011426","s1":"2:6","s2":"6:2","s3":"2:6","rez":"L","pastabos":""},{"id":"m15","data":"2024-05-15","kortai":"SEB","turnyras":"Activus pavasaris 2024","etapas":"","div":"5","varzovas":"Lukas Velutis","tel":"37063070430","s1":"4:6","s2":"6:4","s3":"10:3","rez":"W","pastabos":""},{"id":"m16","data":"2024-05-19","kortai":"SEB","turnyras":"TP pavasaris 2024","etapas":"","div":"light","varzovas":"Ramunas Stanišauskas","tel":"37068233782","s1":"3:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m17","data":"2024-06-02","kortai":"Vingis","turnyras":"TP vasara 2024","etapas":"","div":"light","varzovas":"Andrius Matuzas","tel":"37067582500","s1":"6:7","s2":"6:2","s3":"8:10","rez":"L","pastabos":""},{"id":"m18","data":"2024-06-03","kortai":"SEB","turnyras":"TopSpin vasara 2024","etapas":"","div":"3.0","varzovas":"Arnoldas Šeščila","tel":"37067173257","s1":"2:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m19","data":"2024-06-05","kortai":"SEB","turnyras":"Olybet vasara 2024","etapas":"","div":"4","varzovas":"Vytautas Butkus","tel":"37061554041","s1":"6:1","s2":"5:7","s3":"10:5","rez":"W","pastabos":""},{"id":"m20","data":"2024-06-06","kortai":"M7","turnyras":"TP vasara 2024","etapas":"","div":"light","varzovas":"Kęstutis Gramba","tel":"37060039820","s1":"1:6","s2":"6:3","s3":"10:8","rez":"W","pastabos":""},{"id":"m21","data":"2024-06-11","kortai":"SEB","turnyras":"Olybet vasara 2024","etapas":"","div":"4","varzovas":"Vaidas Beinoras","tel":"37065635351","s1":"2:6","s2":"1:6","s3":"","rez":"L","pastabos":""},{"id":"m22","data":"2024-06-12","kortai":"SEB","turnyras":"TP vasara 2024","etapas":"","div":"light","varzovas":"Evaldas Česnavičius","tel":"37060460384","s1":"4:6","s2":"6:2","s3":"6:4","rez":"W","pastabos":""},{"id":"m23","data":"2024-06-13","kortai":"M7","turnyras":"TopSpin vasara 2024","etapas":"","div":"3.0","varzovas":"Vitali Luchanok","tel":"37069000337","s1":"7:6(5)","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"m24","data":"2024-06-17","kortai":"BS","turnyras":"TopSpin vasara 2024","etapas":"","div":"3.0","varzovas":"Andrius Nikanorovas","tel":"37069996686","s1":"4:6","s2":"7:5","s3":"4:10","rez":"L","pastabos":""},{"id":"m25","data":"2024-06-19","kortai":"M7","turnyras":"Olybet vasara 2024","etapas":"","div":"4","varzovas":"Šarūnas Samas","tel":"37064207558","s1":"4:6","s2":"6(3):7","s3":"","rez":"L","pastabos":""},{"id":"m26","data":"2024-07-01","kortai":"SEB","turnyras":"Olybet vasara 2024","etapas":"","div":"4","varzovas":"Justas Kriukas","tel":"37065635620","s1":"7:5","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m27","data":"2024-07-08","kortai":"SEB","turnyras":"Olybet vasara 2024","etapas":"","div":"4","varzovas":"Karolis Sutkaitis","tel":"37069912455","s1":"2:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m28","data":"2024-07-09","kortai":"SEB","turnyras":"TopSpin vasara 2024","etapas":"","div":"3.0","varzovas":"Arnas Jagminas","tel":"37063095104","s1":"7:6(3)","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m29","data":"2024-07-15","kortai":"Ozo","turnyras":"Olybet vasara 2024","etapas":"","div":"4","varzovas":"Lukas Morkevičius","tel":"37066518018","s1":"6:0","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"m30","data":"2024-07-16","kortai":"SEB","turnyras":"TopSpin vasara 2024","etapas":"","div":"3.0","varzovas":"Antanas Savickis","tel":"37067088276","s1":"6:4","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m31","data":"2024-07-17","kortai":"SEB","turnyras":"TP vasara 2024","etapas":"top16","div":"light","varzovas":"Mantas Namgaudis","tel":"37062839474","s1":"6:3","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m32","data":"2024-07-25","kortai":"SEB","turnyras":"TopSpin vasara 2024","etapas":"top32","div":"3.0","varzovas":"Rimvydas Stumbrys","tel":"37061022908","s1":"4:5","s2":"-","s3":"","rez":"W","pastabos":""},{"id":"m33","data":"2024-07-29","kortai":"SEB","turnyras":"Olybet vasara 2024","etapas":"top64","div":"4","varzovas":"Ignas Jurkus","tel":"37062129129","s1":"2:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m34","data":"2024-08-04","kortai":"BS","turnyras":"Olybet vasara 2024","etapas":"paguoda","div":"4","varzovas":"Elvinas Didika","tel":"37063906185","s1":"3:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m35","data":"2024-08-06","kortai":"SEB","turnyras":"TopSpin vasara 2024","etapas":"top16","div":"3.0","varzovas":"Žygimantas Satkauskas","tel":"37062806881","s1":"2:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m36","data":"2024-08-18","kortai":"BT","turnyras":"TP vasara 2024","etapas":"top8","div":"light","varzovas":"Rimantas Besenas","tel":"37067255322","s1":"1:6","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"m37","data":"2024-09-05","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Matas Anužis","tel":"37069270159","s1":"6:2","s2":"1:6","s3":"1:6","rez":"L","pastabos":""},{"id":"m38","data":"2024-09-09","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Aivaras Lukošius","tel":"37060064130","s1":"0:6","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"m39","data":"2024-09-10","kortai":"BS","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Martynas Visockas","tel":"37068687915","s1":"1:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m40","data":"2024-09-17","kortai":"SEB","turnyras":"Activus ruduo 2024","etapas":"","div":"4","varzovas":"Karolis Savickis","tel":"37060742944","s1":"6:4","s2":"4:6","s3":"9:11","rez":"L","pastabos":""},{"id":"m41","data":"2024-09-18","kortai":"SEB","turnyras":"TP ruduo 2024","etapas":"","div":"3.0","varzovas":"Tautvydas Gegelis","tel":"37062147215","s1":"6:0","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m42","data":"2024-09-22","kortai":"SEB","turnyras":"TP ruduo 2024","etapas":"","div":"3.0","varzovas":"Audrius Baranovas","tel":"37062044906","s1":"6:2","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m43","data":"2024-09-23","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Ernestas Degtiariovas","tel":"37068438528","s1":"2:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m44","data":"2024-09-29","kortai":"SEB","turnyras":"Activus ruduo 2024","etapas":"","div":"4","varzovas":"Marius Žymantas","tel":"37061511114","s1":"6:0","s2":"4:6","s3":"2:10","rez":"L","pastabos":""},{"id":"m45","data":"2024-10-01","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Darius Čepokas","tel":"37061133236","s1":"1:6","s2":"6:4","s3":"7:10","rez":"L","pastabos":""},{"id":"m46","data":"2024-10-04","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Dominykas Šalčis","tel":"37065096358","s1":"1:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m47","data":"2024-10-07","kortai":"SEB","turnyras":"TP ruduo 2024","etapas":"","div":"3.0","varzovas":"Simonas Kairys","tel":"37068689005","s1":"6:0","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m48","data":"2024-10-08","kortai":"SEB","turnyras":"TP ruduo 2024","etapas":"","div":"3.0","varzovas":"Dzmitry Liaukovich","tel":"37066555706","s1":"4:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m49","data":"2024-10-20","kortai":"SEB","turnyras":"Activus ruduo 2024","etapas":"","div":"4","varzovas":"Andrius Lazarenka","tel":"37067786901","s1":"6:0","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m50","data":"2024-10-21","kortai":"SEB","turnyras":"TP ruduo 2024","etapas":"","div":"3.0","varzovas":"Lukas Girdvainis","tel":"37069137504","s1":"6:4","s2":"2:6","s3":"6:10","rez":"L","pastabos":""},{"id":"m51","data":"2024-11-14","kortai":"BT","turnyras":"Activus ruduo 2024","etapas":"","div":"4","varzovas":"Romanas Golovko","tel":"37069560352","s1":"6:1","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m52","data":"2024-11-18","kortai":"SEB","turnyras":"Activus ruduo 2024","etapas":"","div":"4","varzovas":"Artūras Rakovskis","tel":"37060440052","s1":"7:6","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"m53","data":"2024-11-20","kortai":"SEB","turnyras":"TP ruduo 2024","etapas":"paguoda","div":"3.0","varzovas":"Kristupas Veteris","tel":"37068734413","s1":"6:7","s2":"5:7","s3":"","rez":"L","pastabos":""},{"id":"m54","data":"2024-12-03","kortai":"SEB","turnyras":"Olybet žiema 2024/25","etapas":"","div":"3","varzovas":"Erikas Piskunovas","tel":"37068748801","s1":"7:6","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m55","data":"2024-12-06","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Adomas Žadeika","tel":"37061022729","s1":"0:6","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"m56","data":"2024-12-09","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Paulius Baltramiejūnas","tel":"37068790641","s1":"0:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m57","data":"2024-12-10","kortai":"SEB","turnyras":"Olybet žiema 2024/25","etapas":"","div":"3","varzovas":"Gediminas Vaitkus","tel":"37065634862","s1":"6:1","s2":"7:6","s3":"","rez":"W","pastabos":""},{"id":"m58","data":"2024-12-13","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Arminas Nemeika","tel":"37067628780","s1":"7:6","s2":"4:6","s3":"4:10","rez":"L","pastabos":""},{"id":"m59","data":"2024-12-16","kortai":"SEB","turnyras":"Olybet žiema 2024/25","etapas":"","div":"3","varzovas":"Antanas Balbata","tel":"37065275275","s1":"6:7","s2":"6:4","s3":"10:3","rez":"W","pastabos":""},{"id":"m60","data":"2024-12-23","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Linas Balčiūnas","tel":"37061226728","s1":"6:1","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m61","data":"2025-01-08","kortai":"SEB","turnyras":"Olybet žiema 2024/25","etapas":"","div":"3","varzovas":"Kristupas Veteris","tel":"37068734413","s1":"6:3","s2":"3:6","s3":"0:6","rez":"L","pastabos":""},{"id":"m62","data":"2025-01-08","kortai":"SEB","turnyras":"Olybet žiema 2024/25","etapas":"","div":"3","varzovas":"Ignas Lelys","tel":"37067788588","s1":"6:7","s2":"6:4","s3":"10:7","rez":"W","pastabos":""},{"id":"m63","data":"2025-01-22","kortai":"N","turnyras":"TopSpin ruduo 2024","etapas":"top20","div":"3.5","varzovas":"Arnas Daugėla","tel":"37067454748","s1":"6:7","s2":"1:6","s3":"","rez":"L","pastabos":""},{"id":"m64","data":"2025-02-05","kortai":"SEB","turnyras":"Olybet žiema 2024/25","etapas":"","div":"3","varzovas":"Giedrius Leskauskas","tel":"37060722776","s1":"4:6","s2":"1:6","s3":"","rez":"L","pastabos":""},{"id":"m65","data":"2025-03-19","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3.0","varzovas":"Arnas Dūmanas","tel":"37067485999","s1":"4:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m66","data":"2025-03-21","kortai":"M7","turnyras":"Activus pavasaris 2025","etapas":"","div":"3","varzovas":"Arnas Dūmanas","tel":"37067485999","s1":"6:4","s2":"7:5","s3":"","rez":"W","pastabos":""},{"id":"m67","data":"2025-03-24","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3","varzovas":"Rimantas Besenas","tel":"37067255322","s1":"3:6","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"m68","data":"2025-03-31","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3.0","varzovas":"Tomas Misevičius","tel":"37061881254","s1":"6:3","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"m69","data":"2025-04-02","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3.0","varzovas":"Mantas Namgaudis","tel":"37062839474","s1":"6:7","s2":"6:2","s3":"10:2","rez":"W","pastabos":""},{"id":"m70","data":"2025-04-04","kortai":"SEB","turnyras":"Activus pavasaris 2025","etapas":"","div":"3","varzovas":"Gražvydas Pangonis","tel":"37066352311","s1":"2:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m71","data":"2025-04-07","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3","varzovas":"Vytautas Mackevičius","tel":"37068460070","s1":"6:1","s2":"4:6","s3":"10:8","rez":"W","pastabos":""},{"id":"m72","data":"2025-04-09","kortai":"SEB","turnyras":"Activus pavasaris 2025","etapas":"","div":"3","varzovas":"Augusto Herrera","tel":"37062520210","s1":"6:1","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"m73","data":"2025-04-23","kortai":"SEB","turnyras":"Activus pavasaris 2025","etapas":"","div":"3","varzovas":"Maksimas Glebovas","tel":"37065380786","s1":"3:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m74","data":"2025-04-30","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3","varzovas":"Kristupas Mejeris","tel":"37068620888","s1":"0:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m75","data":"2025-05-08","kortai":"SEB","turnyras":"Activus pavasaris 2025","etapas":"","div":"3","varzovas":"Germantas Gaurilcikas","tel":"37061687225","s1":"5:7","s2":"7:5","s3":"11:9","rez":"W","pastabos":""},{"id":"m76","data":"2025-05-10","kortai":"BT","turnyras":"TP pavasaris 2025","etapas":"","div":"3","varzovas":"Kostas Drazdauskas","tel":"37063361437","s1":"4:6","s2":"1:6","s3":"","rez":"W","pastabos":""},{"id":"m77","data":"2025-05-20","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3","varzovas":"Laurynas Kunavičius","tel":"37065002200","s1":"6:0","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m78","data":"2025-05-21","kortai":"SEB","turnyras":"Activus pavasaris 2025","etapas":"","div":"3","varzovas":"Marius Vainauskas","tel":"37061020807","s1":"6:3","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"m79","data":"2025-05-26","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3","varzovas":"Rytis Paukštė","tel":"37064041019","s1":"7:5","s2":"3:6","s3":"6:0","rez":"W","pastabos":""},{"id":"m80","data":"2025-06-09","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3","varzovas":"Audrius Deveikis","tel":"37068137052","s1":"3:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m81","data":"2025-06-17","kortai":"SEB","turnyras":"Olybet vasara 2025","etapas":"","div":"3","varzovas":"Arūnas Valickas","tel":"37060464944","s1":"5:7","s2":"6:2","s3":"6:4","rez":"W","pastabos":""},{"id":"m82","data":"2025-06-18","kortai":"SEB","turnyras":"Olybet vasara 2025","etapas":"","div":"3","varzovas":"Robertas Simaška","tel":"37065200520","s1":"4:6","s2":"6:0","s3":"10:5","rez":"W","pastabos":""},{"id":"m83","data":"2025-07-07","kortai":"SEB","turnyras":"Olybet vasara 2025","etapas":"","div":"3","varzovas":"Danas Vaitkevičius","tel":"37069969157","s1":"3:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m84","data":"2025-07-08","kortai":"SEB","turnyras":"Olybet vasara 2025","etapas":"","div":"3","varzovas":"Šarūnas Akelaitis","tel":"37064545455","s1":"6:4","s2":"5:7","s3":"6:10","rez":"L","pastabos":""},{"id":"m85","data":"2025-07-14","kortai":"SEB","turnyras":"Olybet vasara 2025","etapas":"","div":"3","varzovas":"Laurynas Babrauskas","tel":"37067022235","s1":"7:5","s2":"3:6","s3":"10:8","rez":"W","pastabos":""},{"id":"m86","data":"2025-07-27","kortai":"SEB","turnyras":"Olybet vasara 2025","etapas":"","div":"3","varzovas":"Ąžuolas Bagdonas","tel":"37067024450","s1":"6:2","s2":"4:6","s3":"10:5","rez":"W","pastabos":""},{"id":"m87","data":"2025-07-31","kortai":"SEB","turnyras":"Olybet vasara 2025","etapas":"","div":"3","varzovas":"Vaclovas Paulikas","tel":"37068612270","s1":"2:6","s2":"7:6","s3":"9:11","rez":"L","pastabos":""},{"id":"m88","data":"2025-09-03","kortai":"SEB","turnyras":"TP ruduo 2025","etapas":"","div":"2","varzovas":"Giedrius Juodišius","tel":"37068245290","s1":"4:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m89","data":"2025-09-10","kortai":"SEB","turnyras":"TP ruduo 2025","etapas":"","div":"2","varzovas":"Marius Reut","tel":"37060813457","s1":"0:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m90","data":"2025-09-11","kortai":"SEB","turnyras":"TP ruduo 2025","etapas":"","div":"2","varzovas":"Valdas Bukauskas","tel":"37060615093","s1":"4:6","s2":"7:5","s3":"10:8","rez":"W","pastabos":""},{"id":"m91","data":"2025-09-20","kortai":"BT","turnyras":"TP ruduo 2025","etapas":"","div":"2","varzovas":"Arnas Dūmanas","tel":"37067485999","s1":"4:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m92","data":"2025-09-24","kortai":"SEB","turnyras":"Activus ruduo 2025","etapas":"","div":"2","varzovas":"Algis Kublickas","tel":"37064092475","s1":"2:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m93","data":"2025-09-28","kortai":"SEB","turnyras":"Activus ruduo 2025","etapas":"","div":"2","varzovas":"Lukas Babelis","tel":"37067882769","s1":"3:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m94","data":"2025-10-15","kortai":"SEB","turnyras":"Activus ruduo 2025","etapas":"","div":"2","varzovas":"Marius Zeba","tel":"37067785959","s1":"6:2","s2":"3:6","s3":"14:12","rez":"W","pastabos":""},{"id":"m95","data":"2025-10-27","kortai":"SEB","turnyras":"TP ruduo 2025","etapas":"","div":"2","varzovas":"Adrian Ščerban","tel":"37067018008","s1":"3:6","s2":"7:6","s3":"6:10","rez":"L","pastabos":""},{"id":"m96","data":"2025-10-28","kortai":"SEB","turnyras":"Activus ruduo 2025","etapas":"","div":"2","varzovas":"Kastytis Račiūnas","tel":"37068722097","s1":"7:6","s2":"3:5","s3":"","rez":"L","pastabos":""},{"id":"m97","data":"2025-11-08","kortai":"SEB","turnyras":"Activus ruduo 2025","etapas":"","div":"2","varzovas":"Rokas Mačiulaitis","tel":"37064172039","s1":"2:6","s2":"6:3","s3":"8:10","rez":"L","pastabos":""},{"id":"m98","data":"2025-11-17","kortai":"SEB","turnyras":"Activus ruduo 2025","etapas":"","div":"2","varzovas":"Domantas Ražanas","tel":"37060072919","s1":"1:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m99","data":"2025-12-15","kortai":"M7","turnyras":"TopSpin žiema 2025/26","etapas":"","div":"3","varzovas":"Richardas Jonaitis","tel":"37063934216","s1":"6:7","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"m100","data":"2025-12-17","kortai":"SEB","turnyras":"TopSpin žiema 2025/26","etapas":"","div":"3","varzovas":"Dovydas Kurlenskas","tel":"37069419040","s1":"3:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m101","data":"2025-12-22","kortai":"SEB","turnyras":"TN žiema 2025/26","etapas":"","div":"3","varzovas":"Darius Čepokas","tel":"37061133236","s1":"7:6","s2":"6:7","s3":"5:10","rez":"L","pastabos":""},{"id":"m102","data":"2025-12-22","kortai":"SEB","turnyras":"TP žiema 2025/26","etapas":"","div":"2","varzovas":"Ramunas Kybartas","tel":"37062918272","s1":"1:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m103","data":"2025-12-23","kortai":"SEB","turnyras":"TP žiema 2025/26","etapas":"","div":"2","varzovas":"Andrius Ladauskas","tel":"37062042351","s1":"1:6","s2":"1:6","s3":"","rez":"L","pastabos":""},{"id":"m104","data":"2025-12-27","kortai":"SEB","turnyras":"TN žiema 2025/26","etapas":"","div":"3","varzovas":"Elvinas Didika","tel":"37063906185","s1":"6:3","s2":"0:6","s3":"8:10","rez":"L","pastabos":""},{"id":"m105","data":"2026-01-02","kortai":"SEB","turnyras":"TN žiema 2025/26","etapas":"","div":"3","varzovas":"Giedrius Čiurinskas","tel":"37068618769","s1":"3:6","s2":"6:4","s3":"6:10","rez":"L","pastabos":""},{"id":"m106","data":"2026-01-08","kortai":"SEB","turnyras":"TP žiema 2025/26","etapas":"","div":"2","varzovas":"Tomas Česnauskas","tel":"37064025033","s1":"4:6","s2":"5:7","s3":"","rez":"L","pastabos":""},{"id":"m107","data":"2026-01-26","kortai":"SEB","turnyras":"TN žiema 2025/26","etapas":"","div":"3","varzovas":"Mantas Gruodis","tel":"37065043169","s1":"3:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m108","data":"2026-02-02","kortai":"SEB","turnyras":"TN žiema 2025/26","etapas":"","div":"3","varzovas":"Rimantas Slavinskas","tel":"37060609445","s1":"6:2","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"m109","data":"2026-02-12","kortai":"SEB","turnyras":"TN žiema 2025/26","etapas":"","div":"3","varzovas":"Andrius Čelkis","tel":"37067604444","s1":"7:6","s2":"7:6","s3":"","rez":"W","pastabos":""},{"id":"m110","data":"2026-02-16","kortai":"SEB","turnyras":"TN žiema 2025/26","etapas":"","div":"3","varzovas":"Darius Skunčikas","tel":"37060767840","s1":"1:6","s2":"1:6","s3":"","rez":"L","pastabos":""},{"id":"m111","data":"2026-03-13","kortai":"SEB","turnyras":"TP pavasaris 2026","etapas":"","div":"2","varzovas":"Adrian Ščerban","tel":"37067018008","s1":"5:7","s2":"6:4","s3":"3:2","rez":"W","pastabos":""},{"id":"m112","data":"2026-03-23","kortai":"SEB","turnyras":"Rewo pavasaris 2026","etapas":"","div":"3","varzovas":"Mantas Gruodis","tel":"37065043169","s1":"5:7","s2":"7:6","s3":"10:12","rez":"L","pastabos":""},{"id":"m113","data":"2026-03-25","kortai":"SEB","turnyras":"TP pavasaris 2026","etapas":"","div":"2","varzovas":"Eimantas Rutkauskas","tel":"37067646602","s1":"3:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m114","data":"2026-04-02","kortai":"SEB","turnyras":"Rewo pavasaris 2026","etapas":"","div":"3","varzovas":"Dmitry Ogievich","tel":"37062479714","s1":"3:6","s2":"6:4","s3":"6:10","rez":"L","pastabos":""},{"id":"m115","data":"2026-04-04","kortai":"SEB","turnyras":"TP pavasaris 2026","etapas":"","div":"2","varzovas":"Aurimas Andzelevičius","tel":"37061270860","s1":"7:6","s2":"4:6","s3":"8:10","rez":"L","pastabos":""},{"id":"m116","data":"2026-04-09","kortai":"SEB","turnyras":"TP pavasaris 2026","etapas":"","div":"2","varzovas":"Tomas Kiričenko","tel":"37065013341","s1":"4:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m117","data":"2026-04-14","kortai":"BT","turnyras":"Rewo pavasaris 2026","etapas":"","div":"3","varzovas":"Audrius Baranovas","tel":"37062044906","s1":"7:6","s2":"4:6","s3":"8:10","rez":"L","pastabos":""},{"id":"m118","data":"2026-04-27","kortai":"SEB","turnyras":"Rewo pavasaris 2026","etapas":"","div":"3","varzovas":"Jovydas Starkus","tel":"37067172903","s1":"6:1","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m119","data":"2026-05-08","kortai":"BT","turnyras":"Rewo pavasaris 2026","etapas":"","div":"3","varzovas":"Raimondas Monkevičius","tel":"37069930009","s1":"6:4","s2":"6:7","s3":"4:6","rez":"L","pastabos":""},{"id":"m120","data":"2026-05-26","kortai":"SEB","turnyras":"Rewo pavasaris 2026","etapas":"","div":"3","varzovas":"Matas Kuliešius","tel":"37060453267","s1":"6:3","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m121","data":"2026-05-31","kortai":"M7","turnyras":"TopSpin vasara 2026","etapas":"","div":"3","varzovas":"Mantas Lukošius","tel":"37069004696","s1":"3:6","s2":"6:3","s3":"10:5","rez":"W","pastabos":""},{"id":"m122","data":"2026-06-01","kortai":"Bernardinai","turnyras":"TopSpin vasara 2026","etapas":"","div":"3","varzovas":"Liucijus Viščinis","tel":"37064512757","s1":"7:5","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m123","data":"2026-06-02","kortai":"SEB","turnyras":"TopSpin vasara 2026","etapas":"","div":"3","varzovas":"Aurius Žukovas","tel":"37061869872","s1":"6:2","s2":"6:1","s3":"","rez":"W","pastabos":""},{"id":"m124","data":"2026-06-03","kortai":"SEB","turnyras":"Olybet vasara 2026","etapas":"","div":"3","varzovas":"Andrius Bialobžeskis","tel":"37068637337","s1":"6:1","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m125","data":"2026-06-11","kortai":"SEB","turnyras":"Olybet vasara 2026","etapas":"","div":"3","varzovas":"Algirdas Rakšnys","tel":"37060228323","s1":"6:1","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"m126","data":"2026-06-14","kortai":"SEB","turnyras":"Olybet vasara 2026","etapas":"","div":"3","varzovas":"Renato Margheritino","tel":"37060731910","s1":"7:5","s2":"6:1","s3":"","rez":"W","pastabos":""},{"id":"m127","data":"2026-06-15","kortai":"Widen","turnyras":"TP vasara 2026","etapas":"","div":"2","varzovas":"Marek Andrijevskij","tel":"37068128190","s1":"4:6","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"m128","data":"2026-06-16","kortai":"SEB","turnyras":"TP vasara 2026","etapas":"","div":"2","varzovas":"Karolis Saveikis","tel":"37062320494","s1":"6:4","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"m129","data":"2026-06-17","kortai":"SEB","turnyras":"Olybet vasara 2026","etapas":"","div":"3","varzovas":"Mantas Juočepys","tel":"37069309450","s1":"6:4","s2":"6:1","s3":"","rez":"W","pastabos":""},{"id":"m130","data":"2026-06-21","kortai":"SEB","turnyras":"Olybet vasara 2026","etapas":"","div":"3","varzovas":"Ignas Narmontas","tel":"37068576577","s1":"2:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m131","data":"2026-07-10","kortai":"SEB","turnyras":"TopSpin vasara 2026","etapas":"","div":"3","varzovas":"Mindaugas Sakalauskas","tel":"37065243323","s1":"6:4","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"m132","data":"2026-07-14","kortai":"SEB","turnyras":"TP vasara 2026","etapas":"","div":"2","varzovas":"Valdas Bukauskas","tel":"37060615093","s1":"4:6","s2":"6:4","s3":"7:10","rez":"L","pastabos":""},{"id":"m133","data":"2026-07-22","kortai":"SEB","turnyras":"TopSpin vasara 2026","etapas":"","div":"3","varzovas":"Andžejus Papsujevas","tel":"37061718425","s1":"6:7","s2":"6:7","s3":"","rez":"L","pastabos":""},{"id":"m134","data":"2026-08-06","kortai":"SEB","turnyras":"Olybet vasara 2026","etapas":"","div":"3","varzovas":"Algirdas Kulikauskas","tel":"37060091718","s1":"6:7","s2":"2:6","s3":"","rez":"L","pastabos":""}],"future":[{"id":"f1","varzovas":"Vytautas Mickevičius","tel":"37066352464","turnyras":"TopSpin vasara 2026","deadline":"","planData":"","laikas":"","aikstynas":"","mokejo":"","suma":"","pastabos":"trauma","tipas":"vienetai","partneris":""},{"id":"f2","varzovas":"Marius Zalensas","tel":"37067392391","turnyras":"TP vasara 2026","deadline":"","planData":"","laikas":"","aikstynas":"","mokejo":"","suma":"","pastabos":"","tipas":"vienetai","partneris":""}],"contacts":[{"vardas":"Irmantas Jurėnas","tel":"37062683867","pastabos":"","id":"c1"}],"doubles":[{"id":"d1","data":"2026-09-02","turnyras":"Olybet ruduo 2026","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"D. Diržius / J. Beganskis","s1":"6:3","s2":"2:6","s3":"2:6","rez":"L","pastabos":""},{"id":"d2","data":"2026-08-11","turnyras":"Rewo vasara 2026","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Kondrotas / A. Kisielis","s1":"6:3","s2":"3:6","s3":"4:6","rez":"L","pastabos":""},{"id":"d3","data":"2026-08-05","turnyras":"Rewo vasara 2026","vieta":"TENISO ERDVĖ","danga":"Gruntas","partneris":"V. Bražinskas","varzovai":"L. Viščinis / V. Kriauza","s1":"6:0","s2":"6:1","s3":"","rez":"W","pastabos":""},{"id":"d4","data":"2026-07-21","turnyras":"Rewo vasara 2026","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"E. Gladkij / A. Polinski","s1":"1:6","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"d5","data":"2026-07-08","turnyras":"Rewo vasara 2026","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"D. Savickis / I. Kašnikov","s1":"7:6(7:2)","s2":"7:6(7:3)","s3":"","rez":"W","pastabos":""},{"id":"d6","data":"2026-06-22","turnyras":"Rewo vasara 2026","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"D. Mikaliūnas / L. Sederevičius","s1":"3:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"d7","data":"2026-05-25","turnyras":"Olybet pavasaris 2026","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"I. Pileckas / M. Čipkus","s1":"6:3","s2":"5:7","s3":"6:10","rez":"L","pastabos":""},{"id":"d8","data":"2026-05-21","turnyras":"Olybet pavasaris 2026","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"D. Andziulis / J. Kugis","s1":"3:6","s2":"6:3","s3":"10:5","rez":"W","pastabos":""},{"id":"d9","data":"2026-05-11","turnyras":"Olybet pavasaris 2026","vieta":"","danga":"","partneris":"V. Bražinskas","varzovai":"B. Lučiūnas / I. Kružikas","s1":"","s2":"","s3":"","rez":"","pastabos":"b/ž (be žaidimo)"},{"id":"d10","data":"2026-04-28","turnyras":"Olybet pavasaris 2026","vieta":"Teniso Sala","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"M. Daniškevičius / E. Petrulis","s1":"4:6","s2":"5:7","s3":"","rez":"L","pastabos":""},{"id":"d11","data":"2026-04-14","turnyras":"Olybet pavasaris 2026","vieta":"Baltictennis","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"K. Gasiūnas / G. Tijūnėlis","s1":"4:6","s2":"6:1","s3":"8:10","rez":"L","pastabos":""},{"id":"d12","data":"2026-04-06","turnyras":"Olybet pavasaris 2026","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"E. Gladkij / D. Kačanovski","s1":"7:5","s2":"7:5","s3":"","rez":"W","pastabos":""},{"id":"d13","data":"2026-03-30","turnyras":"Olybet pavasaris 2026","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"P. Kairavičius / K. Šimonis","s1":"6:4","s2":"7:6(7:5)","s3":"","rez":"W","pastabos":""},{"id":"d14","data":"2026-03-23","turnyras":"Olybet pavasaris 2026","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"P. Sipavičius / M. Barisas","s1":"6:3","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"d15","data":"2026-03-09","turnyras":"Olybet pavasaris 2026","vieta":"TENISO ERDVĖ","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Baliukevičius / V. Kniuras","s1":"1:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"d16","data":"2026-02-16","turnyras":"Activus žiema 2025/26","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"J. Krugelis / R. Juršėnas","s1":"1:6","s2":"5:7","s3":"","rez":"L","pastabos":""},{"id":"d17","data":"2026-02-03","turnyras":"Activus žiema 2025/26","vieta":"DELFI","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"A. Čelkis / V. Pletas","s1":"7:6(7:4)","s2":"3:6","s3":"8:10","rez":"L","pastabos":""},{"id":"d18","data":"2026-01-26","turnyras":"Activus žiema 2025/26","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"K. Eimutis / G. Eimutis","s1":"4:6","s2":"1:6","s3":"","rez":"L","pastabos":""},{"id":"d19","data":"2026-01-13","turnyras":"Activus žiema 2025/26","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"E. Leskauskas / M. Rudaitis","s1":"5:7","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"d20","data":"2025-12-27","turnyras":"Activus žiema 2025/26","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"R. Vozbutas / A. Dūmanas","s1":"3:6","s2":"6:3","s3":"6:4","rez":"W","pastabos":""},{"id":"d21","data":"2025-11-11","turnyras":"Olybet ruduo 2025","vieta":"","danga":"","partneris":"V. Bražinskas","varzovai":"Š. Račkauskas / T. Eigėlis","s1":"","s2":"","s3":"","rez":"","pastabos":"b/ž (be žaidimo)"},{"id":"d22","data":"2025-10-23","turnyras":"Olybet ruduo 2025","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"V. Skarulskis / M. Skarulskis","s1":"6:3","s2":"4:6","s3":"4:10","rez":"L","pastabos":""},{"id":"d23","data":"2025-10-11","turnyras":"Olybet ruduo 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"D. Čerjazdanovas / E. Paleckis","s1":"6:4","s2":"4:6","s3":"10:5","rez":"W","pastabos":""},{"id":"d24","data":"2025-10-11","turnyras":"Olybet ruduo 2025","vieta":"WIDEN Arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"G. Muznikas / P. Ramanavičius","s1":"1:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"d25","data":"2025-10-05","turnyras":"Olybet ruduo 2025","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"V. Ramanauskas / P. Simenas","s1":"5:7","s2":"7:6(7:5)","s3":"7:10","rez":"L","pastabos":""},{"id":"d26","data":"2025-09-09","turnyras":"Olybet ruduo 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"E. Stundys / T. Stundys","s1":"5:7","s2":"7:6(7:3)","s3":"11:9","rez":"W","pastabos":""},{"id":"d27","data":"2025-09-07","turnyras":"Olybet ruduo 2025","vieta":"TENISO ERDVĖ","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"M. Mikutavičius / E. Belickas","s1":"3:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"d28","data":"2025-08-25","turnyras":"Activus vasara 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Jonaitis / K. Jaciunskas","s1":"6:7(3:7)","s2":"1:6","s3":"","rez":"L","pastabos":""},{"id":"d29","data":"2025-08-06","turnyras":"Activus vasara 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Kaminskas / T. Songaila","s1":"3:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"d30","data":"2025-07-28","turnyras":"Activus vasara 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"E. Gladkij / A. Polinski","s1":"6:4","s2":"5:7","s3":"10:8","rez":"W","pastabos":""},{"id":"d31","data":"2025-07-04","turnyras":"Activus vasara 2025","vieta":"Bernardinai","danga":"Gruntas","partneris":"V. Bražinskas","varzovai":"V. Kniuras / T. Jukna","s1":"0:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"d32","data":"2025-06-27","turnyras":"Activus vasara 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"M. Glebovas / M. Andrijevskij","s1":"6:3","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"d33","data":"2025-06-05","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"D. Mironas / Š. Akelaitis","s1":"6:4","s2":"6:7(2:7)","s3":"8:10","rez":"L","pastabos":""},{"id":"d34","data":"2025-05-25","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"A. Kondrotas / A. Kisielis","s1":"6:4","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"d35","data":"2025-05-20","turnyras":"Olybet pavasaris 2025","vieta":"TENISO ERDVĖ","danga":"Gruntas","partneris":"V. Bražinskas","varzovai":"R. Juška / D. Garuckas","s1":"2:6","s2":"6:0","s3":"6:4","rez":"W","pastabos":""},{"id":"d36","data":"2025-05-18","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Šeščila / V. Krivickas","s1":"6:4","s2":"7:6(8:6)","s3":"","rez":"W","pastabos":""},{"id":"d37","data":"2025-05-07","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Čelkis / T. Stundys","s1":"7:5","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"d38","data":"2025-03-27","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"A. Sadzevičius / E. Ribokas","s1":"6:1","s2":"6:1","s3":"","rez":"W","pastabos":""},{"id":"d39","data":"2025-03-26","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"E. Varoneckas / E. Zaleskis","s1":"6:4","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"d40","data":"2025-03-16","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Bolotnikov / P. Usovich","s1":"6:4","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"d41","data":"2025-03-06","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Paškevičius / D. Skunčikas","s1":"6:1","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"d42","data":"2025-03-05","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"R. Simaška / R. Stanisauskas","s1":"6:2","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"d43","data":"2025-02-12","turnyras":"Activus žiema 2024/25","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"D. Rastenis / L. Lingė","s1":"5:7","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"d44","data":"2025-02-04","turnyras":"Activus žiema 2024/25","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"E. Radzevič / (partneris be vardo)","s1":"6:3","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"d45","data":"2025-01-18","turnyras":"Activus žiema 2024/25","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"J. Paknys / A. Šilalnikas","s1":"6:2","s2":"6:7(5:7)","s3":"10:5","rez":"W","pastabos":""},{"id":"d46","data":"2025-01-07","turnyras":"Activus žiema 2024/25","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Sadzevičius / E. Ribokas","s1":"6:0","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"d47","data":"2024-12-22","turnyras":"Activus žiema 2024/25","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"I. Zasimavicius / M. Dromantas","s1":"6:4","s2":"3:6","s3":"8:10","rez":"L","pastabos":""},{"id":"d48","data":"2024-08-07","turnyras":"Activus vasara 2024","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"D. Rastenis / L. Lingė","s1":"6:3","s2":"3:6","s3":"10:6","rez":"W","pastabos":""},{"id":"d49","data":"2024-08-02","turnyras":"Activus vasara 2024","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"L. Urbonavičius / A. Krupovičius","s1":"5:7","s2":"6:4","s3":"10:12","rez":"L","pastabos":""},{"id":"d50","data":"2024-07-22","turnyras":"Activus vasara 2024","vieta":"Bernardinai","danga":"Gruntas","partneris":"V. Bražinskas","varzovai":"M. Alūza / J. Alūza","s1":"6:3","s2":"5:7","s3":"7:10","rez":"L","pastabos":""},{"id":"d51","data":"2024-07-09","turnyras":"Activus vasara 2024","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"G. Kavoliūnas / A. Markevičius","s1":"6:2","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"d52","data":"2024-06-30","turnyras":"Activus vasara 2024","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Romanovskis / T. Mikelskas","s1":"6:7(4:7)","s2":"4:6","s3":"","rez":"L","pastabos":""}]};
+const KEY='tenis_karjera_v1';
+let D; // {matches, future, contacts}
+
+function load(){
+  try{ const s=localStorage.getItem(KEY); if(s){ D=JSON.parse(s); if(!D.doubles) D.doubles=JSON.parse(JSON.stringify(SEED.doubles)); return; } }catch(e){}
+  D=JSON.parse(JSON.stringify(SEED));
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(D)); }
+  catch(e){ toast('Nepavyko išsaugoti: '+e.message); }
+}
+function uid(p){ return p+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('on'),2200); }
+function esc(s){ return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+const $=id=>document.getElementById(id);
+function today(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function fmtD(s){ if(!s) return ''; const [y,m,d]=s.split('-'); return `${y}-${m}-${d}`; }
+function fmtTel(t){ t=String(t||'').replace(/\D/g,''); if(!t) return ''; return t.startsWith('370')?'+'+t:t; }
+function telHref(t){ t=String(t||'').replace(/\D/g,''); return t?('tel:'+(t.startsWith('370')?'+'+t:t)):''; }
+
+/* ---------- helpers ---------- */
+function setWon(s){ const m=String(s||'').trim().match(/^(\d+)(?:\([\d:\-]+\))?[:\-](\d+)(?:\([\d:\-]+\))?$/); if(!m) return null; const a=+m[1],b=+m[2]; if(a===b) return null; return a>b; }
+function deriveRes(s1,s2,s3){ const w=[s1,s2,s3].map(setWon).filter(x=>x!==null); if(!w.length) return ''; const ww=w.filter(x=>x).length; return ww>w.length/2?'W':(ww<w.length/2?'L':''); }
+function scoreStr(m){ return [m.s1,m.s2,m.s3].filter(Boolean).join('  '); }
+function years(){ const s=new Set(D.matches.map(m=>m.data.slice(0,4))); D.future.forEach(f=>{ if(f.planData) s.add(f.planData.slice(0,4)); }); return [...s].sort().reverse(); }
+function tournaments(){ const s=new Set(D.matches.map(m=>m.turnyras)); D.future.forEach(f=>f.turnyras&&s.add(f.turnyras)); return [...s].sort((a,b)=>b.localeCompare(a,'lt')); }
+function courts(){ const s=new Set(D.matches.map(m=>m.kortai).filter(Boolean)); D.future.forEach(f=>f.aikstynas&&s.add(f.aikstynas)); return [...s].sort(); }
+function opponents(){ const map={}; D.matches.forEach(m=>{ if(m.varzovas){ map[m.varzovas]=map[m.varzovas]||m.tel; if(m.tel) map[m.varzovas]=m.tel; } }); D.future.forEach(f=>{ if(f.varzovas&&f.tipas!=='dvejetai') map[f.varzovas]=map[f.varzovas]||f.tel; }); D.contacts.forEach(c=>{ if(c.vardas) map[c.vardas]=map[c.vardas]||c.tel; }); return map; }
+function tournamentSortKey(t){ const m=t.match(/(\d{4})/); return m?m[1]:'0'; }
+
+function fillSelect(id, opts, allLabel, keep){
+  const el=$(id); const cur=keep?el.value:''; el.innerHTML=`<option value="">${allLabel}</option>`+opts.map(o=>`<option value="${esc(o)}">${esc(o)}</option>`).join('');
+  if(keep && [...el.options].some(o=>o.value===cur)) el.value=cur;
+}
+function fillDatalists(){
+  $('dlOpp').innerHTML=Object.keys(opponents()).sort().map(n=>`<option value="${esc(n)}">`).join('');
+  $('dlTurn').innerHTML=tournaments().map(n=>`<option value="${esc(n)}">`).join('');
+  $('dlCourt').innerHTML=courts().map(n=>`<option value="${esc(n)}">`).join('');
+  const dl=(id,arr)=>$(id).innerHTML=[...new Set(arr.filter(Boolean))].sort().map(n=>`<option value="${esc(n)}">`).join('');
+  dl('dlDOpp',D.doubles.map(m=>m.varzovai)); dl('dlPartner',D.doubles.map(m=>m.partneris)); dl('dlDTurn',D.doubles.map(m=>m.turnyras)); dl('dlVieta',D.doubles.map(m=>m.vieta)); dl('dlDanga',D.doubles.map(m=>m.danga));
+}
+function refreshAll(){
+  fillSelect('fYear',years(),'Visi metai',true); fillSelect('fTurn',tournaments(),'Visi turnyrai',true);
+  fillSelect('sYear',years(),'Visi metai',true); fillSelect('sTurn',tournaments(),'Visi turnyrai',true);
+  fillSelect('dYear',[...new Set(D.doubles.map(m=>m.data.slice(0,4)))].sort().reverse(),'Visi metai',true);
+  fillSelect('dTurn',[...new Set(D.doubles.map(m=>m.turnyras))].sort((a,b)=>b.localeCompare(a,'lt')),'Visi turnyrai',true);
+  fillDatalists(); renderHeader(); renderMatches(); renderFuture(); renderCal(); renderStats(); renderContacts(); renderDoubles();
+}
+function renderHeader(){
+  const sg=D.matches; const w=sg.filter(m=>m.rez==='W').length, l=sg.filter(m=>m.rez==='L').length;
+  const y=new Date().getFullYear()+''; const yy=sg.filter(m=>m.data.startsWith(y)); const yw=yy.filter(m=>m.rez==='W').length, yl=yy.filter(m=>m.rez==='L').length;
+  const dw=D.doubles.filter(m=>m.rez==='W').length, dl=D.doubles.filter(m=>m.rez==='L').length;
+  $('hdrRec').innerHTML=`Vienetai <b class="num">${w}–${l}</b> &nbsp;·&nbsp; Dvejetai <b class="num">${dw}–${dl}</b> &nbsp;·&nbsp; Būsimų ${D.future.length}`;
+}
+
+/* ---------- views ---------- */
+function showView(v){
+  document.querySelectorAll('.view').forEach(e=>e.classList.toggle('on',e.id==='v-'+v));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+  $('fab').style.display=(v==='matchai'||v==='kal'||v==='dvej')?'block':'none';
+  $('fab').onclick=v==='dvej'?()=>openDouble():()=>openMatch();
+  window.scrollTo(0,0);
+}
+function openOv(id){ $(id).classList.add('on'); }
+function closeOv(id){ $(id).classList.remove('on'); }
+document.querySelectorAll('.ov').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('on'); }));
+
+/* ---------- matches list ---------- */
+function matchRow(m, showTurn=true){
+  const res=m.rez||'';
+  const who=esc(m.varzovas);
+  const sub=[fmtD(m.data), showTurn?m.turnyras:'', m.div?'div. '+m.div:'', m.kortai].filter(Boolean).map(esc).join(' · ');
+  const sets=[m.s1,m.s2,m.s3].filter(Boolean).map(s=>`<span class="set${setWon(s)?' won':''}">${esc(s)}</span>`).join('');
+  return `<div class="m ${res}" onclick="openMatch('${m.id}')">
+    ${m.etapas?`<span class="tag">${esc(m.etapas)}</span>`:''}
+    <div class="who">${who}</div><div class="sub">${sub}</div>
+    <div class="score num">${res?`<small>${res==='W'?'L':'P'}</small>`:''}<span>${sets}</span></div>
+  </div>`;
+}
+function filteredMatches(){
+  const y=$('fYear').value, t=$('fTurn').value, r=$('fRes').value, n=$('fName').value.trim().toLowerCase();
+  return D.matches.filter(m=>(!y||m.data.startsWith(y))&&(!t||m.turnyras===t)&&(!r||m.rez===r)&&(!n||(m.varzovas||'').toLowerCase().includes(n)||(m.pastabos||'').toLowerCase().includes(n)))
+    .sort((a,b)=>b.data.localeCompare(a.data));
+}
+function renderMatches(){
+  const list=filteredMatches(); const w=list.filter(m=>m.rez==='W').length, l=list.filter(m=>m.rez==='L').length;
+  $('mCount').innerHTML=`${list.length} matchai · <span style="color:var(--win)">${w} laimėta</span> · <span style="color:var(--loss)">${l} pralaimėta</span>`;
+  if(!list.length){ $('mList').innerHTML='<div class="empty">Nėra matchų pagal šį filtrą.</div>'; return; }
+  // group by tournament (in date order)
+  const groups={}, order=[];
+  list.forEach(m=>{ if(!groups[m.turnyras]){ groups[m.turnyras]=[]; order.push(m.turnyras); } groups[m.turnyras].push(m); }); // list is date-desc, so order = most recent tournament first
+  $('mList').innerHTML=order.map(t=>{ const grp=groups[t]; const gw=grp.filter(m=>m.rez==='W').length, gl=grp.filter(m=>m.rez==='L').length;
+    return `<div class="group"><b>${esc(t)}</b><span class="num">${gw}–${gl}</span></div>`+grp.map(m=>matchRow(m,false)).join(''); }).join('');
+}
+['fYear','fTurn','fRes'].forEach(id=>$(id).addEventListener('change',renderMatches));
+$('fName').addEventListener('input',renderMatches);
+
+/* ---------- match modal ---------- */
+let mRez='';
+function segInit(id, cb){ $(id).querySelectorAll('button').forEach(b=>b.onclick=()=>{ $(id).querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); cb(b.dataset.v); }); }
+function segSet(id,v){ $(id).querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===v)); }
+segInit('m_rez',v=>{ mRez=v; });
+['m_s1','m_s2','m_s3'].forEach(id=>$(id).addEventListener('input',()=>{ const r=deriveRes($('m_s1').value,$('m_s2').value,$('m_s3').value); if(r){ mRez=r; segSet('m_rez',r); } }));
+$('m_varzovas').addEventListener('change',()=>{ const t=opponents()[$('m_varzovas').value.trim()]; if(t&&!$('m_tel').value) $('m_tel').value=t; });
+$('f_varzovas').addEventListener('change',()=>{ const t=opponents()[$('f_varzovas').value.trim()]; if(t&&!$('f_tel').value) $('f_tel').value=t; });
+
+let fromFutureId=null, fromFutureIdD=null, fTipas='vienetai';
+function fSetTipas(v){ fTipas=v; segSet('f_tipas',v); const d=v==='dvejetai'; $('f_telBox').style.display=d?'none':''; $('f_partBox').style.display=d?'':'none'; $('f_lblV').textContent=d?'Varžovų pora':'Vardas Pavardė'; $('f_varzovas').placeholder=d?'pvz. A. Kondrotas / A. Kisielis':'Varžovas'; $('f_varzovas').setAttribute('list',d?'dlDOpp':'dlOpp'); $('f_turnyras').setAttribute('list',d?'dlDTurn':'dlTurn'); }
+segInit('f_tipas',fSetTipas);
+function openMatch(id, prefill){
+  fromFutureId=null;
+  const m=id?D.matches.find(x=>x.id===id):null;
+  $('mTitle').textContent=m?'Redaguoti matchą':'Naujas matchas';
+  $('m_id').value=m?m.id:'';
+  const v=m||Object.assign({varzovas:'',tel:'',data:today(),kortai:'',turnyras:'',div:'',etapas:'',s1:'',s2:'',s3:'',rez:'',pastabos:''},prefill||{});
+  ['varzovas','tel','data','kortai','turnyras','div','etapas','s1','s2','s3','pastabos'].forEach(k=>$('m_'+k).value=v[k]||'');
+  mRez=v.rez||''; segSet('m_rez',mRez);
+  $('m_del').style.display=m?'':'none';
+  if(!m && !prefill){ // suggest last used tournament / division
+    const last=[...D.matches].sort((a,b)=>b.data.localeCompare(a.data))[0]; if(last){ $('m_turnyras').value=''; $('m_div').value=last.div||''; }
+  }
+  openOv('ovMatch');
+}
+function saveMatch(){
+  const g=k=>$('m_'+k).value.trim();
+  if(!g('varzovas')) return toast('Įvesk varžovo vardą');
+  if(!g('data')) return toast('Įvesk datą');
+  if(!g('turnyras')) return toast('Įvesk turnyrą');
+  let rez=mRez||deriveRes(g('s1'),g('s2'),g('s3'));
+  if(!rez) return toast('Pažymėk rezultatą');
+  const obj={id:g('id')||uid('m'),varzovas:g('varzovas'),tel:g('tel').replace(/\D/g,''),data:g('data'),kortai:g('kortai'),turnyras:g('turnyras'),div:g('div'),etapas:g('etapas'),s1:g('s1'),s2:g('s2'),s3:g('s3'),rez,pastabos:g('pastabos')};
+  const i=D.matches.findIndex(x=>x.id===obj.id); if(i>=0) D.matches[i]=obj; else D.matches.push(obj);
+  // propagate phone to same opponent
+  if(obj.tel) D.matches.forEach(x=>{ if(x.varzovas===obj.varzovas&&!x.tel) x.tel=obj.tel; });
+  const moved=!!fromFutureId;
+  if(fromFutureId){ D.future=D.future.filter(f=>f.id!==fromFutureId); fromFutureId=null; }
+  save(); closeOv('ovMatch'); refreshAll();
+  if(moved){ showView('matchai'); toast('Perkelta į sužaistus matchus'); } else toast('Išsaugota');
+}
+function deleteMatch(){ const id=$('m_id').value; if(!id||!confirm('Ištrinti šį matchą?')) return; D.matches=D.matches.filter(x=>x.id!==id); save(); closeOv('ovMatch'); refreshAll(); toast('Ištrinta'); }
+
+/* ---------- future ---------- */
+function dlInfo(dl){
+  if(!dl) return '';
+  const days=Math.round((new Date(dl)-new Date(today()))/86400000);
+  let cls='', txt='';
+  if(days<0){ cls='over'; txt=`vėluoja ${-days} d.`; } else if(days===0){ cls='soon'; txt='šiandien'; } else if(days<=7){ cls='soon'; txt=`liko ${days} d.`; } else txt=`iki ${fmtD(dl)}`;
+  return `<span class="dl ${cls}">${txt}</span>`;
+}
+function renderFuture(){
+  const list=[...D.future].sort((a,b)=>(a.planData||a.deadline||'9999').localeCompare(b.planData||b.deadline||'9999'));
+  if(!list.length){ $('fList').innerHTML='<div class="empty">Nėra būsimų matchų. Pridėk varžovus, su kuriais dar nesužaista.</div>'; }
+  else $('fList').innerHTML=list.map(f=>{
+    const dbl=f.tipas==='dvejetai';
+    const h2h=dbl?D.doubles.filter(m=>m.varzovai===f.varzovas):D.matches.filter(m=>m.varzovas===f.varzovas); const hw=h2h.filter(m=>m.rez==='W').length, hl=h2h.filter(m=>m.rez==='L').length;
+    const planned=f.planData||f.laikas||f.aikstynas||f.mokejo;
+    return `<div class="f">
+      <div class="who"><span>${esc(f.varzovas)}</span>${dlInfo(f.deadline)}</div>
+      <div class="info">${dbl?`<span style="color:var(--plan);font-weight:600">Dvejetai${f.partneris?' su '+esc(f.partneris):''}</span>`:''}${f.turnyras?`<span>${esc(f.turnyras)}</span>`:''}${f.tel?`<a href="${telHref(f.tel)}" style="color:var(--court);text-decoration:none"><b>${fmtTel(f.tel)}</b></a>`:''}${h2h.length?`<span>anksčiau: <b class="num">${hw}–${hl}</b></span>`:'<span>dar nežaista</span>'}${f.pastabos?`<span>${esc(f.pastabos)}</span>`:''}</div>
+      <div class="planned">${planned?[
+        f.planData?`<span>📅 <b>${fmtD(f.planData)}</b>${f.laikas?' '+esc(f.laikas):''}</span>`:'',
+        f.aikstynas?`<span>📍 <b>${esc(f.aikstynas)}</b></span>`:'',
+        f.mokejo?`<span>💶 ${esc(f.mokejo)}${f.suma?' '+esc(f.suma)+' €':''}</span>`:''
+      ].filter(Boolean).join(''):'<span class="none">Dar nesuplanuota – nėra datos ir aikštyno</span>'}</div>
+      <div class="acts"><button onclick="openFuture('${f.id}')">Koreguoti</button><button class="pri" onclick="futureToResult('${f.id}')">Sužaista – įvesti rezultatą</button></div>
+    </div>`; }).join('');
+}
+function openFuture(id){
+  const f=id?D.future.find(x=>x.id===id):null;
+  $('fTitle').textContent=f?'Koreguoti būsimą matchą':'Naujas būsimas matchas';
+  $('f_id').value=f?f.id:'';
+  const lastP=[...D.doubles].sort((a,b)=>b.data.localeCompare(a.data))[0];
+  const v=f||{tipas:'vienetai',varzovas:'',tel:'',partneris:lastP?lastP.partneris:'',turnyras:'',deadline:'',planData:'',laikas:'',aikstynas:'',mokejo:'',suma:'',pastabos:''};
+  ['varzovas','tel','partneris','turnyras','deadline','planData','laikas','aikstynas','mokejo','suma','pastabos'].forEach(k=>$('f_'+k).value=v[k]||'');
+  fSetTipas(v.tipas||'vienetai');
+  $('f_del').style.display=f?'':'none'; $('f_toRes').style.display=f?'':'none';
+  openOv('ovFuture');
+}
+function saveFuture(){
+  const g=k=>$('f_'+k).value.trim();
+  if(!g('varzovas')) return toast('Įvesk varžovo vardą');
+  const obj={id:g('id')||uid('f'),tipas:fTipas,varzovas:g('varzovas'),tel:fTipas==='dvejetai'?'':g('tel').replace(/\D/g,''),partneris:fTipas==='dvejetai'?g('partneris'):'',turnyras:g('turnyras'),deadline:g('deadline'),planData:g('planData'),laikas:g('laikas'),aikstynas:g('aikstynas'),mokejo:g('mokejo'),suma:g('suma'),pastabos:g('pastabos')};
+  const i=D.future.findIndex(x=>x.id===obj.id); if(i>=0) D.future[i]=obj; else D.future.push(obj);
+  save(); closeOv('ovFuture'); refreshAll(); toast('Išsaugota');
+}
+function deleteFuture(){ const id=$('f_id').value; if(!id||!confirm('Ištrinti būsimą matchą?')) return; D.future=D.future.filter(x=>x.id!==id); save(); closeOv('ovFuture'); refreshAll(); toast('Ištrinta'); }
+function futureToResult(id){
+  id=id||$('f_id').value; const f=D.future.find(x=>x.id===id); if(!f) return;
+  closeOv('ovFuture');
+  if(f.tipas==='dvejetai'){
+    openDouble(null,{varzovai:f.varzovas,partneris:f.partneris,turnyras:f.turnyras,data:f.planData||today(),vieta:f.aikstynas,pastabos:f.mokejo?('Kortas: '+f.mokejo+(f.suma?' '+f.suma+' €':'')):''});
+    fromFutureIdD=id; $('dTitle').textContent='Rezultatas: '+f.varzovas; return;
+  }
+  const last=D.matches.filter(m=>m.turnyras===f.turnyras).sort((a,b)=>b.data.localeCompare(a.data))[0];
+  openMatch(null,{varzovas:f.varzovas,tel:f.tel,turnyras:f.turnyras,data:f.planData||today(),kortai:f.aikstynas,div:last?last.div:'',pastabos:f.mokejo?('Kortas: '+f.mokejo+(f.suma?' '+f.suma+' €':'')):''});
+  fromFutureId=id; $('mTitle').textContent='Rezultatas: '+f.varzovas;
+}
+
+/* ---------- calendar ---------- */
+let calY, calM, calSel=null;
+(function(){ const d=new Date(); calY=d.getFullYear(); calM=d.getMonth(); })();
+const MON=['Sausis','Vasaris','Kovas','Balandis','Gegužė','Birželis','Liepa','Rugpjūtis','Rugsėjis','Spalis','Lapkritis','Gruodis'];
+function calMove(n){ calM+=n; if(calM<0){calM=11;calY--;} if(calM>11){calM=0;calY++;} calSel=null; renderCal(); }
+function renderCal(){
+  $('calTitle').textContent=`${MON[calM]} ${calY}`;
+  const first=new Date(calY,calM,1); const startDow=(first.getDay()+6)%7; const days=new Date(calY,calM+1,0).getDate(); const prevDays=new Date(calY,calM,0).getDate();
+  const ev={}; const add=(d,t)=>{ (ev[d]=ev[d]||[]).push(t); };
+  D.matches.forEach(m=>add(m.data,m.rez||'L')); D.doubles.forEach(m=>{ if(m.rez) add(m.data,m.rez); }); D.future.forEach(f=>{ if(f.planData) add(f.planData,'P'); if(f.deadline) add(f.deadline,'D'); });
+  let h='<div class="dow">Pr</div><div class="dow">An</div><div class="dow">Tr</div><div class="dow">Kt</div><div class="dow">Pn</div><div class="dow">Št</div><div class="dow">Sk</div>';
+  const td=today();
+  const cell=(y,m,d,out)=>{ const key=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; const e=ev[key]||[]; const dots=[...new Set(e)].slice(0,4).map(t=>`<i class="dot-${t}"></i>`).join('');
+    return `<div class="d ${out?'out':''} ${key===td?'today':''} ${key===calSel?'sel':''}" onclick="calPick('${key}')">${d}<div class="dots">${dots}</div></div>`; };
+  for(let i=startDow-1;i>=0;i--) h+=cell(calM===0?calY-1:calY, calM===0?11:calM-1, prevDays-i, true);
+  for(let d=1;d<=days;d++) h+=cell(calY,calM,d,false);
+  const total=startDow+days; const rest=(7-total%7)%7; for(let d=1;d<=rest;d++) h+=cell(calM===11?calY+1:calY, calM===11?0:calM+1, d, true);
+  $('cal').innerHTML=h;
+  renderCalDay();
+}
+function calPick(key){ calSel=key; const [y,m]=key.split('-').map(Number); if(y!==calY||m-1!==calM){ calY=y; calM=m-1; } renderCal(); }
+function renderCalDay(){
+  if(!calSel){
+    // upcoming list for this month
+    const key=`${calY}-${String(calM+1).padStart(2,'0')}`;
+    const ms=D.matches.filter(m=>m.data.startsWith(key)).sort((a,b)=>a.data.localeCompare(b.data));
+    const ds=D.doubles.filter(m=>m.data.startsWith(key)).sort((a,b)=>a.data.localeCompare(b.data));
+    const fs=D.future.filter(f=>(f.planData||'').startsWith(key)||(f.deadline||'').startsWith(key));
+    let h='';
+    if(fs.length) h+='<div class="sect">Suplanuota / deadline</div>'+fs.map(futRow).join('');
+    if(ms.length) h+=`<div class="sect">Sužaista šį mėnesį <span class="num" style="font-weight:600;color:var(--mute)">${ms.filter(m=>m.rez==='W').length}–${ms.filter(m=>m.rez==='L').length}</span></div>`+ms.map(m=>matchRow(m)).join('');
+    if(ds.length) h+=`<div class="sect">Dvejetai šį mėnesį <span class="num" style="font-weight:600;color:var(--mute)">${ds.filter(m=>m.rez==='W').length}–${ds.filter(m=>m.rez==='L').length}</span></div>`+ds.map(m=>doubleRow(m)).join('');
+    $('calDay').innerHTML=h||'<div class="empty">Šį mėnesį matchų nėra.</div>'; return;
+  }
+  const ms=D.matches.filter(m=>m.data===calSel); const ds=D.doubles.filter(m=>m.data===calSel); const fs=D.future.filter(f=>f.planData===calSel||f.deadline===calSel);
+  let h=`<div class="sect">${fmtD(calSel)} <span><button onclick="openMatch(null,{data:'${calSel}'})">+ Vienetai</button> <button onclick="openDouble(null,{data:'${calSel}'})">+ Dvejetai</button></span></div>`;
+  h+=fs.map(futRow).join('')+ms.map(m=>matchRow(m)).join('')+ds.map(m=>doubleRow(m)).join('');
+  if(!fs.length&&!ms.length&&!ds.length) h+='<div class="empty">Šią dieną nieko nėra.</div>';
+  $('calDay').innerHTML=h;
+}
+function futRow(f){ const isDl=f.deadline&&(!f.planData||calSel===f.deadline); return `<div class="m F" onclick="openFuture('${f.id}')"><div class="who">${esc(f.varzovas)}${f.tipas==='dvejetai'?' <span style="font-size:11px;color:var(--plan)">dvejetai</span>':''}</div><div class="sub">${[f.turnyras,f.planData?('📅 '+fmtD(f.planData)+' '+(f.laikas||'')):'',f.aikstynas,f.deadline?('deadline '+fmtD(f.deadline)):''].filter(Boolean).map(esc).join(' · ')}</div><div class="score"><small style="background:${isDl&&!f.planData?'#E0A100':'var(--plan)'}">${f.planData?'planas':'deadline'}</small></div></div>`; }
+
+/* ---------- stats ---------- */
+['sYear','sTurn'].forEach(id=>$(id).addEventListener('change',renderStats));
+function pct(w,n){ return n?Math.round(w/n*100)+'%':'–'; }
+function statTable(title, rows, keyLabel){
+  if(!rows.length) return '';
+  return `<div class="h2">${title}</div><table><tr><th>${keyLabel}</th><th class="n">Sužaista</th><th class="n">L</th><th class="n">P</th><th class="n">%</th></tr>`+
+    rows.map(r=>`<tr><td>${esc(r.k)}<div class="mini"><i style="width:${r.n?r.w/r.n*100:0}%"></i></div></td><td class="n">${r.n}</td><td class="n" style="color:var(--win)">${r.w}</td><td class="n" style="color:var(--loss)">${r.l}</td><td class="n">${pct(r.w,r.n)}</td></tr>`).join('')+'</table>';
+}
+function groupBy(list, fn, sortFn){
+  const g={}; list.forEach(m=>{ const k=fn(m); if(k==null||k==='') return; g[k]=g[k]||{k,n:0,w:0,l:0,last:''}; g[k].n++; if(m.rez==='W') g[k].w++; if(m.rez==='L') g[k].l++; if(m.data>g[k].last) g[k].last=m.data; });
+  return Object.values(g).sort(sortFn||((a,b)=>b.last.localeCompare(a.last)));
+}
+function renderStats(){
+  const y=$('sYear').value, t=$('sTurn').value;
+  const list=D.matches.filter(m=>(!y||m.data.startsWith(y))&&(!t||m.turnyras===t));
+  $('stats').innerHTML=statsHtml(list,{y,t,singles:true});
+}
+function statsHtml(list,o){
+  const n=list.length, w=list.filter(m=>m.rez==='W').length, l=list.filter(m=>m.rez==='L').length;
+  if(!n) return '<div class="empty">Nėra duomenų pagal šį filtrą.</div>';
+  const y=o.y, t=o.t;
+  // sets
+  let sw=0,sl=0,three=0,threeW=0,twoZero=0; list.forEach(m=>{ [m.s1,m.s2,m.s3].forEach(s=>{ const r=setWon(s); if(r===true) sw++; if(r===false) sl++; }); if(m.s3){ three++; if(m.rez==='W') threeW++; } else if(m.rez==='W') twoZero++; });
+  // streaks
+  const chron=[...list].sort((a,b)=>a.data.localeCompare(b.data)); let cur=0,curT='',best=0,worst=0,run=0,runT='';
+  chron.forEach(m=>{ if(m.rez===runT) run++; else { run=1; runT=m.rez; } if(runT==='W') best=Math.max(best,run); if(runT==='L') worst=Math.max(worst,run); }); cur=run; curT=runT;
+  let h=`<div class="kpi"><div><b class="num">${n}</b><span>Sužaista</span></div><div class="w"><b class="num">${w}</b><span>Laimėta</span></div><div class="l"><b class="num">${l}</b><span>Pralaimėta</span></div><div><b class="num">${pct(w,n)}</b><span>Laimėjimų</span></div></div>
+  <div class="bar"><i style="width:${n?w/n*100:0}%"></i></div>
+  <table><tr><td>Setai laimėti / pralaimėti</td><td class="n"><span style="color:var(--win)">${sw}</span> / <span style="color:var(--loss)">${sl}</span></td></tr>
+  <tr><td>Trijų setų matchai</td><td class="n">${three} (laimėta ${threeW}, ${pct(threeW,three)})</td></tr>
+  <tr><td>Laimėta 2:0</td><td class="n">${twoZero}</td></tr>
+  <tr><td>Ilgiausia pergalių serija</td><td class="n" style="color:var(--win)">${best}</td></tr>
+  <tr><td>Ilgiausia pralaimėjimų serija</td><td class="n" style="color:var(--loss)">${worst}</td></tr>
+  <tr><td>Dabartinė serija</td><td class="n">${cur} ${curT==='W'?'pergalės':'pralaimėjimai'} iš eilės</td></tr>${o.bz?`<tr><td>Be žaidimo (b/ž)</td><td class="n">${o.bz}</td></tr>`:''}</table>`;
+  if(!y) h+=statTable('Pagal metus', groupBy(list,m=>m.data.slice(0,4),(a,b)=>b.k.localeCompare(a.k)), 'Metai');
+  if(!t) h+=statTable('Pagal turnyrus', groupBy(list,m=>m.turnyras), 'Turnyras');
+  h+=statTable('Pagal turnyrų serijas', groupBy(list,m=>m.turnyras.split(' ')[0],(a,b)=>b.n-a.n), 'Serija');
+  if(o.singles){
+    h+=statTable('Pagal divizioną', groupBy(list,m=>m.div?('Div. '+m.div):'',(a,b)=>a.k.localeCompare(b.k)), 'Divizionas');
+    h+=statTable('Pagal aikštyną', groupBy(list,m=>m.kortai,(a,b)=>b.n-a.n), 'Aikštynas');
+  } else {
+    h+=statTable('Pagal partnerį', groupBy(list,m=>m.partneris,(a,b)=>b.n-a.n), 'Partneris');
+    h+=statTable('Pagal vietą', groupBy(list,m=>m.vieta,(a,b)=>b.n-a.n), 'Vieta');
+    h+=statTable('Pagal dangą', groupBy(list,m=>m.danga,(a,b)=>b.n-a.n), 'Danga');
+  }
+  h+=statTable('Pagal mėnesį', groupBy(list,m=>MON[+m.data.slice(5,7)-1],(a,b)=>MON.indexOf(a.k)-MON.indexOf(b.k)), 'Mėnuo');
+  const opp=groupBy(list,m=>o.singles?m.varzovas:m.varzovai,(a,b)=>b.n-a.n||b.last.localeCompare(a.last)).filter(x=>x.n>1);
+  if(opp.length) h+=statTable(o.singles?'Varžovai, su kuriais žaista daugiau nei kartą':'Poros, su kuriomis žaista daugiau nei kartą', opp, o.singles?'Varžovas':'Pora');
+  if(o.singles){ const et=groupBy(list.filter(m=>m.etapas),m=>m.etapas,(a,b)=>b.n-a.n); if(et.length) h+=statTable('Playoff etapai', et, 'Etapas'); }
+  return h;
+}
+
+/* ---------- doubles ---------- */
+let dMode='list', dRez='';
+segInit('dMode',v=>{ dMode=v; renderDoubles(); });
+segInit('d_rez',v=>{ dRez=v; });
+['d_s1','d_s2','d_s3'].forEach(id=>$(id).addEventListener('input',()=>{ const r=deriveRes($('d_s1').value,$('d_s2').value,$('d_s3').value); if(r){ dRez=r; segSet('d_rez',r); } }));
+['dYear','dTurn','dRes'].forEach(id=>$(id).addEventListener('change',renderDoubles)); $('dName').addEventListener('input',renderDoubles);
+function doubleRow(m, showTurn=true){
+  const res=m.rez||'';
+  const sub=[fmtD(m.data), showTurn?m.turnyras:'', m.partneris?'su '+m.partneris:'', m.vieta, m.danga].filter(Boolean).map(esc).join(' · ');
+  const sets=[m.s1,m.s2,m.s3].filter(Boolean).map(s=>`<span class="set${setWon(s)?' won':''}">${esc(s)}</span>`).join('');
+  return `<div class="m ${res}" onclick="openDouble('${m.id}')"><div class="who">${esc(m.varzovai)}</div><div class="sub">${sub}</div>
+    <div class="score num">${res?`<small>${res==='W'?'L':'P'}</small>`:''}<span>${sets||`<span class="set" style="color:var(--mute);font-weight:500">${esc(m.pastabos||'–')}</span>`}</span></div></div>`;
+}
+function renderDoubles(){
+  const y=$('dYear').value, t=$('dTurn').value, r=$('dRes').value, q=$('dName').value.trim().toLowerCase();
+  const list=D.doubles.filter(m=>(!y||m.data.startsWith(y))&&(!t||m.turnyras===t)&&(!r||m.rez===r)&&(!q||(m.varzovai||'').toLowerCase().includes(q)||(m.partneris||'').toLowerCase().includes(q))).sort((a,b)=>b.data.localeCompare(a.data));
+  const isStat=dMode==='stat';
+  $('dListWrap').style.display=isStat?'none':''; $('dStats').style.display=isStat?'':'none'; $('dRes').style.display=isStat?'none':''; $('dName').style.display=isStat?'none':'';
+  if(isStat){ const played=list.filter(m=>m.rez); $('dStats').innerHTML=statsHtml(played,{y,t,singles:false,bz:list.length-played.length}); return; }
+  const w=list.filter(m=>m.rez==='W').length, l=list.filter(m=>m.rez==='L').length;
+  $('dCount').innerHTML=`${list.length} matchai · <span style="color:var(--win)">${w} laimėta</span> · <span style="color:var(--loss)">${l} pralaimėta</span>`;
+  if(!list.length){ $('dList').innerHTML='<div class="empty">Nėra dvejetų matchų pagal šį filtrą.</div>'; return; }
+  const groups={}, order=[];
+  list.forEach(m=>{ if(!groups[m.turnyras]){ groups[m.turnyras]=[]; order.push(m.turnyras); } groups[m.turnyras].push(m); });
+  $('dList').innerHTML=order.map(tt=>{ const g=groups[tt]; return `<div class="group"><b>${esc(tt)}</b><span class="num">${g.filter(m=>m.rez==='W').length}–${g.filter(m=>m.rez==='L').length}</span></div>`+g.map(m=>doubleRow(m,false)).join(''); }).join('');
+}
+function openDouble(id, prefill){
+  fromFutureIdD=null;
+  const m=id?D.doubles.find(x=>x.id===id):null;
+  $('dTitle').textContent=m?'Redaguoti dvejetų matchą':'Naujas dvejetų matchas';
+  $('d_id').value=m?m.id:'';
+  const lastP=[...D.doubles].sort((a,b)=>b.data.localeCompare(a.data))[0];
+  const v=m||Object.assign({varzovai:'',partneris:lastP?lastP.partneris:'',data:today(),turnyras:'',vieta:'',danga:'',s1:'',s2:'',s3:'',rez:'',pastabos:''},prefill||{});
+  ['varzovai','partneris','data','turnyras','vieta','danga','s1','s2','s3','pastabos'].forEach(k=>$('d_'+k).value=v[k]||'');
+  dRez=v.rez||''; segSet('d_rez',dRez); $('d_del').style.display=m?'':'none';
+  openOv('ovDouble');
+}
+function saveDouble(){
+  const g=k=>$('d_'+k).value.trim();
+  if(!g('varzovai')) return toast('Įvesk varžovų porą'); if(!g('data')) return toast('Įvesk datą'); if(!g('turnyras')) return toast('Įvesk turnyrą');
+  const rez=dRez||deriveRes(g('s1'),g('s2'),g('s3'));
+  if(!rez && !g('pastabos')) return toast('Pažymėk rezultatą arba įrašyk pastabą (pvz. b/ž)');
+  const obj={id:g('id')||uid('d'),varzovai:g('varzovai'),partneris:g('partneris'),data:g('data'),turnyras:g('turnyras'),vieta:g('vieta'),danga:g('danga'),s1:g('s1'),s2:g('s2'),s3:g('s3'),rez,pastabos:g('pastabos')};
+  const i=D.doubles.findIndex(x=>x.id===obj.id); if(i>=0) D.doubles[i]=obj; else D.doubles.push(obj);
+  const moved=!!fromFutureIdD;
+  if(fromFutureIdD){ D.future=D.future.filter(f=>f.id!==fromFutureIdD); fromFutureIdD=null; }
+  save(); closeOv('ovDouble'); refreshAll();
+  if(moved){ showView('dvej'); toast('Perkelta į dvejetų matchus'); } else toast('Išsaugota');
+}
+function deleteDouble(){ const id=$('d_id').value; if(!id||!confirm('Ištrinti šį dvejetų matchą?')) return; D.doubles=D.doubles.filter(x=>x.id!==id); save(); closeOv('ovDouble'); refreshAll(); toast('Ištrinta'); }
+
+/* ---------- contacts ---------- */
+$('cSearch').addEventListener('input',renderContacts);
+function allContacts(){
+  const map={};
+  D.matches.forEach(m=>{ if(!m.varzovas) return; const c=map[m.varzovas]=map[m.varzovas]||{vardas:m.varzovas,tel:'',n:0,w:0,l:0,last:'',src:'match'}; c.n++; if(m.rez==='W')c.w++; if(m.rez==='L')c.l++; if(m.tel) c.tel=m.tel; if(m.data>c.last) c.last=m.data; });
+  D.future.forEach(f=>{ if(!f.varzovas||f.tipas==='dvejetai') return; const c=map[f.varzovas]=map[f.varzovas]||{vardas:f.varzovas,tel:'',n:0,w:0,l:0,last:'',src:'future'}; if(f.tel&&!c.tel) c.tel=f.tel; c.fut=true; });
+  D.contacts.forEach(k=>{ const c=map[k.vardas]=map[k.vardas]||{vardas:k.vardas,tel:'',n:0,w:0,l:0,last:'',src:'contact'}; if(k.tel) c.tel=k.tel; c.cid=k.id; c.pastabos=k.pastabos; });
+  return Object.values(map).sort((a,b)=>a.vardas.localeCompare(b.vardas,'lt'));
+}
+function renderContacts(){
+  const q=$('cSearch').value.trim().toLowerCase();
+  const list=allContacts().filter(c=>!q||c.vardas.toLowerCase().includes(q)||(c.tel||'').includes(q));
+  $('cList').innerHTML=list.map(c=>`<div class="c"><div onclick="openContact(${JSON.stringify(c.vardas)})" style="flex:1;min-width:0"><div class="nm">${esc(c.vardas)}</div><div class="st">${c.n?`<span class="rec"><span class="w">${c.w}</span>–<span class="l">${c.l}</span></span> · ${c.n} matchai · paskutinis ${fmtD(c.last)}`:'dar nežaista'}${c.fut?' · <span style="color:var(--plan)">būsimas</span>':''}${c.pastabos?' · '+esc(c.pastabos):''}</div></div>${c.tel?`<a href="${telHref(c.tel)}">${fmtTel(c.tel)}</a>`:'<span class="st">nėra nr.</span>'}</div>`).join('')||'<div class="empty">Kontaktų nerasta.</div>';
+}
+function openContact(name){
+  const c=name?allContacts().find(x=>x.vardas===name):null;
+  $('c_id').value=c?(c.cid||''):''; $('c_vardas').value=c?c.vardas:''; $('c_tel').value=c?c.tel:''; $('c_pastabos').value=c?(c.pastabos||''):'';
+  $('c_vardas').dataset.orig=c?c.vardas:'';
+  $('c_hint').textContent=c&&c.n?'Vardo ir numerio pakeitimas atsinaujins visuose šio žaidėjo matchuose.':'';
+  $('c_del').style.display=(c&&c.cid&&!c.n&&!c.fut)?'':'none';
+  openOv('ovContact');
+}
+function saveContact(){
+  const v=$('c_vardas').value.trim(), t=$('c_tel').value.replace(/\D/g,''), p=$('c_pastabos').value.trim(), orig=$('c_vardas').dataset.orig, id=$('c_id').value;
+  if(!v) return toast('Įvesk vardą');
+  if(orig){ D.matches.forEach(m=>{ if(m.varzovas===orig){ m.varzovas=v; if(t) m.tel=t; } }); D.future.forEach(f=>{ if(f.varzovas===orig){ f.varzovas=v; if(t) f.tel=t; } }); }
+  const i=D.contacts.findIndex(x=>x.id===id||x.vardas===orig);
+  const obj={id:id||uid('c'),vardas:v,tel:t,pastabos:p};
+  if(i>=0) D.contacts[i]=obj; else D.contacts.push(obj);
+  save(); closeOv('ovContact'); refreshAll(); toast('Išsaugota');
+}
+function deleteContact(){ const id=$('c_id').value; if(!id||!confirm('Ištrinti kontaktą?')) return; D.contacts=D.contacts.filter(x=>x.id!==id); save(); closeOv('ovContact'); refreshAll(); }
+
+/* ---------- menu / data ---------- */
+function openMenu(){ $('storInfo').textContent=`Vienetų: ${D.matches.length} · dvejetų: ${D.doubles.length} · būsimų: ${D.future.length} · duomenys saugomi šioje naršyklėje (localStorage). Reguliariai eksportuok kopiją.`; openOv('ovMenu'); }
+function exportData(){
+  const blob=new Blob([JSON.stringify(D,null,1)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`teniso_karjera_${today()}.json`; document.body.appendChild(a); a.click(); a.remove(); toast('Failas paruoštas');
+}
+function importData(inp){
+  const f=inp.files[0]; if(!f) return; const r=new FileReader();
+  r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!Array.isArray(d.matches)) throw new Error('blogas formatas'); if(!confirm(`Importuoti ${d.matches.length} matchų? Dabartiniai duomenys bus pakeisti.`)) return; D={matches:d.matches,future:d.future||[],contacts:d.contacts||[],doubles:d.doubles||[]}; save(); closeOv('ovMenu'); refreshAll(); toast('Importuota'); }catch(e){ toast('Nepavyko importuoti: '+e.message); } inp.value=''; };
+  r.readAsText(f);
+}
+function resetData(){ if(!confirm('Atstatyti pradinius duomenis iš Excel? Visi vėliau įvesti matchai bus ištrinti.')) return; D=JSON.parse(JSON.stringify(SEED)); save(); closeOv('ovMenu'); refreshAll(); toast('Atstatyta'); }
+function openRename(){ closeOv('ovMenu'); fillSelect('r_from',tournaments(),'– pasirink –'); $('r_to').value=''; openOv('ovRename'); }
+function doRename(){ const a=$('r_from').value, b=$('r_to').value.trim(); if(!a||!b) return toast('Pasirink turnyrą ir įvesk naują pavadinimą'); let n=0; D.matches.forEach(m=>{ if(m.turnyras===a){ m.turnyras=b; n++; } }); D.future.forEach(f=>{ if(f.turnyras===a) f.turnyras=b; }); save(); closeOv('ovRename'); refreshAll(); toast(`Pervadinta ${n} matchų`); }
+
+/* ---------- init ---------- */
+load(); refreshAll();
+</script>
+</body>
+</html>
