@@ -508,7 +508,7 @@ function matchRow(m, showTurn=true){
   const res=m.rez||'';
   const who=avatar(m.varzovas,'sm')+'<span>'+esc(m.varzovas)+'</span>';
   const sub=[fmtD(m.data), showTurn?m.turnyras:'', m.div?'div. '+m.div:'', m.kortai].filter(Boolean).map(esc).join(' · ');
-  const note=m.pastabos?`<div class="note">${esc(m.pastabos)}</div>`:'';
+  const note='';
   const sets=[m.s1,m.s2,m.s3].filter(Boolean).map(s=>`<span class="set${setWon(s)?' won':''}">${esc(s)}</span>`).join('');
   return `<div class="m ${res}" onclick="openMatch('${m.id}')">
     ${m.etapas?`<span class="tag">${esc(m.etapas)}</span>`:''}
@@ -740,7 +740,7 @@ function doubleRow(m, showTurn=true){
   const sub=[fmtD(m.data), showTurn?m.turnyras:'', m.partneris?'su '+m.partneris:'', m.vieta, m.danga].filter(Boolean).map(esc).join(' · ');
   const sets=[m.s1,m.s2,m.s3].filter(Boolean).map(s=>`<span class="set${setWon(s)?' won':''}">${esc(s)}</span>`).join('');
   return `<div class="m ${res}" onclick="openDouble('${m.id}')"><div class="who">${esc(m.varzovai)}</div><div class="sub">${sub}</div>
-    <div class="score num">${res?`<small>${res==='W'?'L':'P'}</small>`:''}<span>${sets||`<span class="set" style="color:var(--mute);font-weight:500">${esc(m.pastabos||'–')}</span>`}</span></div>${sets&&m.pastabos?`<div class="note">${esc(m.pastabos)}</div>`:''}</div>`;
+    <div class="score num">${res?`<small>${res==='W'?'L':'P'}</small>`:''}<span>${sets||`<span class="set" style="color:var(--mute);font-weight:500">${esc(m.pastabos||'–')}</span>`}</span></div></div>`;
 }
 function renderDoubles(){
   const y=$('dYear').value, t=$('dTurn').value, r=$('dRes').value, q=$('dName').value.trim().toLowerCase();
@@ -792,7 +792,7 @@ function allContacts(){
 function renderContacts(){
   const q=$('cSearch').value.trim().toLowerCase();
   const list=allContacts().filter(c=>!q||c.vardas.toLowerCase().includes(q)||(c.tel||'').includes(q));
-  $('cList').innerHTML=list.map(c=>`<div class="c">${avatar(c.vardas)}<div onclick="openContact(${JSON.stringify(c.vardas)})" style="flex:1;min-width:0"><div class="nm">${esc(c.vardas)}</div><div class="st">${c.n?`<span class="rec"><span class="w">${c.w}</span>–<span class="l">${c.l}</span></span> · ${c.n} matchai · paskutinis ${fmtD(c.last)}`:'dar nežaista'}${c.fut?' · <span style="color:var(--plan)">būsimas</span>':''}${c.pastabos?' · '+esc(c.pastabos):''}</div></div>${c.tel?`<a href="${telHref(c.tel)}">${fmtTel(c.tel)}</a>`:'<span class="st">nėra nr.</span>'}</div>`).join('')||'<div class="empty">Kontaktų nerasta.</div>';
+  $('cList').innerHTML=list.map(c=>`<div class="c" data-n="${esc(c.vardas)}" onclick="openContact(this.dataset.n)">${avatar(c.vardas)}<div style="flex:1;min-width:0"><div class="nm">${esc(c.vardas)}</div><div class="st">${c.n?`<span class="rec"><span class="w">${c.w}</span>–<span class="l">${c.l}</span></span> · ${c.n} matchai · paskutinis ${fmtD(c.last)}`:'dar nežaista'}${c.fut?' · <span style="color:var(--plan)">būsimas</span>':''}${c.pastabos?' · '+esc(c.pastabos):''}</div></div>${c.tel?`<a href="${telHref(c.tel)}" onclick="event.stopPropagation()">${fmtTel(c.tel)}</a>`:'<span class="st">nėra nr.</span>'}</div>`).join('')||'<div class="empty">Kontaktų nerasta.</div>';
 }
 function openContact(name){
   const c=name?allContacts().find(x=>x.vardas===name):null;
