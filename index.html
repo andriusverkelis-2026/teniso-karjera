@@ -3,863 +3,408 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B2735">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#1E4D36">
-<link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%20%22Teniso%20karjera%22%2C%20%22short_name%22%3A%20%22Tenisas%22%2C%20%22start_url%22%3A%20%22https%3A%2F%2Fandriusverkelis-2026.github.io%2Fteniso-karjera%2F%22%2C%20%22scope%22%3A%20%22https%3A%2F%2Fandriusverkelis-2026.github.io%2Fteniso-karjera%2F%22%2C%20%22display%22%3A%20%22standalone%22%2C%20%22background_color%22%3A%20%22%2318261F%22%2C%20%22theme_color%22%3A%20%22%231E4D36%22%2C%20%22icons%22%3A%20%5B%7B%22src%22%3A%20%22data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAALmUlEQVR42u2dSXAU1xmA%2F%2FHIRsIgCLttQBKJsc1qgcQuBBYC7Sv2KZWqpLJU5ZwcUinnkFsOqazlqlxySyUFCGm0jkCAJBBgJGMbWwZvgAA7aDHLsEgYSZNDCkJsAfP%2B7h66e77vBszfG%2B%2Fr%2Ft%2Fr978OzFucFhWABOUpLgEgAAACACAAAAIAIAAAAgAgAAACACAAAAIAIAAAAgAgAAACACAAAAIAIAAAAgAgAAACACAAAAIAIAAAAgAgAAACACAAAAIAIAAAAgAgAAACACAAAAIAIAAAAgAgAAACACAAAAIAIAAAAgAgAAACACAAAAIAIAAAAgAgAAACACAAIAAAAgAgAAACACQQSYl2wr%2F99W%2FkJz%2F4kaVt%2FGPXP%2BUXb%2F5KHf%2FzH%2F9M3vylefyBjkPy%2FZ%2F%2BMK7X6%2B9%2F%2FZsU5u8wjvvdn34vf3zrLzwBXGV7MEkqi8stb6e0sEQmTZqkjq8J1crY2JhxXO6mHJk5Y0bcrldqaqrk5W41jotGo7Knbi8pkNvYujlXZs2cab1hTJ0qBXn56vj%2BwQE5cuyoSuDyotK4Xa%2FSHUXyzDPPGMcd7z4hl778AgHcxusVVTZuq9pS%2FK66Paq46rLKuF2vqrKKuJ4bAjj8ON%2FxWr5t29uyabPMnjVLHd%2B8v1Vu3rplHLdq5auSkZbu%2BPV6bt5zsi5rjXHc8PCwNIabEcBtlBeVqB7nDyMYDEpVaYU6fmRkRN1QrOw3VipLyuSpp8ybR0vbPpXYCOB4%2BlPtum1qU4WqsnLHr5c21dpdV%2BOpdpEQAmSkpUt25mrbt7v05VdkyUsvq%2BOPd5%2BQi19cMo5blJYhmStWOna9Xnpxseq8Lg%2F0y%2BFjXQjg587vN3mjcqc6NhqNSk2o1nVpkPbuv7e%2BTjW8iwAOEggEHB05qSwtl2AwqI7frRwvryguk6RgkiPXq7KkLK7nggAOsi57jSycv8Cx7c%2BZNVtyN%2Bao48%2F2nZOed08ax82aOVNyNmy0%2FXzWrM6W%2Bc%2B%2FYBz34Ue9cubTjxEgETq%2Fdu9jd0jXcdxZbv%2BTrVqZWu2qrfFk%2BwjMW5wW9WvjT05OllNdPTJ1yhRH93Pnzh1ZvmG13Lh5UxU%2FLXWanOrqNh6mvT18W5avz5Lbw7dtOY%2Bnk5Lk1NEemT5tulHc6NioZOaslaGvvuIJ4CaK8ncYN%2F4Lly7KyfffM4qZNGmSlBWWqI%2FzeuS67DvUZhw3OWWyFGzbbtv1ysvdatz4RUQOdXZ4svH7XgBNahJqbpS6pnrFvqyNNGk7kHamQdqpD17s%2FPpegLmz50jOevNOYqipXhrCzRKNmmWGa1ZnW%2BpsH%2BxoV91FczZstGWC39QpU2T71m3GcZFIRFoP7kcAt1FdXmk8PPn5ubPSe%2Ba0XO6%2FLN0ne8w6U4GApc7w6Nio1DaFjOOSgklSUVxm%2BXoVbS9QTfEONTfK119%2FjQBuQ5MahJob%2Fu8%2FNt7piDaVsOOlmHYbXpv6kBACLFuyVF5ZbP4qv67pfwI0hptlfHzcKD59YZpkr8pSH%2FcHvR%2BqxtIzV6yURWkZltLFTes2GMed6zsv3e%2B%2BgwBu441K81Tk9Cdn5NPPP7v%2F54GhQTnW%2Fbb5vp9QZ9jKBLny4lLVzE8vd359K4C27DH0wN1%2FopQoVsqeULmklTRop2KqSDQalT0hBHAd2rLHiXL%2BptawjI6NGm3HauFN%2F%2BCAakZlRlq6rFr5qnHc9xZ9V5YvXWYc93ZPt2omKwK4MP051fuBnL%2FQ962%2Fv3L1inQdP2a8PevvBHQdS82kv%2BoE7fz6UoDU1FTVWHZd08NTnXrFaNCWnCdTLlleVGo8Q7Sy1DxdHBkZkYZwEwK4DU3ZYzQalfqWhzfypn1huTtqlgYlBZOkskTfKdU2sJkzZkjupthnpmZlrpK0BQuN99PStk897wkBnEx%2FKsyLU3reOylffPnlQ%2F%2F9euS6dHYdVhyLxRmicUiDqhI8%2FfGVABlp6ZKVuco4LpYUR%2FNSbOkrS1TvIu6hLZcsyMuXZyc%2FG9NTSjOBr39wQDqPHkEAt6HpeI6Pj0tDy%2BNTjXBbq%2Bp1v5XOsHaYMSUlJaalDLfkbFatMufFskffCxAIBGRnuXljO95zQvoHBx77uxs3b8qhIx3G268qq3gi5ZLVMczq1Kc%2Fe8VP%2BEKAddlrZMEL843jTF50aUaD5s6eI5s3bFKf17m%2B86pyyZz1Gx85CjU5ZbJqacfe0x%2FJ6U%2FOIID70h%2FzDufo2Kg0hlti%2Fn3rgTYZGRmJy7E9iGbtoGAwKBVFD58hWpi%2FQ1JSUhTHUiN%2Bw%2FMCJCcnS8mOIuO4rmPH5MrVKzH%2F%2FtbtW3Kg45Dxfgq3bbdUkqmdblxdXmEpRZrohlHbGEIAt6EpezRNfx5sjBpBSwuK1ecXiURU5ZIrl62QRenfniGqXU2i%2FXCnDA4NIYAf0p%2B7d%2B9K0%2F6wcVxbx0FVAbrlNKjWvlUjNG%2BL%2Fdj59YUA2rLH9iOdEolEjOOGh4dl38EDxnFrs7JVnfR7aIvOJxrp0cwX8nrZ46Pw9CeSNGWPIiL5W%2FPk3x%2Bfj9tx3hum%2FcNbf1bF3yuXNP20U9qChZKVuer%2BSFJGWrpqTdH6lka5c%2BcOTwC34cTCUM6latZmiGrToAfv%2BNqx%2F10%2BTX88LcDypcssTTWIN1ZXqNYuPVhWWHw%2F569SzPw8f6HPeIEABPDAHdUrHXarHdEZ35khWzfnyqvLV044KvQ49ihXr0YAJzsuNn3tMd6UFRVb%2BkqNlXJJTc2wX8oefSfAa7lbbFkMKt5MS532RMolC%2FLyVTeME%2B90S9%2FFCwhA%2BuOeY9fMxU9OTlbdMHbX%2BfvuL%2BLB1aFTU1Plg64eWz94F0%2BsrqQczxWvV2zMksiNGzwB3ERFcalnG78d%2FZeRkRFpbHX%2BM6Qtbft83%2Fg9KcDr5dWev%2BialSuspkFu3IcrbkheOlht2eNnZz%2BXnMI8R46p%2Fl81xuP7y5YslZdffEn9SaHj3SfkwqWLjn36aWBoUDoUddA8AZy%2BcyrH0fc2ODeNN9TUoIqzWi5ZU%2B%2Fc%2BHxtQ8hXZY%2B%2BECAQCEi1cuqDtpHG9ARoadSNzT%2BhcknSH48KoC17fP%2FDU3K275xjxzU4NKRaRHfenLmqmaz3cGpl5t4zp6X3zGkEcF%2F6o%2FsgdW1jvePHVqdOg9zXGU6ku7%2BIR94DaMe%2Bx8fHZfWWDXK5%2F7Kjxzd92nQ5dbRHnk4yG1MYHh6WFRuzVMsgitj%2FTmRsbEwyN6%2F1ZeWXp58A2rLH4z0nHG%2F8IiLXrl9TrR6XkpIiJQVF6v3aXajSfqQzoRq%2FZwRwc%2FpjNQ3SnpsTneFES388IcDc2XNk03rzz%2FfcHR2VptaWuB1nuK1VVTW1LnuNzH%2F%2BBfV%2B7fpGb%2BTGDQkf2I8AbkNb9thxpFOuXrsat%2BO8eeuWtLUfNO%2BEBQKy08I7AbuWK2kIN%2Fm27NHznWCAhO4DACAAAAIAIAAAAgAgAAACACAAAAIAIAAAAgAgAAACACAAAAIAIAAAAgAgAAACAAIAIAAAAgAkHElcgvjSHp7%2B2N9sKbjGhYoTrAvkkkaPDAhAw0cE%2BgBA40cAGi6NHwH8kfZYacDfjG0PT7c1rQIEcKTx2yHBRI3fib4FAoAjd347G%2BlE20ICBHBt47eay8f6WyRAAFc3fjsa6OO2gQQI4BliubMz6oMAvkp9rNyhY43lKYAAAAgAgAAuSn8m%2Bu2jcvwH%2F800rSENQgAABABAAAAEAEAAAAQAQAAABABAAFvQTm%2BOdfao6aQ4JtEhAAACACCAi9IgO4viSX8QwNM4XT8ACOCqp0A81gXi7o8AnkiFtNOnafwI4EkJ7GycE22Lxo8ArpXgUYtaaZ8CD26Txm8frA7tgo4vaQ5PABq%2Fg9sABEh4kYAUyJMNmBQIARJOBho9AgDQBwBAAAAEAEAAAAQAQAAABABAAAAEAEAAAAQAQAAABABAAAAEAEAAAAQAQAAABAD4L%2F8BX0oZEvMf3bgAAAAASUVORK5CYII%3D%22%2C%20%22sizes%22%3A%20%22192x192%22%2C%20%22type%22%3A%20%22image%2Fpng%22%2C%20%22purpose%22%3A%20%22any%22%7D%2C%20%7B%22src%22%3A%20%22data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAkyElEQVR42u3dV5dW1bon8KeoKoJAEUQEDJgABRUTIIJkJBVVRdiej3EuzujRPXqc0V%2BgL%2FqmP0KP7nEMxKqiyFlEMG0FdatgBBM5U4G%2BOL13u%2FdBrfclPave3%2B9m74FQ9ay5wvyvudaas2rE2NHXAgCoKL00AQAIAACAAAAACAAAgAAAAAgAAIAAAAAIAACAAAAACAAAgAAAAAgAAIAAAAAIAACAAAAACAAAgAAAAAgAACAAAAACAAAgAAAAAgAAIAAAAAIAACAAAAACAAAgAAAAAgAAIAAAAAIAACAAAAACAAAgAAAAAgAAIAAAgAAAAAgAAIAAAAAIAACAAAAACAAAgAAAAAgAAIAAAAAIAACAAAAACAAAgAAAAAgAAIAAAAAIAACAAAAAAgAAIAAAAAIAACAAAAACAAAgAAAAAgAAIAAAAAIAACAAAAACAAAgAAAAAgAAIAAAAAIAACAAAAACAAAIAACAAAAACAAAgAAAAAgAAIAAAAAIAACAAAAACAAAgAAAAAgAAIAAAAAIAACAAAAACAAAgAAAAAgAACAAaAIAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAC6rUYTkMHEJ5%2BOtjfXFarmCxcvxNMvTYqLly6mr3VH86YYN2ZsqppOnjoZz0yfHO0dHU6Abhrz6GOxq3VLurpeW%2F1m%2FPN%2F%2BRc7yAgAlO5PTcsLV3P%2Fu%2FrH4lcWFqLW19esSlfT0CFDY%2FaMWQ7%2BEqxszHmevLb6DTtHAIDS1dbUxLL6hkLW%2FuqyFYWo8811q6OzszNdXSsampwA3VRVVRXLlzamq%2Bv7Y8firXfetoMEACjd3FlzYuiQoYWsfdqUqTFq5Mj0df7w04%2BxZ99b6ep6Zfa8GDhggJOgGyY%2FPynuH3VfurreWLsqrl27ZgcJAFDGXXTTiuKeQL16xcqGZYWo9bU1%2BYZp%2B%2FbtG0sWLHISdMPKpKMlr615084RAKB0QwYPiXmz5hQ7wCxbWYg6WzdvjHPnz6era0VBAtSdVFtbG%2FULF6er6%2BD778WRr47aQQIAlG5ZfUPU1tYWehseffiReG7iM%2BnrvHz5cjRvbE1X10uTX4wR945wMvyOuTNnx%2BBBg9PV9fpad%2F8CAJSpiG%2F%2FX387ivEYI%2BPb2r169SrsS6C3S8bHTFevXo21Lc12jgAApRvz6GPxzFMTe8S2NC1ZWoiRjP0HD8Q3332bri6PAX5b3cCBKR%2BTbdy2Oc6cPWMHCQBQuqJ8QtcdgwcNjlfmzEtf57Vr1%2BKNtfnmBJjw%2BBPx%2BJhxTorrqF%2BwOPr06ZOuroxzSyAAUIQDr1evWLG0qUdtU1EeZ2S9cK9obHJiXLdd8o2O%2FHLiRGzftdPOEQCgdC9PnRYjR4zsUds0Z8bsuHto%2FvkMvvrm63jn3QPp6lpe3xRVVVVOjl8ZOWJkvPjC5HR1rVq%2FJjo6TeEsAEAZetLw%2F1%2FV1tTE8vpi3MW%2BlnAUYNTIkTF10hQnx9%2BFosbo1atXwuPH2%2F8CAJRhQP%2F%2BsWjegh65bUV5DLB%2BQ3NcuXIlXV0Zh7vvbHvkC5SHP%2Fs0Dn1y2M4RAKB09QsXR79%2B%2FXrktj014clCvMx29ty52LBlU75jY8Hi6N27t5MkIh4fMy6eGPt4vrt%2FC%2F8IAFCuV5tW9uztK8jjjdcTDuPWDRwY82fPdZJExMqmfKMhnZ2dsXr9WjtHAIDS3T%2Fqvnhx0uQevY3LG5qiuro6fZ079%2B6OH3%2F%2BKV%2FHZ06AqKqqimVL8q38t2PPrvjpl59dyAQAKN2fmlb0%2BDe9771neMx4aXr6Ojs7O2PVujXp6po7c3YMqhtU0efJ1ElTUq4y%2BdpqL%2F8JAFB2AFheEdtZlAWCMl7Qa2tro2Hxkoo%2BTzK%2BDHn27NnYuG2zi5gAAKWb9NwL8fDohypiWxfNeyXqBg5MX%2Benn38WHx8%2BlK6uSn4M0Lt376h%2FJd8SyeuSfjmCAEAR7oor5O4%2FIqJPnz6xdGEx7mIzjgJMeu6FeOC%2B%2ByvyPJk%2Fe27U1dU5ThAA6DkdYsOi%2BsoKPAX5GmBV85po78g1q1tVVVUsb2iqyHMl4%2BjH0a%2B%2FigPvv%2BtCJgBA6RbOnZ%2FyruZWmvz8pBj9wIPp6zxx8mRs37UjXV09ba2I7qirq4u5M2enq8vCPwIAlO1PTSsqdLuL8dgj49SuYx59LJ6a8GRFHS8Ni%2BrTLSuddQVJBAAKYPiwe2LW9BkVG3yK8Nnjpm1b4vSZ0%2BnqqrSXAVcmfOyx78D%2B%2BPb771zIBAAoXVEmxrkVHrz%2FgZjywqT0dba3t8fa1uZ0dTXVN1TMsXPfqFEx%2Bfl8x8rrFv4RAOBG7oJtf34Z53gfPuyemD71pYo4TlYszbcc8qVLl6K5rdVFTACA0k14YnyMH%2Fd4RbfB0oVLom%2FfvunrfO%2FDD%2BLLo0fS1VUpjwGWJ3zpsXVzW5y%2FcMGFTACA0v3TspUV3wYDBwyIxfOLsfxxxuHeRfMX9NjVI38dlMeNGZvwePDynwAAZaiprommJQ0aIorzGOD1tauiq6srVU397%2BofC%2BfO79HHR8ZRjh9%2B%2FCF279vr5BUAoHSzZ8yMe4YN0xARMeOl6TFi%2BL3p6zx2%2FHjs3b8vXV0revBjgF69ekXTkqUJw%2BDqdGEQAYCCKMpMeLfrIl%2BUTizjsO%2FM6S%2FH3UOH9shjY9qUqTHi3hEJjwNv%2FwsAUIZBdYPildnzNMSvFGVSoJaNG%2BLCxVwvfvXkx0kZg%2BEHH30Yn3%2F5hZNWAIDSNS6pj969e2uIXxk3Zmw8PeGp9HVevHQxWja26Shvgz59%2BsTiVxamq8vCPwIAlO3Vpjxv%2F%2B%2FcuztPuxTksUjG4d9nn54Yj4x%2BuEedJwvmzI%2BBAwakqqm9vT3WtKx3ERMAoHSPjH44nn%2Fm2RS1nDl7Jv7lX%2F9zmpeZltU3RG1NTfp9uHf%2Fvvj%2B2LF8owCNTT3qXFmRcOrfLTu2xanTp1zIBAAo9l1uy6a2%2BP7Ysdh3YH%2BKeoYOGZpytbd%2FlHUBmOU9aIXAwYMGx%2BwZs9LVlXFGSAQACqCqqipWNuZ52W1N87p%2F%2F99EQ5qvFmRypIwrBD704Og0o0s3qnFxfbrRoJOnTsbWndtdyAQAKN20KVPjvlGjUtTy8y%2B%2FxFvvvB0REc1trdHe0ZGirnmz5sSQwUPS78sjXx2Ndz94P11dPeVlwBWN%2BbZjdfO6NOcJAgAFk2nGu3UbmqOzszMiIk6fOR2739qToq7a2tqUE79cfxQg33Bw4%2BL6qKmuKfR58uD9D8SkZ5%2FPt7%2B9%2FS8AQDnu6ndXLFmQ55Omtf8w7L%2F6%2Fz0OyKAoXwOsbWmOq1evpqpp6JChMXvGzEKfK8sTvvz32ed%2FiT8f%2BsiFTACA0i1ZsCj639U%2FRS3fHfs%2BDn7w3t%2F9WduWjXHlypUU9T3z1MQY8%2Bhj6ffpmbNnYtP2LenqKvpjgBUJX2a08I8AAGXLNNPd2tb1ce3atb%2F7s%2FMXLqR6wakoCwRlHBZeMGdeDOjfv5DnydMTnorHHnk0VU1dXV3x5rrVLmICAJRu1MiRMW3K1DT1%2FNZwf6avAVY2NEWvXvlPwe27dsYvJ06kqqlv376xZMGiQp4rKxO%2B%2FLfrrT3xw08%2FupAJAFDG3Wzj8jSd2ZdHj8ShTw5f979t3rE1zTz3I0eMjJenTku%2Fbzs6O2J189p0dRVxToDq6upozLjyn4V%2FBAAo%2F64mz%2FD%2F773sd%2Fny5di4Nc8z7aIsEPRvCSeHmf7iS4VYYvnvap76Ugwfdk%2Bqms6dPx%2Btmze6iAkAULrnJj6T6pnmmpbff9t%2FbWuexwCL5y8sxLPsQ58cjsOffZrr4tWrVzTVF2uFwJUJX15c39YSly9fdiETAKB0mWa2%2B%2Fjwofjy6JHf%2FTvbd%2B%2BMM2fPpKi3X79%2BUb9wcSH2c8Zh4pUF%2Bhqgb9%2B%2BsWj%2BAvsVAYCeoba2NhoX1ye6%2B%2F%2Fju%2Fv29vZUQ55F%2BRpg1bo1f5tYKYsJT4yPcWPGFqL9Fs17Jc1nsn%2F1zXffxv6DB1zIBAAo3Stz5sXgQYNT1HLt2rVuD%2B%2BvTfQ1wNRJU%2BKB%2B%2B5Pv69%2F%2BuXn2LFnV7q6ijInQMY6X1%2Fz5n%2F4XBYBALrl1UR3rwfffze%2BO%2FZ9t%2F7unrffip9%2F%2BSVF3dkWUPqjDiOb5fWNUVVVlbrdhg4ZGjOnv5yurjfW%2BvZfAIAy3D10aKrlTEv5xr%2BzszOaN7amqb0oXwO0bd0cZ8%2BeTVXTfaNGxYuTJqdut6YlS9OtX%2FDOuwfiq2%2B%2BdiETAKCcO6%2BmNMuZdnZ2xvq2llsWGG61h0c%2FlHJxmH905cqVWLehOV1dK5LPCZBx%2BN%2FCPwgAlC3TgjZ79%2B8reUj%2FwHsH49jx49qz1I4j4ZzxSxcuid69e6dsr4ceHB3PTXwmXZArNTAjAEBERDw%2BZlw8OX5CmnrWlLHS37Vr11LdzTYsqo8%2Bffqk3%2FcH3jsYR7%2F%2BKlVNdXV1MW%2FWHHf%2F3bRhy6Y4e%2B6cC5kAAMW%2BW21vb4%2BWzW3lBYdEjwHq6upiwZz5hdj%2FGVeOyzonwPKGxnQ1vZZwZkcEAAqguro61Xrm23bvKPvFtA8%2F%2FnOqu9miPAbI%2BPnYvFlzYlDdoFQ1Pfv0xHhk9MOpavrx559i11t7XMgQACjdzGkvx733DE9Tz41%2B07%2BuNc9jgFnTZ8Q9w4alPwa%2BO%2FZ9vH3gnVQ11dbWxtJFS1LVlHH4P%2BOETggAFESmmesuXbp0w4v7rG5Zl2Z7qqurC7PK3Wtr8g0jr0w0MlVdXR2Ni%2FOt%2FOftfwQAylI3cGAsnJvnOfWm7Vvj4qWLN%2FQzPvv8L%2FHZ539Js02Z1lb4Pc1trXHp0qVUNU1%2BflLcN2pUilpmTns5ht19d6r2%2BejQx%2FHp55%2B5kCEAULqli%2Bqjb9%2B%2BaepZc5PWqV%2BTaIXA8eMejwlPjE9%2FLJy%2FcCE2bMm1jGxVVVWaOQFyTv27KkAAoLy700Qz1p09dy627d55k4LEumTtXJA5ARIOJ2foeO%2Fqd1csnJfri46Ozo5Y1bzGRQwBgNI99ODomPz8pDT1tG5qi6tXr96Un%2FXVN1%2FHhx%2F%2FOc22LV%2FalG7q2OvZvW9vHP%2FheKqaxj425o7PUbFo%2FoK4q99dqdpl687tceLkSRcyBABKl22%2B%2BjWtN%2FeuPdOcAMPuvjtmz5iZ%2Fpjo6uqKN9fnu6u803MCrGw0%2FI8AQA%2BRbcW6X06ciD373rqpP3Nta3Oqb9uLskBQxscATfUN0avXnbm8Dbv77nh56rRU7XH6zOnYtG1LgABAyaa8MCkevP%2BBNPU0b2y96d8yH%2F%2FheBx472CabVwwZ366iW2u5%2FMvv4gPPvowVU333jP8jnXCy5Y0RnV1dar2WNOyPtrb213IEAAoXbZP01bfopf2Mj0G6N27dzQuqS%2FE8ZFxeHnFHZoTYEVjU8L949t%2FBADK0Ldv36hfsDhNPceO37o79fVtLalmSftTYzG%2BBljdvC7dHeai%2BQtv%2Byerjzz0cEx88ulU7fDl0SPx3ocfuJAhAFC6xfMXxMABA9LUs7Z1%2FS17Vv%2FLiROxd%2F%2B%2BNNv6wrPPxSMPPZz%2BGDl1%2BlRs2bEtVU0D%2Bve%2F7ZNWZXz5z8I%2FCACU7dWmXMP%2Ft3qYfm2ixwD%2F3v4FmRNgjTkBltXnWvmvq6sr3li32kUMAYDSjRh%2Bb0yf%2BlKaeo58fTT%2BfOijW%2Fo7mjdtSDWcvbJxeVRVVaU%2FVrbu2BYnT%2BX6znzWyzPi7qFDb8vveuHZ5%2BKhB0en2v69%2B%2FfFsePHAwQAyrqDyvRG8%2B24Oz979mxsv0kzDN4M940aFS9NfjH9sdLe0XHLXs4sV011zW1bkCfj1L8W%2FkEAoGzZvkW%2FXR3M2tZkjwEKskBQzq8Bbn3HXFNdEw3JliK%2BcPFCtG5qcxFDAKB0E598OsaNGZumnsOffRqff%2FnFbfldG7duSbXS3ZIFC9NNLXs9H37851QrK0ZEPDfxmXh49EO39HfMnjEzhg4Zmmq7Wza23fBKmQgAuPtP4Wat%2FNfdu6ctO%2FO81d7%2Frv6x%2BJWFRgHKtPwWrxCYc%2Fjf2%2F8IAJShtqYmltU35AoAt%2Fnt%2FDXZvgZYVoyvAd5ctzrVXAoREcsbbt3b%2BQP6948Fc%2Bal2t7vjx2Lt95524UMAYDSzZ01J9WQ5rsfvB%2Fffv%2Fdbf2dW3duj3Pnz6dpg2lTpsaokSPTHzs%2F%2FPTjTV%2Bn4UY9MvrheG7iM7fkZy9%2B5fZPOPRH3li7KtW6FggAFEi2b8%2FvxLf5V65ciY1bN%2BU5WXv1uuOr3HXXa2vyDT%2FfqmH6lMP%2Fpv5FAKAcQwYPiXmz5qSpp6urK9ZtaL4jvzvfY4BifA3QunljqtGTiIjGxUujprrmpv7Me%2B8ZHtOmTE21nQfffy%2BOfHXUhQwBgNItq2%2BI2traNPXsO7A%2Ffvz5pzvyu3ft3R2nTp9K0xaPPvzILRvKvpkuX74czRtbU9V099ChMevlGTf1ZzbVN6Rb%2Be%2F1te7%2BEQAoU6V%2B%2B3897R0d6b6l%2FlNRpgZe3fMfA2R7JHP16tVY29IcIABQsjGPPhbPPDUxTT3tHR3RsnFDxQaQ6951LlmaaoTmt%2Bw%2FeCC%2B%2Be7bVDUtmDMvBvTvf9POlSfHT0i1fRu3bY4zZ8%2B4kCEAULpsn5rt3LMrTp85fUdruJOPIK5n8KDB8Uqyz86u59q1a%2FHG2lxzAvTr1y8Wzb858ylkfPkv4xwMCAAU4WDo1StW3OIJU0qV4SW8rq6uWL%2BhJVW7ZHtMU6QOaUXDjR%2FjVVVVsXxprpX%2FfjlxIrbv2hkgAFCyl6dOi5Ej8nxnfvny5TSf4WVbG2DOjNm3bZW7G%2FHVN1%2FHO%2B8eSFXT9BdfinvvGX5DP2PScy%2FEA%2Ffdn2q7Vq1fEx2dHS5kCACULtvw%2F5ad2%2BL8hQspajn4%2Fnu3fSKi31NbUxPL65sKcVy9lmwUoLq6OppucJbLlb79RwCgpxjQv38smrcgVU3ZXr67U3MR%2FJaiPAZYv6E5rly5kqqmG%2BnAa2tqYumixam25%2FBnn8ahTw67kCEAULr6hYujX79%2Baeo5d%2F58bN25PVUbZZsU6KkJT8bjY8alP7bOnjsXG7ZsSlXTk%2BMnxNjHxpT1b%2BfOnB2DBw3Odfdv4R8EAMr1alOuGebatmxMd9f48eFD8eXRI7n2W0EWCHo94fB0uW%2Fxr2jMNfzf2dkZq9evDRAAKNn9o%2B6LFydNdrfdDdleBlze0JRuJrrr2bl3d6pPKSMili9tjKqqqpL%2BzcABA2L%2BrLmptmPHnl3x0y8%2Fu5AhAFC6PzWtKPlCeCudPHUydu3dk7Ktsr2XcO89w2PGS9PTH2OdnZ2xat2adMF38vOTSvo39QsWR58%2BfVJtx2urvfyHAEDZASDXy2QtG9vSfs70xZEv49Cnn6SqqSgLBGXsqFaWOCdAtuH%2Fs2fPxsZtm13EKEvViLGjLRpdwSY990Ks%2Bz9eICqyK1euxNPTXoiz586lr3Xz6pZU0%2BeeOXsmnnrphWhvb%2F%2FDvzvi3hHx7o63olevPPdN%2F%2Bvf%2Fnf8p%2F%2F2X50EGAGgjLvHgnxKxm%2Fr06dPLF24xChAGQbVDer20tfLlzam6vwzticCAAXqOBoW1WuInhDkCvI1wKrmNdHekevxTnfnBMg29%2F%2FRr7%2BKA%2B%2B%2F6%2BBHAKB0C%2BfOj7q6Og3RA0x%2BflKMfuDB9HWeOHkytu%2FakaqmebPm%2FOF5MG7M2Bg%2F7vFUdVv4BwGAshVlXXm6uz%2BL8Tgn25S1vXv3%2FsNHKCuTvfyXcaVFBAAKYviwe2LW9BkaoocFukyfc%2F6WTdu23PElnv%2FR762CWVVVFcuW5Fr5b9%2BB%2FanWpkAAoECKMoEM3ffg%2FQ%2FElBcmpa%2Bzvb091rbmWlfhxUmT475Ro0r%2Bb3fK6xb%2BQQDgRu4WsV%2FvlGxz11dVVcXy%2Buvf5Wd7%2Be%2FSpUvR3NbqYEcAoHQTnhif7oUmbo6lC5dE375909f53ocfpFtX4Xodfe%2FevWPpglwr%2F7VubkuzTDYCAAXzTwWZOY7SDRwwIBbPX1CIWrMNY48bMzYmPDH%2B7%2F6sO18I3P528%2FIfAgBlqKmuiaYlDRqiByvKY4DX166Krq6uVDX945wAK5MN%2F%2F%2Fw4w%2Bxe99eBzkCAKWbPWNm3DNsmIbowWa8ND1GDL83fZ3Hjh%2BPvfv3paqpqb7hb7P91dXVxdyZs5OFptXpQhMCAAVRlBnjuIGTulevdC%2Bu%2FWaHlmw4e8Twe2PalKkR8e%2FvU%2FTu3TtZe3n7HwGAMgyqGxSvzJ6nISpAUSYFatm4IS5czPVC21%2FDU7bh%2Fw8%2B%2BjA%2B%2F%2FILBzcCAKVrXFKf7o6GW2PcmLHx9ISn0td58dLFaNnYlqqmJQsWxaMPP5JuTgUL%2FyAAULZXm7z9X1H7uyCPe7INaw%2Fo3z%2F%2B53%2F%2FH6lmVWxvb481Lesd1AgAlO6R0Q%2FH8888qyEqyLL6hqitqUlf5979%2B%2BL7Y8dS1fTMUxNT1bNlx7Y4dfqUgxoBgJ57N8jNM3TI0HRvsV%2BPhW3%2BWLaZExEAKIiqqqpY2bhcQ1Rk8CvGY5%2FXvN3%2Bm06eOhlbd27XEAgAlG7alKnpFjPh9pg3a04MGTwkfZ1Hvjoa737wvh12Haub10V7R4eGQACgdBb%2BqVy1tbXRtGRpQUYBDHNft128%2FY8AQDnu6ndXLFmwUENUsKK8%2F7G2pTmuXr1qh%2F3KZ5%2F%2FJf586CMNgQBA6ZYsWBT97%2BqvISrYM09NjDGPPpa%2BzjNnz8Sm7VvssF%2Bx8A8CAGUryoxw3OrjoBijAIa7%2F7%2Burq54c91qDYEAQOlGjRz5t3nNqWwrG5r%2BtshNZtt37YxfTpywwyJi11t74oefftQQCACUcdfXuLwQF31uvZEjRsbLU6elr7OjsyNWN6%2B1w8LCPwgA3Mhdn2%2F%2F%2BXUgLMjjoH8z6U2cO38%2BWjdvdNByS9Vogp7puYnPxGOPPJqqpm%2B%2B%2BzamzH25Itq%2Fb9%2B%2B8fG%2Bd1O9gLl4%2FsIY0P9f4%2FyFC6nb7tAnh%2BPwZ5%2FG%2BHGPV%2Bz5u76tJS5fvuxChhEASpdxBri1rc0V0%2F6XL1%2BOTdu2pqqpX79%2BUb9wcSHar9KHvw3%2FIwBQltra2mhcXJ8vALSsq6j9sK413%2BptRfkaYNW6NdHZ2VmR5%2B83330b%2Bw8ecCFDAKB0r8yZF4MHDU5V0xdHvoxDn35SUfth2%2B6dcfbcuVQ1TZ00JR647%2F70bffTLz%2FHjj27Kvbu%2F9q1ay5kCACU7tWEd3mVuJb51atXY%2BPWTalqKtLCUJU6DP7GWt%2F%2BIwBQhruHDo3ZM2YlDADrKnJ%2FZHzvoShfA7Rt3Rxnz56tqOPlnXcPxFfffO1ChgBA6ZbXN0VtTa6POw59cji%2BPHqkIvfHrr274%2FSZ06lqenj0QzHp2efTt92VK1di3YbmijpezISIAEDZMi78UonD%2F3%2FV3tGR8nvuoiwQ9FoFzYV%2F5cqVWN%2FW4iKGAEDpHh8zLp4cPyFdXWtb11f0flmX8DFAw6L66NOnT%2Fq2O%2FDewTj69VcVcZxs2LIp3UujCAC4%2By%2Fbux%2B8H99%2B%2F11F75c9b78VJ06eTFVTXV1dLJgzvxDtVykr4r1mBkQEAMpRXV0dyxua8t39t6yv%2BH3T2dkZLRs3CIxlB4Ce%2F1ncjz%2F%2FFLve2uNChgBA6WZOeznuvWd4qpq6uroq7iWu3wxCCR%2BDzJo%2BI%2B4ZNix923137Pt4%2B8A7Pfr4qOSJjxAAuEEZZ3h7%2B%2BA78ePPP9k5Sduiuro6li9tKkT7vbamZw%2BPe%2FsfAYCy1A0cGAvn5nueW6nf%2Fl9PV1dXNLe1pqsr45oR19Pc1hqXLl3qkcfGR4c%2Bjk8%2F%2F8xJggBA6ZYuqo%2B%2BffumqqmjsyNaNrbZOb%2BScVKg8eMejwlPjE%2FfducvXIgNW3rm8rivV9CnjggA3Oy7uIQzu%2B1%2Ba2%2BcPHXSzvmVg%2B%2B%2FG8eOH094%2FBRkToAeOEze0dkRq5rXODkQACjdQw%2BOjsnPT0pXl%2BH%2F%2F%2BjatWspJ3pZvrQpaqpr0rff7n174%2FgPx3vUMbF15%2FZ0n4giAFAQGed1v3r1arRt2WTnXEfGrwGG3X13zJ4xM33bdXV1xZvre9bdsuF%2FBADKknVlt227dpjR7De8%2F%2BcP45vvvhUky9STHgOcPnM6Nm3b4qRAAKB0U16YFA%2Fe%2F0C6ugz%2F%2F76McyMsmDM%2FBtUNSt92n3%2F5RXzw0Yc94jhY07I%2B2tvbnRAIAJQu4ydcFy9djE3bt9o5vyPj1wC9e%2FeOxiX1hWi%2FnjJs%2Fvoa3%2F4jAFCGvn37Rv2Cxenq2rRta4%2F9Xvtm%2BfjwoTjy9dF0df2psRhfA6xuXlf4O%2Bcvjx6J9z78wMmAAEDpFs9fEAMHDMh3d2v4v1vWteQbBXjh2efikYceTt92p06fii07thV6%2F1v4BwGAsr3alG%2F4%2F%2By5c7Ft9047pztBqbU56XFVkDkBCjx83tXVFW%2BsW%2B0kQACgdCOG3xvTp76Urq4NmzfG1atX7aBu%2BPTzz%2BIvX3yerq6Vjcujqqoqfftt3bGtsBNN7d2%2FL%2BWEUAgAFMCKhmVRXV2dri5v%2Fxd%2FFOC%2BUaPipckvpm%2B79o6OWN1czOPNwj8IAJQt4zfbJ0%2BdjD373rJzSgoA61PWVZQFgorYkV64eCFaN1kjgxyqRowdfU0zAIARAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAC4%2BWo0AfR8O9oGl%2FxvZi08reGgB6saMXb0Nc0Ald3ZCwUgAAA6fIEABABAxy8IgAAA6PSFARAAAB2%2FIAACAKDjFwSgIMwDADp%2F2wECAIARABAAAB2nzh8EAEAHqvMHAQDQkZZds3cDQAAAelAI6G6tsxaeFgJAAIDKs6NtcEkdYBFCQCk1%2FnXbhQAQAKCiOv%2Fr%2Ff9K3H4hAAQAqMjOr5QOMPMoQHdr%2B61tFQJAAICK6vx7Qgi40c5fCAABACqy86%2BEDrC72yYEgAAAgkIBRgF88gcCAHAbO8AMIeBW1SAwgAAAFdn596QOsNxtEQJAAICKvPPP%2Fijgdgz9CwEgAAAAAgD07Lv%2F7KMAt%2FPFP6MAIABARXX%2BRe4Ab3bNQgAIAMAdHgWwzC8IAIC7Ve0KAgCg89NRgwAAOurb6nYMzd%2Fp4X%2FhAgQAEC7UCAgAAIAAABV693srh%2BizvP1vlAEEABAy1AYIAKDz096AAAAACABQKW7Fs3qz%2F4EAANxhGYe%2FDcmDAAA6ZLQ7CAAAgAAAAAgAAIAAAHTTHz3%2Fvplv7f%2FRz%2FIsHgQA0BGj%2FUEAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAABAAgNLczFX30P4gAAA31PHdzFXybufSw4AAAAAIAACAAAAACABwJ3kGrt1BAAAqsuPTGYMAANxhN%2FMLgFv5MwEBAAAQAKB4DIFrbxAAgIrs%2BHTKIACAzvkOuZXP6rO8ByBogAAAAAgA0LMV4c7X3TkIAKCTvs1uxxD9nX4MIGCAAACChVoBAQB0gNoVEACgwtzOoXmzAoIAANyGu9Ui3vne7Jrd%2FYMAABXVCXbnZ9yJO%2FLu%2FM6b1Wnr%2FEEAAAAEAOjZowBZ7%2F5v5yiAu38QAKCiQkBP6vjK3RadPwgAUNEjARnv%2Fm91DTp%2FEABAWEja%2BZdSiw4dBADQsVdoR9ndbRMWQACAiuoEu9vxZZyIp7s1%2FdE26vxBAICKCgFF7vxvVgjQ%2BYMAABUVAiqx4%2FvHbdb5w%2B1XNWLs6GuaAfIryhz8pXTmO9oG6%2FzBCABQ9M6%2FlFp1%2FmAEAOghnX%2B5IwGAEQCgB3T%2BRa8dBABAByoEgAAAIASAAADcQj3lGbp3ASAnLwGCu2gdPwgAgCCg4wcBABAGdPogAACCgI4fBACgwgKBDh8EAKCHhwKdPQgAAEAPYx4AABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAQAAAAAQAAEAAAAAEAABAAAAABAAAq2f8FTyFkt5WdTQIAAAAASUVORK5CYII%3D%22%2C%20%22sizes%22%3A%20%22512x512%22%2C%20%22type%22%3A%20%22image%2Fpng%22%2C%20%22purpose%22%3A%20%22any%22%7D%5D%7D">
-<link rel="apple-touch-icon" href="data:image/png;base64,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">
-<link rel="icon" href="data:image/png;base64,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">
-<title>Teniso karjera</title>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<title>Trucks-Trailers</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
-:root{
-  --bg:#F4F3EC; --card:#FFFFFF; --ink:#18261F; --mute:#6B7A72; --line:#DDDCD2;
-  --court:#1E4D36; --court2:#2B6B4B; --win:#2E7D4F; --loss:#B8432F; --ball:#D8DE2F; --plan:#2D6FB5;
-  --r:12px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--bg);color:var(--ink);font:16px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%}
-body{padding-bottom:calc(74px + env(safe-area-inset-bottom))}
-button,input,select,textarea{font:inherit;color:inherit}
-button{cursor:pointer;border:0;background:none}
-.num{font-variant-numeric:tabular-nums}
+  :root{
+    --bg:#F3F4F1; --panel:#FFFFFF; --ink:#1B2735; --ink2:#5C6673; --line:#DDE1DC;
+    --accent:#E9A800; --accent-ink:#1B2735; --danger:#B4302B; --r:10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:Roboto,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.45;-webkit-tap-highlight-color:transparent}
+  button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+  input,textarea{font:inherit;color:inherit}
+  .hidden{display:none!important}
 
-/* header */
-header{background:var(--court);color:#fff;padding:calc(12px + env(safe-area-inset-top)) 16px 12px;position:sticky;top:0;z-index:20}
-header .row{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
-header h1{font-size:20px;font-weight:700;letter-spacing:.2px}
-header .rec{font-size:13px;opacity:.85}
-header .rec b{font-size:17px;color:var(--ball)}
-header .menu{background:rgba(255,255,255,.14);border-radius:8px;padding:6px 10px;color:#fff;font-size:13px}
+  header{position:sticky;top:0;z-index:5;background:var(--ink);color:#fff;padding:calc(env(safe-area-inset-top) + 12px) 16px 12px;display:flex;align-items:center;gap:12px;min-height:60px}
+  header h1{font-size:20px;font-weight:600;letter-spacing:.2px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  header .count{font-size:14px;color:#B9C2CC}
+  .iconbtn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;flex:none}
+  .iconbtn:active{background:rgba(255,255,255,.15)}
+  .iconbtn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .sync{width:8px;height:8px;border-radius:50%;background:#4CAF50;flex:none}
+  .sync.off{background:#E9A800}
 
-/* tabs */
-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:20}
-nav button{flex:1;padding:10px 1px 8px;font-size:10px;color:var(--mute);display:flex;flex-direction:column;align-items:center;gap:3px}
-nav button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-nav button.on{color:var(--court);font-weight:600}
+  main{padding:12px 12px calc(100px + env(safe-area-inset-bottom));max-width:900px;margin:0 auto}
 
-main{padding:12px 12px 20px;max-width:720px;margin:0 auto}
-.view{display:none}.view.on{display:block}
+  .search{display:flex;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:0 12px;margin-bottom:12px}
+  .search input{flex:1;border:0;outline:0;padding:12px 8px;background:none}
+  .search svg{width:18px;height:18px;stroke:var(--ink2);fill:none;stroke-width:2}
 
-/* filters */
-.filters{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-.filters .full{grid-column:1/-1}
-select,input,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;-webkit-appearance:none;appearance:none}
-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7A72' stroke-width='1.8' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:30px}
-input:focus,select:focus,textarea:focus{outline:2px solid var(--court2);outline-offset:0;border-color:transparent}
-.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:8px;-webkit-overflow-scrolling:touch}
-.chip{white-space:nowrap;padding:7px 12px;border-radius:20px;background:#fff;border:1px solid var(--line);font-size:13px;color:var(--mute)}
-.chip.on{background:var(--court);color:#fff;border-color:var(--court)}
-.count{font-size:13px;color:var(--mute);margin:4px 2px 8px}
+  .filters{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+  .filters select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);font-size:14px;color:var(--ink)}
+  .grid{display:flex;flex-direction:column;gap:8px}
+  .card{background:var(--panel);border-radius:var(--r);overflow:hidden;border:1px solid var(--line);text-align:left;display:flex;flex-direction:row;align-items:stretch;width:100%}
+  .card .thumb{flex:0 0 84px;min-height:72px;background:#E4E7E2 center/cover no-repeat;display:grid;place-items:center;color:var(--ink2);font-size:11px;position:relative;text-align:center;padding:4px}
+  .card .n{position:absolute;right:4px;bottom:4px;background:rgba(27,39,53,.85);color:#fff;font-size:11px;padding:1px 6px;border-radius:12px}
+  .card .t{padding:8px 10px;flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:3px}
+  .card .t b{display:block;font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .card .t span{display:block;font-size:13px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .card .t .co{font-size:12px;color:var(--ink2);opacity:.85}
 
-/* match rows */
-.group{margin:14px 0 6px;font-size:13px;color:var(--mute);display:flex;justify-content:space-between;align-items:baseline}
-.group b{color:var(--ink);font-size:14px}
-.m{background:var(--card);border-radius:var(--r);padding:10px 12px 10px 14px;margin-bottom:8px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;border-left:5px solid var(--line);position:relative}
-.m.W{border-left-color:var(--win)}.m.L{border-left-color:var(--loss)}.m.F{border-left-color:var(--plan)}
-.m .who{font-weight:600;font-size:16px}
-.m .sub{font-size:12px;color:var(--mute);grid-column:1}
-.m .score{grid-column:2;grid-row:1/3;display:flex;align-items:center;gap:6px;font-size:16px;font-weight:600;letter-spacing:.3px}
-.m .score>span{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:3px;max-width:190px}
-.m .score small{font-size:11px;padding:2px 6px;border-radius:5px;color:#fff;font-weight:700}
-.m.W .score small{background:var(--win)}.m.L .score small{background:var(--loss)}
-.m .score .set{padding:2px 5px;border-radius:5px}
-.m .score .set.won{background:#DDF3E1;color:var(--win)}
-.m .tag{position:absolute;right:12px;top:-7px;font-size:10px;background:var(--ball);color:var(--ink);border-radius:5px;padding:1px 6px;font-weight:700}
+  .empty{text-align:center;color:var(--ink2);padding:60px 20px}
+  .empty b{display:block;color:var(--ink);font-size:18px;margin-bottom:6px}
 
-/* future */
-.f{background:var(--card);border-radius:var(--r);padding:12px 14px;margin-bottom:10px;border-left:5px solid var(--plan)}
-.f .who{font-weight:600;font-size:16px;display:flex;justify-content:space-between;align-items:center}
-.f .who span.dl{font-size:12px;font-weight:600;padding:3px 8px;border-radius:6px;background:#E8EEF7;color:var(--plan)}
-.f .who span.dl.soon{background:#FFF0C7;color:#8A6100}
-.f .who span.dl.over{background:#F8DDD8;color:var(--loss)}
-.f .info{font-size:13px;color:var(--mute);margin-top:4px;display:flex;flex-wrap:wrap;gap:4px 14px}
-.f .info b{color:var(--ink);font-weight:600}
-.f .planned{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:14px;display:flex;flex-wrap:wrap;gap:4px 14px}
-.f .planned .none{color:var(--mute);font-style:italic;font-size:13px}
-.f .acts{display:flex;gap:8px;margin-top:10px}
-.f .acts button{flex:1;padding:8px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--line);background:#fff}
-.f .acts button.pri{background:var(--court);color:#fff;border-color:var(--court)}
-.sect{font-size:15px;font-weight:700;margin:18px 0 8px;display:flex;justify-content:space-between;align-items:center}
-.sect button{font-size:13px;font-weight:600;color:var(--court);padding:4px 8px;border-radius:8px;background:#E6EFE9}
+  .fab{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:6;background:var(--accent);color:var(--accent-ink);border-radius:28px;height:56px;padding:0 22px 0 18px;display:flex;align-items:center;gap:8px;font-weight:600;font-size:16px;box-shadow:0 6px 18px rgba(27,39,53,.25)}
+  .fab svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .fab:active{transform:scale(.97)}
 
-/* calendar */
-.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.cal-head b{font-size:17px}
-.cal-head button{width:40px;height:40px;border-radius:10px;background:#fff;border:1px solid var(--line);font-size:18px}
-.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;background:transparent}
-.cal .dow{text-align:center;font-size:11px;color:var(--mute);padding:4px 0}
-.cal .d{aspect-ratio:1;background:#fff;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:13px;position:relative;border:1px solid transparent}
-.cal .d.out{opacity:.35}
-.cal .d.today{border-color:var(--court);font-weight:700}
-.cal .d.sel{background:var(--court);color:#fff}
-.cal .dots{display:flex;gap:2px;margin-top:3px;height:6px}
-.cal .dots i{width:6px;height:6px;border-radius:50%;display:block}
-.dot-W{background:var(--win)}.dot-L{background:var(--loss)}.dot-P{background:var(--plan)}.dot-D{background:#E0A100}
-.legend{display:flex;gap:14px;font-size:12px;color:var(--mute);margin:10px 2px;flex-wrap:wrap}
-.legend span{display:flex;align-items:center;gap:5px}.legend i{width:8px;height:8px;border-radius:50%;display:inline-block}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:13px;color:var(--ink2);margin-bottom:5px}
+  .field input,.field textarea{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:12px;outline:0}
+  .field input:focus,.field textarea:focus{border-color:var(--ink)}
+  .field textarea{min-height:140px;resize:vertical}
+  .photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-bottom:14px}
+  .ph{aspect-ratio:1;border-radius:8px;background:#E4E7E2 center/cover no-repeat;position:relative;overflow:hidden}
+  .ph button{position:absolute;top:4px;right:4px;width:28px;height:28px;border-radius:50%;background:rgba(27,39,53,.8);color:#fff;font-size:18px;line-height:1}
+  .ph.cover::after{content:"Viršelis";position:absolute;left:0;bottom:0;right:0;background:rgba(233,168,0,.92);color:var(--accent-ink);font-size:11px;padding:2px 6px;font-weight:600}
+  .ph.new::before{content:"Nauja";position:absolute;left:4px;top:4px;background:rgba(27,39,53,.8);color:#fff;font-size:11px;padding:1px 6px;border-radius:8px}
+  .addph{aspect-ratio:1;border:2px dashed var(--line);border-radius:8px;display:grid;place-items:center;color:var(--ink2);font-size:13px;text-align:center;padding:6px;background:var(--panel)}
+  .addph svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:2;margin-bottom:2px}
+  .row{display:flex;gap:10px;margin-top:6px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .row2 .field{margin:0 0 14px}
+  .btn{flex:1;padding:14px;border-radius:var(--r);font-weight:600;text-align:center}
+  .btn.primary{background:var(--ink);color:#fff}
+  .btn.accent{background:var(--accent);color:var(--accent-ink)}
+  .btn.ghost{background:var(--panel);border:1px solid var(--line)}
+  .btn.danger{color:var(--danger);background:var(--panel);border:1px solid var(--line)}
+  .btn:disabled{opacity:.5}
+  .meta{font-size:13px;color:var(--ink2);margin:16px 0 6px}
 
-/* stats */
-.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
-.kpi div{background:#fff;border-radius:var(--r);padding:12px 6px;text-align:center}
-.kpi b{display:block;font-size:24px;font-weight:700}
-.kpi span{font-size:11px;color:var(--mute)}
-.kpi .w b{color:var(--win)}.kpi .l b{color:var(--loss)}
-.bar{height:10px;border-radius:5px;background:var(--loss);overflow:hidden;margin:2px 0 14px}
-.bar i{display:block;height:100%;background:var(--win)}
-table{width:100%;border-collapse:collapse;background:#fff;border-radius:var(--r);overflow:hidden;font-size:14px;margin-bottom:14px}
-th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line)}
-th{font-size:12px;color:var(--mute);font-weight:600;background:#FAFAF6}
-td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
-tr:last-child td{border-bottom:0}
-td .pct{display:inline-block;min-width:44px;text-align:right}
-.mini{height:6px;background:#EDECE4;border-radius:3px;overflow:hidden;margin-top:4px}
-.mini i{display:block;height:100%;background:var(--win)}
-.h2{font-size:14px;font-weight:700;margin:6px 0 6px;color:var(--mute)}
+  .login{max-width:380px;margin:60px auto;padding:0 8px}
+  .login h2{font-size:22px;font-weight:600;margin-bottom:4px}
+  .login p{color:var(--ink2);font-size:14px;margin-bottom:20px}
+  .login .err{color:var(--danger);font-size:14px;min-height:20px;margin-bottom:8px}
 
-/* contacts */
-.c{background:#fff;border-radius:var(--r);padding:10px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.c .nm{font-weight:600}.c .st{font-size:12px;color:var(--mute)}
-.av{width:44px;height:44px;border-radius:50%;background:#E6EFE9;color:var(--court);font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;flex:0 0 44px;overflow:hidden;background-size:cover;background-position:center}
-.av.sm{width:34px;height:34px;flex-basis:34px;font-size:12px}
-.av.lg{width:96px;height:96px;flex-basis:96px;font-size:30px;margin:0 auto 10px}
-.m .who{display:flex;align-items:center;gap:8px}
-.m .note{grid-column:1/-1;font-size:13px;color:var(--ink);opacity:.8;margin-top:4px;white-space:pre-wrap;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-textarea{min-height:120px;resize:vertical;line-height:1.45}
-.photoBox{text-align:center;margin-bottom:12px}
-.photoBox button{font-size:13px;font-weight:600;color:var(--court);background:#E6EFE9;padding:7px 12px;border-radius:8px;margin:0 3px}
-.c a{color:var(--court);text-decoration:none;font-weight:600;font-size:14px;white-space:nowrap;background:#E6EFE9;padding:7px 10px;border-radius:8px}
-.c .rec{font-size:12px;font-weight:600}.c .rec .w{color:var(--win)}.c .rec .l{color:var(--loss)}
+  .sheet{position:fixed;inset:0;background:rgba(27,39,53,.5);z-index:20;display:flex;align-items:flex-end}
+  .sheet .box{background:var(--panel);width:100%;border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));max-width:600px;margin:0 auto}
+  .sheet h2{font-size:17px;font-weight:600;margin-bottom:6px}
+  .sheet p{font-size:14px;color:var(--ink2);margin-bottom:12px}
+  .sheet .btn{margin-top:8px;flex:none;width:100%}
 
-/* fab */
-.fab{position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;background:var(--ball);color:var(--ink);font-size:32px;line-height:56px;text-align:center;box-shadow:0 6px 16px rgba(0,0,0,.25);z-index:19;font-weight:300}
+  .viewer{position:fixed;inset:0;background:#000;z-index:30;display:flex;align-items:center;justify-content:center}
+  .viewer img{max-width:100%;max-height:100%;object-fit:contain}
+  .viewer .x{position:absolute;top:calc(12px + env(safe-area-inset-top));right:12px;color:#fff;font-size:30px;width:44px;height:44px}
+  .viewer .nav{position:absolute;bottom:calc(16px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;color:#ccc;font-size:14px}
 
-/* modal */
-.ov{position:fixed;inset:0;background:rgba(10,20,15,.55);display:none;z-index:30;align-items:flex-end;justify-content:center}
-.ov.on{display:flex}
-.md{background:var(--bg);width:100%;max-width:720px;max-height:92vh;border-radius:18px 18px 0 0;overflow:auto;padding:14px 16px calc(20px + env(safe-area-inset-bottom))}
-.md h2{font-size:18px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
-.md h2 button{font-size:14px;color:var(--mute);padding:6px}
-.fg{margin-bottom:10px}
-.fg label{display:block;font-size:12px;color:var(--mute);margin-bottom:4px;padding-left:2px}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-.seg{display:flex;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.seg button{flex:1;padding:10px 4px;font-size:14px;color:var(--mute)}
-.seg button.on{background:var(--court);color:#fff;font-weight:600}
-.seg button.on.w{background:var(--win)}.seg button.on.l{background:var(--loss)}
-.btns{display:flex;gap:8px;margin-top:14px}
-.btns button{flex:1;padding:13px;border-radius:10px;font-weight:600;font-size:15px}
-.btn-p{background:var(--court);color:#fff}.btn-s{background:#fff;border:1px solid var(--line)}.btn-d{background:#fff;color:var(--loss);border:1px solid #EBC9C2;flex:0 0 auto!important;padding:13px 16px!important}
-.hint{font-size:12px;color:var(--mute);margin-top:4px;padding-left:2px}
-.empty{text-align:center;color:var(--mute);padding:40px 16px;font-size:14px}
-.menu-list button{display:block;width:100%;text-align:left;padding:14px 12px;background:#fff;border-radius:10px;margin-bottom:8px;font-size:15px}
-.menu-list button small{display:block;color:var(--mute);font-size:12px;margin-top:2px}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(86px + env(safe-area-inset-bottom));background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;z-index:40;opacity:0;transition:opacity .2s;pointer-events:none}
-.toast.on{opacity:1}
-.login{position:fixed;inset:0;background:var(--court);z-index:50;display:flex;align-items:center;justify-content:center;padding:24px}
-.login .box{background:#fff;border-radius:16px;padding:24px 20px;width:100%;max-width:380px}
-.login h1{font-size:22px;margin-bottom:4px}.login p{font-size:13px;color:var(--mute);margin-bottom:16px}
-.login .err{color:var(--loss);font-size:13px;margin-top:8px;min-height:18px}
-.sync{font-size:11px;opacity:.7;margin-left:6px}
-@media (min-width:600px){.filters{grid-template-columns:repeat(4,1fr)}.filters .full{grid-column:span 2}}
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom));background:var(--ink);color:#fff;padding:10px 16px;border-radius:20px;font-size:14px;z-index:40;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;text-align:center}
+  .toast.show{opacity:1}
+  .busy{position:fixed;inset:0;background:rgba(243,244,241,.7);z-index:50;display:grid;place-items:center;font-weight:600}
 </style>
 </head>
 <body>
 
-<div class="login" id="login">
-  <div class="box">
-    <h1>Teniso karjera</h1>
-    <p>Prisijunk, kad matchai būtų sinchronizuojami tarp telefono ir kompiuterio.</p>
-    <div class="fg"><label>El. paštas</label><input id="l_email" type="email" autocomplete="username" inputmode="email"></div>
-    <div class="fg"><label>Slaptažodis</label><input id="l_pass" type="password" autocomplete="current-password"></div>
-    <div class="btns"><button class="btn-p" onclick="login()">Prisijungti</button></div>
-    <div class="err" id="l_err"></div>
-  </div>
-</div>
-<header>
-  <div class="row">
-    <div>
-      <h1>Teniso karjera</h1>
-      <div class="rec" id="hdrRec"></div><div class="rec" id="syncInfo" style="font-size:11px;opacity:.7"></div>
-    </div>
-    <button class="menu" onclick="openMenu()">Meniu</button>
-  </div>
+<header id="hdr">
+  <button class="iconbtn hidden" id="backBtn" aria-label="Atgal"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <h1 id="title">Trucks-Trailers</h1>
+  <span class="count" id="count"></span>
+  <span class="sync hidden" id="sync" title="Prisijungta"></span>
+  <button class="iconbtn hidden" id="menuBtn" aria-label="Meniu"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></button>
 </header>
 
 <main>
-<!-- MATCHAI -->
-<section class="view on" id="v-matchai">
-  <div class="filters">
-    <select id="fYear"></select>
-    <select id="fTurn"></select>
-        <select id="fRes"><option value="">Visi rezultatai</option><option value="W">Laimėti</option><option value="L">Pralaimėti</option></select>
-    <input class="full" id="fName" placeholder="Ieškoti žaidėjo..." autocomplete="off">
-  </div>
-  <div class="count" id="mCount"></div>
-  <div id="mList"></div>
-</section>
+  <!-- LOGIN -->
+  <section id="loginView" class="login hidden">
+    <h2>Prisijungti</h2>
+    <p>Tas pats prisijungimas telefone ir kompiuteryje – nuotraukos sinchronizuojasi automatiškai.</p>
+    <div class="field"><label for="lEmail">El. paštas</label><input id="lEmail" type="email" autocomplete="username" inputmode="email"></div>
+    <div class="field"><label for="lPass">Slaptažodis</label><input id="lPass" type="password" autocomplete="current-password"></div>
+    <div class="err" id="lErr"></div>
+    <button class="btn primary" id="loginBtn" style="width:100%">Prisijungti</button>
+  </section>
 
-<!-- BUSIMI -->
-<section class="view" id="v-busimi">
-  <div class="sect">Būsimi matchai <button onclick="openFuture()">+ Pridėti</button></div>
-  <div id="fList"></div>
-</section>
+  <!-- LIST -->
+  <section id="listView" class="hidden">
+    <div class="search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Ieškoti: pavadinimas, VIN, įmonė, kodas…">
+    </div>
+    <div class="filters">
+      <select id="fltBrand"><option value="">Visos markės</option></select>
+      <select id="fltYear"><option value="">Visi metai</option></select>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty hidden" id="empty"><b>Dar nėra nė vieno vilkiko</b>Spauskite „Naujas" ir nufotografuokite pirmąjį.</div>
+    <div class="empty" id="loading">Kraunama…</div>
+  </section>
 
-<!-- KALENDORIUS -->
-<section class="view" id="v-kal">
-  <div class="cal-head"><button onclick="calMove(-1)">‹</button><b id="calTitle"></b><button onclick="calMove(1)">›</button></div>
-  <div class="cal" id="cal"></div>
-  <div class="legend"><span><i class="dot-W"></i>Laimėta</span><span><i class="dot-L"></i>Pralaimėta</span><span><i class="dot-P"></i>Suplanuota</span><span><i class="dot-D"></i>Deadline</span></div>
-  <div id="calDay"></div>
-</section>
-
-<!-- STATISTIKA -->
-<section class="view" id="v-stat">
-  <div class="filters">
-    <select id="sYear"></select>
-    <select id="sTurn"></select>
+  <!-- EDIT -->
+  <section id="editView" class="hidden">
+    <div class="field"><label for="fTitle">Pavadinimas</label><input id="fTitle" placeholder="pvz. FH 500 4x2"></div>
+    <div class="field"><label for="fBrand">Markė</label><input id="fBrand" placeholder="pvz. Volvo" autocomplete="off"></div>
+    <div class="row2">
+      <div class="field"><label for="fYear">Pagaminimo data</label><input id="fYear" placeholder="pvz. 2019-05" inputmode="numeric"></div>
+      <div class="field"><label for="fKm">Rida (km)</label><input id="fKm" placeholder="pvz. 650000" inputmode="numeric"></div>
+    </div>
+    <div class="field"><label for="fVin">Kėbulo numeris (VIN)</label><input id="fVin" placeholder="17 simbolių" autocapitalize="characters" spellcheck="false" maxlength="17"></div>
+    <div class="field"><label for="fDesc">Aprašymas</label><textarea id="fDesc" placeholder="Būklė, komplektacija, pastabos…"></textarea></div>
+    <div class="row2">
+      <div class="field"><label for="fCompany">Įmonė</label><input id="fCompany" placeholder="pvz. UAB Transportas"></div>
+      <div class="field"><label for="fCode">Įmonės kodas</label><input id="fCode" placeholder="pvz. 123456789" inputmode="numeric"></div>
+    </div>
+    <div class="field"><label for="fLoc">Lokacija</label><input id="fLoc" placeholder="pvz. Vilnius, LT"></div>
+    <div class="field"><label for="fNote">Komentaras</label><textarea id="fNote" placeholder="Papildomos pastabos…"></textarea></div>
+    <div class="field"><label>Nuotraukos</label>
+      <div class="photos" id="photos"></div>
+      <div class="row">
+        <button class="btn ghost" id="camBtn">📷 Fotografuoti</button>
+        <button class="btn ghost" id="galBtn">🖼 Iš galerijos</button>
       </div>
-  <div id="stats"></div>
-</section>
-
-<!-- DVEJETAI -->
-<section class="view" id="v-dvej">
-  <div class="seg" id="dMode" style="margin-bottom:12px"><button data-v="list" class="on">Matchai</button><button data-v="stat">Statistika</button></div>
-  <div class="filters">
-    <select id="dYear"></select>
-    <select id="dTurn"></select>
-    <select id="dRes"><option value="">Visi rezultatai</option><option value="W">Laimėti</option><option value="L">Pralaimėti</option></select>
-    <input id="dName" placeholder="Ieškoti varžovų..." autocomplete="off">
-  </div>
-  <div id="dListWrap"><div class="count" id="dCount"></div><div id="dList"></div></div>
-  <div id="dStats" style="display:none"></div>
-</section>
-
-<!-- KONTAKTAI -->
-<section class="view" id="v-kont">
-  <div class="filters"><input class="full" id="cSearch" placeholder="Ieškoti kontakto..." autocomplete="off"></div>
-  <div class="sect">Kontaktai <button onclick="openContact()">+ Pridėti</button></div>
-  <div id="cList"></div>
-</section>
+    </div>
+    <div class="row">
+      <button class="btn danger" id="delBtn">Ištrinti</button>
+      <button class="btn primary" id="saveBtn">Išsaugoti</button>
+    </div>
+    <div class="meta" id="meta"></div>
+  </section>
 </main>
 
-<button class="fab" id="fab" onclick="openMatch()" title="Pridėti matchą">+</button>
+<button class="fab hidden" id="fab"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Naujas</button>
 
-<nav>
-  <button class="on" data-v="matchai" onclick="showView('matchai')"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Vienetai</button>
-  <button data-v="busimi" onclick="showView('busimi')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Būsimi</button>
-  <button data-v="kal" onclick="showView('kal')"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Kalendorius</button>
-  <button data-v="stat" onclick="showView('stat')"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>Statistika</button>
-  <button data-v="dvej" onclick="showView('dvej')"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3.5"/><circle cx="16" cy="8" r="3.5"/><path d="M2 21c0-4 3-6 6-6s6 2 6 6M10 21c0-4 3-6 6-6s6 2 6 6"/></svg>Dvejetai</button>
-  <button data-v="kont" onclick="showView('kont')"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Kontaktai</button>
-</nav>
+<input type="file" id="camIn" accept="image/*" capture="environment" class="hidden">
+<input type="file" id="galIn" accept="image/*" multiple class="hidden">
 
-<!-- MODAL: match -->
-<div class="ov" id="ovMatch"><div class="md">
-  <h2><span id="mTitle">Naujas matchas</span><button onclick="closeOv('ovMatch')">Uždaryti</button></h2>
-  <input type="hidden" id="m_id">
-    <div class="fg"><label>Vardas Pavardė</label><input id="m_varzovas" list="dlOpp" autocomplete="off" placeholder="Varžovas"></div>
-  <div class="fg"><label>Telefono numeris</label><input id="m_tel" type="tel" inputmode="tel" placeholder="370..."></div>
-  <div class="g2">
-    <div class="fg"><label>Data</label><input id="m_data" type="date"></div>
-    <div class="fg"><label>Aikštynas</label><input id="m_kortai" list="dlCourt" autocomplete="off" placeholder="SEB, M7, BT..."></div>
+<div class="sheet hidden" id="sheet">
+  <div class="box">
+    <h2 id="sheetUser">Paskyra</h2>
+    <p>Duomenys saugomi Firebase debesyje ir matomi visuose įrenginiuose, kuriuose prisijungėte.</p>
+    <button class="btn ghost" id="expBtn">Atsisiųsti atsarginę kopiją (JSON)</button>
+    <button class="btn danger" id="logoutBtn">Atsijungti</button>
+    <button class="btn ghost" id="closeSheet">Uždaryti</button>
   </div>
-  <div class="fg"><label>Turnyras</label><input id="m_turnyras" list="dlTurn" autocomplete="off" placeholder="pvz. TP ruduo 2026"></div>
-  <div class="g2">
-    <div class="fg"><label>Divizionas</label><input id="m_div" placeholder="3" inputmode="decimal"></div>
-    <div class="fg"><label>Etapas (jei playoff)</label><input id="m_etapas" placeholder="top16, paguoda..."></div>
-  </div>
-  <div class="fg"><label>Rezultatas (setai)</label>
-    <div class="g3"><input id="m_s1" placeholder="1 setas" inputmode="text"><input id="m_s2" placeholder="2 setas"><input id="m_s3" placeholder="3 setas / tiebreak"></div>
-    <div class="hint">Formatas 6:4, 7:6(5), 10:8. Rezultatas nustatomas automatiškai, bet galima pakeisti.</div>
-  </div>
-  <div class="fg"><div class="seg" id="m_rez"><button data-v="W" class="w">Laimėta</button><button data-v="L" class="l">Pralaimėta</button></div></div>
-  <div class="fg"><label>Pastabos</label><textarea id="m_pastabos" placeholder="Matcho aprašymas: kaip sekėsi, kas veikė, ką tobulinti, varžovo žaidimo stilius..."></textarea></div>
-  <div class="btns"><button class="btn-d" id="m_del" onclick="deleteMatch()">Ištrinti</button><button class="btn-p" onclick="saveMatch()">Išsaugoti</button></div>
-</div></div>
+</div>
 
-<!-- MODAL: future -->
-<div class="ov" id="ovFuture"><div class="md">
-  <h2><span id="fTitle">Būsimas matchas</span><button onclick="closeOv('ovFuture')">Uždaryti</button></h2>
-  <input type="hidden" id="f_id">
-  <div class="fg"><div class="seg" id="f_tipas"><button data-v="vienetai" class="on">Vienetai</button><button data-v="dvejetai">Dvejetai</button></div></div>
-  <div class="fg"><label id="f_lblV">Vardas Pavardė</label><input id="f_varzovas" list="dlOpp" autocomplete="off" placeholder="Varžovas"></div>
-  <div class="fg" id="f_telBox"><label>Telefono numeris</label><input id="f_tel" type="tel" inputmode="tel" placeholder="370..."></div>
-  <div class="fg" id="f_partBox" style="display:none"><label>Mano partneris</label><input id="f_partneris" list="dlPartner" autocomplete="off" placeholder="V. Bražinskas"></div>
-  <div class="fg"><label>Turnyras</label><input id="f_turnyras" list="dlTurn" autocomplete="off"></div>
-  <div class="fg"><label>Galutinė data (deadline)</label><input id="f_deadline" type="date"></div>
-  <div class="sect" style="margin-top:6px">Suplanuota</div>
-  <div class="g2">
-    <div class="fg"><label>Matcho data</label><input id="f_planData" type="date"></div>
-    <div class="fg"><label>Laikas</label><input id="f_laikas" type="time"></div>
-  </div>
-  <div class="fg"><label>Aikštynas / kortas</label><input id="f_aikstynas" list="dlCourt" autocomplete="off" placeholder="SEB 21, M7, BT..."></div>
-  <div class="g2">
-    <div class="fg"><label>Kas mokėjo už kortą</label><select id="f_mokejo"><option value="">–</option><option>Aš</option><option>Varžovas</option><option>Per pusę</option><option>Nemokamai</option></select></div>
-    <div class="fg"><label>Suma (€)</label><input id="f_suma" inputmode="decimal" placeholder="0"></div>
-  </div>
-  <div class="fg"><label>Pastabos</label><textarea id="f_pastabos" style="min-height:70px"></textarea></div>
-  <div class="btns"><button class="btn-d" id="f_del" onclick="deleteFuture()">Ištrinti</button><button class="btn-s" id="f_toRes" onclick="futureToResult()">Įvesti rezultatą</button><button class="btn-p" onclick="saveFuture()">Išsaugoti</button></div>
-</div></div>
+<div class="viewer hidden" id="viewer">
+  <img id="vimg" alt="">
+  <button class="x" id="vclose">×</button>
+  <div class="nav" id="vnav"></div>
+</div>
 
-<!-- MODAL: doubles -->
-<div class="ov" id="ovDouble"><div class="md">
-  <h2><span id="dTitle">Naujas dvejetų matchas</span><button onclick="closeOv('ovDouble')">Uždaryti</button></h2>
-  <input type="hidden" id="d_id">
-  <div class="fg"><label>Varžovų pora</label><input id="d_varzovai" list="dlDOpp" autocomplete="off" placeholder="pvz. A. Kondrotas / A. Kisielis"></div>
-  <div class="fg"><label>Mano partneris</label><input id="d_partneris" list="dlPartner" autocomplete="off" placeholder="V. Bražinskas"></div>
-  <div class="fg"><label>Data</label><input id="d_data" type="date"></div>
-  <div class="fg"><label>Turnyras</label><input id="d_turnyras" list="dlDTurn" autocomplete="off" placeholder="pvz. Olybet ruduo 2026"></div>
-  <div class="g2">
-    <div class="fg"><label>Vieta</label><input id="d_vieta" list="dlVieta" autocomplete="off" placeholder="SEB arena"></div>
-    <div class="fg"><label>Danga</label><input id="d_danga" list="dlDanga" autocomplete="off" placeholder="Akrilas, Kilimas, Gruntas"></div>
-  </div>
-  <div class="fg"><label>Rezultatas (setai, mūsų taškai pirmi)</label>
-    <div class="g3"><input id="d_s1" placeholder="1 setas"><input id="d_s2" placeholder="2 setas"><input id="d_s3" placeholder="3 setas / tiebreak"></div>
-    <div class="hint">Formatas 6:4, 7:6(7:2), 10:8.</div>
-  </div>
-  <div class="fg"><div class="seg" id="d_rez"><button data-v="W" class="w">Laimėta</button><button data-v="L" class="l">Pralaimėta</button></div></div>
-  <div class="fg"><label>Pastabos</label><textarea id="d_pastabos" placeholder="Matcho aprašymas, arba b/ž (be žaidimo)"></textarea></div>
-  <div class="btns"><button class="btn-d" id="d_del" onclick="deleteDouble()">Ištrinti</button><button class="btn-p" onclick="saveDouble()">Išsaugoti</button></div>
-</div></div>
-
-<!-- MODAL: contact -->
-<div class="ov" id="ovContact"><div class="md">
-  <h2><span>Kontaktas</span><button onclick="closeOv('ovContact')">Uždaryti</button></h2>
-  <input type="hidden" id="c_id">
-  <div class="photoBox"><div class="av lg" id="c_av"></div><button onclick="$('c_file').click()">Įkelti nuotrauką</button><button id="c_photoDel" onclick="removePhoto()">Pašalinti</button><input type="file" id="c_file" accept="image/*" style="display:none" onchange="photoPicked(this)"></div>
-  <div class="fg"><label>Vardas Pavardė</label><input id="c_vardas"></div>
-  <div class="fg"><label>Telefono numeris</label><input id="c_tel" type="tel" inputmode="tel"></div>
-  <div class="fg"><label>Pastabos</label><input id="c_pastabos"></div>
-  <div class="hint" id="c_hint"></div>
-  <div class="btns"><button class="btn-d" id="c_del" onclick="deleteContact()">Ištrinti</button><button class="btn-p" onclick="saveContact()">Išsaugoti</button></div>
-</div></div>
-
-<!-- MODAL: menu -->
-<div class="ov" id="ovMenu"><div class="md">
-  <h2><span>Meniu</span><button onclick="closeOv('ovMenu')">Uždaryti</button></h2>
-  <div class="menu-list">
-    <button onclick="exportExcel()">Eksportuoti į Excel<small>Vienetai, dvejetai, būsimi ir kontaktai atskiruose lapuose</small></button>
-    <button onclick="exportData()">Eksportuoti duomenis (JSON)<small>Atsarginė kopija – išsaugok failą telefone ar debesyje</small></button>
-    <button onclick="document.getElementById('impFile').click()">Importuoti duomenis (JSON)<small>Atkurti iš atsarginės kopijos</small></button>
-    <button onclick="openRename()">Pervadinti turnyrą<small>Suvienodinti pavadinimą visuose matchuose</small></button>
-    <button onclick="resetData()">Atstatyti pradinius duomenis<small>Grąžina duomenis iš Excel failo, ištrina pakeitimus</small></button>
-    <button onclick="logout()">Atsijungti<small id="userInfo"></small></button>
-  </div>
-  <input type="file" id="impFile" accept=".json,application/json" style="display:none" onchange="importData(this)">
-  <div class="hint" id="storInfo"></div>
-</div></div>
-
-<!-- MODAL: rename -->
-<div class="ov" id="ovRename"><div class="md">
-  <h2><span>Pervadinti turnyrą</span><button onclick="closeOv('ovRename')">Uždaryti</button></h2>
-  <div class="fg"><label>Esamas pavadinimas</label><select id="r_from"></select></div>
-  <div class="fg"><label>Naujas pavadinimas</label><input id="r_to" list="dlTurn" autocomplete="off"></div>
-  <div class="btns"><button class="btn-p" onclick="doRename()">Pervadinti</button></div>
-</div></div>
-
-<datalist id="dlOpp"></datalist><datalist id="dlDOpp"></datalist><datalist id="dlPartner"></datalist><datalist id="dlDTurn"></datalist><datalist id="dlVieta"></datalist><datalist id="dlDanga"></datalist><datalist id="dlTurn"></datalist><datalist id="dlCourt"></datalist>
 <div class="toast" id="toast"></div>
+<div class="busy hidden" id="busy">Apdorojama…</div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
-const SEED = {"matches":[{"id":"m1","data":"2023-12-19","kortai":"SEB","turnyras":"Olybet žiema 2023/24","etapas":"","div":"5","varzovas":"Ignas Kindaravičius","tel":"37068355247","s1":"2:6","s2":"1:6","s3":"","rez":"L","pastabos":""},{"id":"m2","data":"2023-12-23","kortai":"SEB","turnyras":"Olybet žiema 2023/24","etapas":"","div":"5","varzovas":"Denis Kostyk","tel":"37060037492","s1":"4:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m3","data":"2024-01-03","kortai":"SEB","turnyras":"Olybet žiema 2023/24","etapas":"","div":"5","varzovas":"Gabrielė Zujutė","tel":"37061286404","s1":"1:6","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"m4","data":"2024-01-15","kortai":"SEB","turnyras":"Olybet žiema 2023/24","etapas":"","div":"5","varzovas":"Sergey Kuksov","tel":"37067534395","s1":"0:6","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"m5","data":"2024-03-17","kortai":"SEB","turnyras":"Activus pavasaris 2024","etapas":"","div":"5","varzovas":"Justinas Samuolis","tel":"37061401982","s1":"4:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m6","data":"2024-03-18","kortai":"SEB","turnyras":"TP pavasaris 2024","etapas":"","div":"light","varzovas":"Ivan Chuvakhin","tel":"37061582207","s1":"6:2","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m7","data":"2024-03-25","kortai":"N-M7","turnyras":"TP pavasaris 2024","etapas":"","div":"light","varzovas":"Arvydas Baublys","tel":"37065070354","s1":"6:4","s2":"1:6","s3":"0:6","rez":"L","pastabos":""},{"id":"m8","data":"2024-04-01","kortai":"SEB","turnyras":"TP pavasaris 2024","etapas":"","div":"light","varzovas":"Gintaras Buzkys","tel":"37060088047","s1":"6:3","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"m9","data":"2024-04-02","kortai":"SEB","turnyras":"Activus pavasaris 2024","etapas":"","div":"5","varzovas":"Mindaugas Osipovas","tel":"37060392894","s1":"6:7","s2":"6:1","s3":"7:5","rez":"L","pastabos":""},{"id":"m10","data":"2024-04-08","kortai":"SEB","turnyras":"Activus pavasaris 2024","etapas":"","div":"5","varzovas":"Ignas Savosta","tel":"37064873199","s1":"4:6","s2":"5:7","s3":"","rez":"W","pastabos":""},{"id":"m11","data":"2024-04-14","kortai":"SEB","turnyras":"TP pavasaris 2024","etapas":"","div":"light","varzovas":"Ignas Zaukevičius","tel":"37061422547","s1":"1:6","s2":"0:6","s3":"","rez":"W","pastabos":""},{"id":"m12","data":"2024-04-19","kortai":"SEB","turnyras":"Activus pavasaris 2024","etapas":"","div":"5","varzovas":"Kipras Siliūnas","tel":"37069943833","s1":"6:2","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m13","data":"2024-04-30","kortai":"SEB","turnyras":"TP pavasaris 2024","etapas":"","div":"light","varzovas":"Rimantas Kadagis","tel":"37065520033","s1":"4:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m14","data":"2024-05-05","kortai":"Vingis","turnyras":"Activus pavasaris 2024","etapas":"","div":"5","varzovas":"Remigijus Savosta","tel":"37061011426","s1":"2:6","s2":"6:2","s3":"2:6","rez":"L","pastabos":""},{"id":"m15","data":"2024-05-15","kortai":"SEB","turnyras":"Activus pavasaris 2024","etapas":"","div":"5","varzovas":"Lukas Velutis","tel":"37063070430","s1":"4:6","s2":"6:4","s3":"10:3","rez":"W","pastabos":""},{"id":"m16","data":"2024-05-19","kortai":"SEB","turnyras":"TP pavasaris 2024","etapas":"","div":"light","varzovas":"Ramunas Stanišauskas","tel":"37068233782","s1":"3:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m17","data":"2024-06-02","kortai":"Vingis","turnyras":"TP vasara 2024","etapas":"","div":"light","varzovas":"Andrius Matuzas","tel":"37067582500","s1":"6:7","s2":"6:2","s3":"8:10","rez":"L","pastabos":""},{"id":"m18","data":"2024-06-03","kortai":"SEB","turnyras":"TopSpin vasara 2024","etapas":"","div":"3.0","varzovas":"Arnoldas Šeščila","tel":"37067173257","s1":"2:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m19","data":"2024-06-05","kortai":"SEB","turnyras":"Olybet vasara 2024","etapas":"","div":"4","varzovas":"Vytautas Butkus","tel":"37061554041","s1":"6:1","s2":"5:7","s3":"10:5","rez":"W","pastabos":""},{"id":"m20","data":"2024-06-06","kortai":"M7","turnyras":"TP vasara 2024","etapas":"","div":"light","varzovas":"Kęstutis Gramba","tel":"37060039820","s1":"1:6","s2":"6:3","s3":"10:8","rez":"W","pastabos":""},{"id":"m21","data":"2024-06-11","kortai":"SEB","turnyras":"Olybet vasara 2024","etapas":"","div":"4","varzovas":"Vaidas Beinoras","tel":"37065635351","s1":"2:6","s2":"1:6","s3":"","rez":"L","pastabos":""},{"id":"m22","data":"2024-06-12","kortai":"SEB","turnyras":"TP vasara 2024","etapas":"","div":"light","varzovas":"Evaldas Česnavičius","tel":"37060460384","s1":"4:6","s2":"6:2","s3":"6:4","rez":"W","pastabos":""},{"id":"m23","data":"2024-06-13","kortai":"M7","turnyras":"TopSpin vasara 2024","etapas":"","div":"3.0","varzovas":"Vitali Luchanok","tel":"37069000337","s1":"7:6(5)","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"m24","data":"2024-06-17","kortai":"BS","turnyras":"TopSpin vasara 2024","etapas":"","div":"3.0","varzovas":"Andrius Nikanorovas","tel":"37069996686","s1":"4:6","s2":"7:5","s3":"4:10","rez":"L","pastabos":""},{"id":"m25","data":"2024-06-19","kortai":"M7","turnyras":"Olybet vasara 2024","etapas":"","div":"4","varzovas":"Šarūnas Samas","tel":"37064207558","s1":"4:6","s2":"6(3):7","s3":"","rez":"L","pastabos":""},{"id":"m26","data":"2024-07-01","kortai":"SEB","turnyras":"Olybet vasara 2024","etapas":"","div":"4","varzovas":"Justas Kriukas","tel":"37065635620","s1":"7:5","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m27","data":"2024-07-08","kortai":"SEB","turnyras":"Olybet vasara 2024","etapas":"","div":"4","varzovas":"Karolis Sutkaitis","tel":"37069912455","s1":"2:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m28","data":"2024-07-09","kortai":"SEB","turnyras":"TopSpin vasara 2024","etapas":"","div":"3.0","varzovas":"Arnas Jagminas","tel":"37063095104","s1":"7:6(3)","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m29","data":"2024-07-15","kortai":"Ozo","turnyras":"Olybet vasara 2024","etapas":"","div":"4","varzovas":"Lukas Morkevičius","tel":"37066518018","s1":"6:0","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"m30","data":"2024-07-16","kortai":"SEB","turnyras":"TopSpin vasara 2024","etapas":"","div":"3.0","varzovas":"Antanas Savickis","tel":"37067088276","s1":"6:4","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m31","data":"2024-07-17","kortai":"SEB","turnyras":"TP vasara 2024","etapas":"top16","div":"light","varzovas":"Mantas Namgaudis","tel":"37062839474","s1":"6:3","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m32","data":"2024-07-25","kortai":"SEB","turnyras":"TopSpin vasara 2024","etapas":"top32","div":"3.0","varzovas":"Rimvydas Stumbrys","tel":"37061022908","s1":"4:5","s2":"-","s3":"","rez":"W","pastabos":""},{"id":"m33","data":"2024-07-29","kortai":"SEB","turnyras":"Olybet vasara 2024","etapas":"top64","div":"4","varzovas":"Ignas Jurkus","tel":"37062129129","s1":"2:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m34","data":"2024-08-04","kortai":"BS","turnyras":"Olybet vasara 2024","etapas":"paguoda","div":"4","varzovas":"Elvinas Didika","tel":"37063906185","s1":"3:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m35","data":"2024-08-06","kortai":"SEB","turnyras":"TopSpin vasara 2024","etapas":"top16","div":"3.0","varzovas":"Žygimantas Satkauskas","tel":"37062806881","s1":"2:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m36","data":"2024-08-18","kortai":"BT","turnyras":"TP vasara 2024","etapas":"top8","div":"light","varzovas":"Rimantas Besenas","tel":"37067255322","s1":"1:6","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"m37","data":"2024-09-05","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Matas Anužis","tel":"37069270159","s1":"6:2","s2":"1:6","s3":"1:6","rez":"L","pastabos":""},{"id":"m38","data":"2024-09-09","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Aivaras Lukošius","tel":"37060064130","s1":"0:6","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"m39","data":"2024-09-10","kortai":"BS","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Martynas Visockas","tel":"37068687915","s1":"1:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m40","data":"2024-09-17","kortai":"SEB","turnyras":"Activus ruduo 2024","etapas":"","div":"4","varzovas":"Karolis Savickis","tel":"37060742944","s1":"6:4","s2":"4:6","s3":"9:11","rez":"L","pastabos":""},{"id":"m41","data":"2024-09-18","kortai":"SEB","turnyras":"TP ruduo 2024","etapas":"","div":"3.0","varzovas":"Tautvydas Gegelis","tel":"37062147215","s1":"6:0","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m42","data":"2024-09-22","kortai":"SEB","turnyras":"TP ruduo 2024","etapas":"","div":"3.0","varzovas":"Audrius Baranovas","tel":"37062044906","s1":"6:2","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m43","data":"2024-09-23","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Ernestas Degtiariovas","tel":"37068438528","s1":"2:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m44","data":"2024-09-29","kortai":"SEB","turnyras":"Activus ruduo 2024","etapas":"","div":"4","varzovas":"Marius Žymantas","tel":"37061511114","s1":"6:0","s2":"4:6","s3":"2:10","rez":"L","pastabos":""},{"id":"m45","data":"2024-10-01","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Darius Čepokas","tel":"37061133236","s1":"1:6","s2":"6:4","s3":"7:10","rez":"L","pastabos":""},{"id":"m46","data":"2024-10-04","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Dominykas Šalčis","tel":"37065096358","s1":"1:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m47","data":"2024-10-07","kortai":"SEB","turnyras":"TP ruduo 2024","etapas":"","div":"3.0","varzovas":"Simonas Kairys","tel":"37068689005","s1":"6:0","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m48","data":"2024-10-08","kortai":"SEB","turnyras":"TP ruduo 2024","etapas":"","div":"3.0","varzovas":"Dzmitry Liaukovich","tel":"37066555706","s1":"4:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m49","data":"2024-10-20","kortai":"SEB","turnyras":"Activus ruduo 2024","etapas":"","div":"4","varzovas":"Andrius Lazarenka","tel":"37067786901","s1":"6:0","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m50","data":"2024-10-21","kortai":"SEB","turnyras":"TP ruduo 2024","etapas":"","div":"3.0","varzovas":"Lukas Girdvainis","tel":"37069137504","s1":"6:4","s2":"2:6","s3":"6:10","rez":"L","pastabos":""},{"id":"m51","data":"2024-11-14","kortai":"BT","turnyras":"Activus ruduo 2024","etapas":"","div":"4","varzovas":"Romanas Golovko","tel":"37069560352","s1":"6:1","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m52","data":"2024-11-18","kortai":"SEB","turnyras":"Activus ruduo 2024","etapas":"","div":"4","varzovas":"Artūras Rakovskis","tel":"37060440052","s1":"7:6","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"m53","data":"2024-11-20","kortai":"SEB","turnyras":"TP ruduo 2024","etapas":"paguoda","div":"3.0","varzovas":"Kristupas Veteris","tel":"37068734413","s1":"6:7","s2":"5:7","s3":"","rez":"L","pastabos":""},{"id":"m54","data":"2024-12-03","kortai":"SEB","turnyras":"Olybet žiema 2024/25","etapas":"","div":"3","varzovas":"Erikas Piskunovas","tel":"37068748801","s1":"7:6","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m55","data":"2024-12-06","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Adomas Žadeika","tel":"37061022729","s1":"0:6","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"m56","data":"2024-12-09","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Paulius Baltramiejūnas","tel":"37068790641","s1":"0:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m57","data":"2024-12-10","kortai":"SEB","turnyras":"Olybet žiema 2024/25","etapas":"","div":"3","varzovas":"Gediminas Vaitkus","tel":"37065634862","s1":"6:1","s2":"7:6","s3":"","rez":"W","pastabos":""},{"id":"m58","data":"2024-12-13","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Arminas Nemeika","tel":"37067628780","s1":"7:6","s2":"4:6","s3":"4:10","rez":"L","pastabos":""},{"id":"m59","data":"2024-12-16","kortai":"SEB","turnyras":"Olybet žiema 2024/25","etapas":"","div":"3","varzovas":"Antanas Balbata","tel":"37065275275","s1":"6:7","s2":"6:4","s3":"10:3","rez":"W","pastabos":""},{"id":"m60","data":"2024-12-23","kortai":"SEB","turnyras":"TopSpin ruduo 2024","etapas":"","div":"3.5","varzovas":"Linas Balčiūnas","tel":"37061226728","s1":"6:1","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m61","data":"2025-01-08","kortai":"SEB","turnyras":"Olybet žiema 2024/25","etapas":"","div":"3","varzovas":"Kristupas Veteris","tel":"37068734413","s1":"6:3","s2":"3:6","s3":"0:6","rez":"L","pastabos":""},{"id":"m62","data":"2025-01-08","kortai":"SEB","turnyras":"Olybet žiema 2024/25","etapas":"","div":"3","varzovas":"Ignas Lelys","tel":"37067788588","s1":"6:7","s2":"6:4","s3":"10:7","rez":"W","pastabos":""},{"id":"m63","data":"2025-01-22","kortai":"N","turnyras":"TopSpin ruduo 2024","etapas":"top20","div":"3.5","varzovas":"Arnas Daugėla","tel":"37067454748","s1":"6:7","s2":"1:6","s3":"","rez":"L","pastabos":""},{"id":"m64","data":"2025-02-05","kortai":"SEB","turnyras":"Olybet žiema 2024/25","etapas":"","div":"3","varzovas":"Giedrius Leskauskas","tel":"37060722776","s1":"4:6","s2":"1:6","s3":"","rez":"L","pastabos":""},{"id":"m65","data":"2025-03-19","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3.0","varzovas":"Arnas Dūmanas","tel":"37067485999","s1":"4:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m66","data":"2025-03-21","kortai":"M7","turnyras":"Activus pavasaris 2025","etapas":"","div":"3","varzovas":"Arnas Dūmanas","tel":"37067485999","s1":"6:4","s2":"7:5","s3":"","rez":"W","pastabos":""},{"id":"m67","data":"2025-03-24","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3","varzovas":"Rimantas Besenas","tel":"37067255322","s1":"3:6","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"m68","data":"2025-03-31","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3.0","varzovas":"Tomas Misevičius","tel":"37061881254","s1":"6:3","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"m69","data":"2025-04-02","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3.0","varzovas":"Mantas Namgaudis","tel":"37062839474","s1":"6:7","s2":"6:2","s3":"10:2","rez":"W","pastabos":""},{"id":"m70","data":"2025-04-04","kortai":"SEB","turnyras":"Activus pavasaris 2025","etapas":"","div":"3","varzovas":"Gražvydas Pangonis","tel":"37066352311","s1":"2:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m71","data":"2025-04-07","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3","varzovas":"Vytautas Mackevičius","tel":"37068460070","s1":"6:1","s2":"4:6","s3":"10:8","rez":"W","pastabos":""},{"id":"m72","data":"2025-04-09","kortai":"SEB","turnyras":"Activus pavasaris 2025","etapas":"","div":"3","varzovas":"Augusto Herrera","tel":"37062520210","s1":"6:1","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"m73","data":"2025-04-23","kortai":"SEB","turnyras":"Activus pavasaris 2025","etapas":"","div":"3","varzovas":"Maksimas Glebovas","tel":"37065380786","s1":"3:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m74","data":"2025-04-30","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3","varzovas":"Kristupas Mejeris","tel":"37068620888","s1":"0:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m75","data":"2025-05-08","kortai":"SEB","turnyras":"Activus pavasaris 2025","etapas":"","div":"3","varzovas":"Germantas Gaurilcikas","tel":"37061687225","s1":"5:7","s2":"7:5","s3":"11:9","rez":"W","pastabos":""},{"id":"m76","data":"2025-05-10","kortai":"BT","turnyras":"TP pavasaris 2025","etapas":"","div":"3","varzovas":"Kostas Drazdauskas","tel":"37063361437","s1":"4:6","s2":"1:6","s3":"","rez":"W","pastabos":""},{"id":"m77","data":"2025-05-20","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3","varzovas":"Laurynas Kunavičius","tel":"37065002200","s1":"6:0","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m78","data":"2025-05-21","kortai":"SEB","turnyras":"Activus pavasaris 2025","etapas":"","div":"3","varzovas":"Marius Vainauskas","tel":"37061020807","s1":"6:3","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"m79","data":"2025-05-26","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3","varzovas":"Rytis Paukštė","tel":"37064041019","s1":"7:5","s2":"3:6","s3":"6:0","rez":"W","pastabos":""},{"id":"m80","data":"2025-06-09","kortai":"SEB","turnyras":"TP pavasaris 2025","etapas":"","div":"3","varzovas":"Audrius Deveikis","tel":"37068137052","s1":"3:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m81","data":"2025-06-17","kortai":"SEB","turnyras":"Olybet vasara 2025","etapas":"","div":"3","varzovas":"Arūnas Valickas","tel":"37060464944","s1":"5:7","s2":"6:2","s3":"6:4","rez":"W","pastabos":""},{"id":"m82","data":"2025-06-18","kortai":"SEB","turnyras":"Olybet vasara 2025","etapas":"","div":"3","varzovas":"Robertas Simaška","tel":"37065200520","s1":"4:6","s2":"6:0","s3":"10:5","rez":"W","pastabos":""},{"id":"m83","data":"2025-07-07","kortai":"SEB","turnyras":"Olybet vasara 2025","etapas":"","div":"3","varzovas":"Danas Vaitkevičius","tel":"37069969157","s1":"3:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m84","data":"2025-07-08","kortai":"SEB","turnyras":"Olybet vasara 2025","etapas":"","div":"3","varzovas":"Šarūnas Akelaitis","tel":"37064545455","s1":"6:4","s2":"5:7","s3":"6:10","rez":"L","pastabos":""},{"id":"m85","data":"2025-07-14","kortai":"SEB","turnyras":"Olybet vasara 2025","etapas":"","div":"3","varzovas":"Laurynas Babrauskas","tel":"37067022235","s1":"7:5","s2":"3:6","s3":"10:8","rez":"W","pastabos":""},{"id":"m86","data":"2025-07-27","kortai":"SEB","turnyras":"Olybet vasara 2025","etapas":"","div":"3","varzovas":"Ąžuolas Bagdonas","tel":"37067024450","s1":"6:2","s2":"4:6","s3":"10:5","rez":"W","pastabos":""},{"id":"m87","data":"2025-07-31","kortai":"SEB","turnyras":"Olybet vasara 2025","etapas":"","div":"3","varzovas":"Vaclovas Paulikas","tel":"37068612270","s1":"2:6","s2":"7:6","s3":"9:11","rez":"L","pastabos":""},{"id":"m88","data":"2025-09-03","kortai":"SEB","turnyras":"TP ruduo 2025","etapas":"","div":"2","varzovas":"Giedrius Juodišius","tel":"37068245290","s1":"4:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m89","data":"2025-09-10","kortai":"SEB","turnyras":"TP ruduo 2025","etapas":"","div":"2","varzovas":"Marius Reut","tel":"37060813457","s1":"0:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m90","data":"2025-09-11","kortai":"SEB","turnyras":"TP ruduo 2025","etapas":"","div":"2","varzovas":"Valdas Bukauskas","tel":"37060615093","s1":"4:6","s2":"7:5","s3":"10:8","rez":"W","pastabos":""},{"id":"m91","data":"2025-09-20","kortai":"BT","turnyras":"TP ruduo 2025","etapas":"","div":"2","varzovas":"Arnas Dūmanas","tel":"37067485999","s1":"4:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m92","data":"2025-09-24","kortai":"SEB","turnyras":"Activus ruduo 2025","etapas":"","div":"2","varzovas":"Algis Kublickas","tel":"37064092475","s1":"2:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m93","data":"2025-09-28","kortai":"SEB","turnyras":"Activus ruduo 2025","etapas":"","div":"2","varzovas":"Lukas Babelis","tel":"37067882769","s1":"3:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m94","data":"2025-10-15","kortai":"SEB","turnyras":"Activus ruduo 2025","etapas":"","div":"2","varzovas":"Marius Zeba","tel":"37067785959","s1":"6:2","s2":"3:6","s3":"14:12","rez":"W","pastabos":""},{"id":"m95","data":"2025-10-27","kortai":"SEB","turnyras":"TP ruduo 2025","etapas":"","div":"2","varzovas":"Adrian Ščerban","tel":"37067018008","s1":"3:6","s2":"7:6","s3":"6:10","rez":"L","pastabos":""},{"id":"m96","data":"2025-10-28","kortai":"SEB","turnyras":"Activus ruduo 2025","etapas":"","div":"2","varzovas":"Kastytis Račiūnas","tel":"37068722097","s1":"7:6","s2":"3:5","s3":"","rez":"L","pastabos":""},{"id":"m97","data":"2025-11-08","kortai":"SEB","turnyras":"Activus ruduo 2025","etapas":"","div":"2","varzovas":"Rokas Mačiulaitis","tel":"37064172039","s1":"2:6","s2":"6:3","s3":"8:10","rez":"L","pastabos":""},{"id":"m98","data":"2025-11-17","kortai":"SEB","turnyras":"Activus ruduo 2025","etapas":"","div":"2","varzovas":"Domantas Ražanas","tel":"37060072919","s1":"1:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m99","data":"2025-12-15","kortai":"M7","turnyras":"TopSpin žiema 2025/26","etapas":"","div":"3","varzovas":"Richardas Jonaitis","tel":"37063934216","s1":"6:7","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"m100","data":"2025-12-17","kortai":"SEB","turnyras":"TopSpin žiema 2025/26","etapas":"","div":"3","varzovas":"Dovydas Kurlenskas","tel":"37069419040","s1":"3:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m101","data":"2025-12-22","kortai":"SEB","turnyras":"TN žiema 2025/26","etapas":"","div":"3","varzovas":"Darius Čepokas","tel":"37061133236","s1":"7:6","s2":"6:7","s3":"5:10","rez":"L","pastabos":""},{"id":"m102","data":"2025-12-22","kortai":"SEB","turnyras":"TP žiema 2025/26","etapas":"","div":"2","varzovas":"Ramunas Kybartas","tel":"37062918272","s1":"1:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m103","data":"2025-12-23","kortai":"SEB","turnyras":"TP žiema 2025/26","etapas":"","div":"2","varzovas":"Andrius Ladauskas","tel":"37062042351","s1":"1:6","s2":"1:6","s3":"","rez":"L","pastabos":""},{"id":"m104","data":"2025-12-27","kortai":"SEB","turnyras":"TN žiema 2025/26","etapas":"","div":"3","varzovas":"Elvinas Didika","tel":"37063906185","s1":"6:3","s2":"0:6","s3":"8:10","rez":"L","pastabos":""},{"id":"m105","data":"2026-01-02","kortai":"SEB","turnyras":"TN žiema 2025/26","etapas":"","div":"3","varzovas":"Giedrius Čiurinskas","tel":"37068618769","s1":"3:6","s2":"6:4","s3":"6:10","rez":"L","pastabos":""},{"id":"m106","data":"2026-01-08","kortai":"SEB","turnyras":"TP žiema 2025/26","etapas":"","div":"2","varzovas":"Tomas Česnauskas","tel":"37064025033","s1":"4:6","s2":"5:7","s3":"","rez":"L","pastabos":""},{"id":"m107","data":"2026-01-26","kortai":"SEB","turnyras":"TN žiema 2025/26","etapas":"","div":"3","varzovas":"Mantas Gruodis","tel":"37065043169","s1":"3:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"m108","data":"2026-02-02","kortai":"SEB","turnyras":"TN žiema 2025/26","etapas":"","div":"3","varzovas":"Rimantas Slavinskas","tel":"37060609445","s1":"6:2","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"m109","data":"2026-02-12","kortai":"SEB","turnyras":"TN žiema 2025/26","etapas":"","div":"3","varzovas":"Andrius Čelkis","tel":"37067604444","s1":"7:6","s2":"7:6","s3":"","rez":"W","pastabos":""},{"id":"m110","data":"2026-02-16","kortai":"SEB","turnyras":"TN žiema 2025/26","etapas":"","div":"3","varzovas":"Darius Skunčikas","tel":"37060767840","s1":"1:6","s2":"1:6","s3":"","rez":"L","pastabos":""},{"id":"m111","data":"2026-03-13","kortai":"SEB","turnyras":"TP pavasaris 2026","etapas":"","div":"2","varzovas":"Adrian Ščerban","tel":"37067018008","s1":"5:7","s2":"6:4","s3":"3:2","rez":"W","pastabos":""},{"id":"m112","data":"2026-03-23","kortai":"SEB","turnyras":"Rewo pavasaris 2026","etapas":"","div":"3","varzovas":"Mantas Gruodis","tel":"37065043169","s1":"5:7","s2":"7:6","s3":"10:12","rez":"L","pastabos":""},{"id":"m113","data":"2026-03-25","kortai":"SEB","turnyras":"TP pavasaris 2026","etapas":"","div":"2","varzovas":"Eimantas Rutkauskas","tel":"37067646602","s1":"3:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"m114","data":"2026-04-02","kortai":"SEB","turnyras":"Rewo pavasaris 2026","etapas":"","div":"3","varzovas":"Dmitry Ogievich","tel":"37062479714","s1":"3:6","s2":"6:4","s3":"6:10","rez":"L","pastabos":""},{"id":"m115","data":"2026-04-04","kortai":"SEB","turnyras":"TP pavasaris 2026","etapas":"","div":"2","varzovas":"Aurimas Andzelevičius","tel":"37061270860","s1":"7:6","s2":"4:6","s3":"8:10","rez":"L","pastabos":""},{"id":"m116","data":"2026-04-09","kortai":"SEB","turnyras":"TP pavasaris 2026","etapas":"","div":"2","varzovas":"Tomas Kiričenko","tel":"37065013341","s1":"4:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m117","data":"2026-04-14","kortai":"BT","turnyras":"Rewo pavasaris 2026","etapas":"","div":"3","varzovas":"Audrius Baranovas","tel":"37062044906","s1":"7:6","s2":"4:6","s3":"8:10","rez":"L","pastabos":""},{"id":"m118","data":"2026-04-27","kortai":"SEB","turnyras":"Rewo pavasaris 2026","etapas":"","div":"3","varzovas":"Jovydas Starkus","tel":"37067172903","s1":"6:1","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m119","data":"2026-05-08","kortai":"BT","turnyras":"Rewo pavasaris 2026","etapas":"","div":"3","varzovas":"Raimondas Monkevičius","tel":"37069930009","s1":"6:4","s2":"6:7","s3":"4:6","rez":"L","pastabos":""},{"id":"m120","data":"2026-05-26","kortai":"SEB","turnyras":"Rewo pavasaris 2026","etapas":"","div":"3","varzovas":"Matas Kuliešius","tel":"37060453267","s1":"6:3","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m121","data":"2026-05-31","kortai":"M7","turnyras":"TopSpin vasara 2026","etapas":"","div":"3","varzovas":"Mantas Lukošius","tel":"37069004696","s1":"3:6","s2":"6:3","s3":"10:5","rez":"W","pastabos":""},{"id":"m122","data":"2026-06-01","kortai":"Bernardinai","turnyras":"TopSpin vasara 2026","etapas":"","div":"3","varzovas":"Liucijus Viščinis","tel":"37064512757","s1":"7:5","s2":"6:0","s3":"","rez":"W","pastabos":""},{"id":"m123","data":"2026-06-02","kortai":"SEB","turnyras":"TopSpin vasara 2026","etapas":"","div":"3","varzovas":"Aurius Žukovas","tel":"37061869872","s1":"6:2","s2":"6:1","s3":"","rez":"W","pastabos":""},{"id":"m124","data":"2026-06-03","kortai":"SEB","turnyras":"Olybet vasara 2026","etapas":"","div":"3","varzovas":"Andrius Bialobžeskis","tel":"37068637337","s1":"6:1","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"m125","data":"2026-06-11","kortai":"SEB","turnyras":"Olybet vasara 2026","etapas":"","div":"3","varzovas":"Algirdas Rakšnys","tel":"37060228323","s1":"6:1","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"m126","data":"2026-06-14","kortai":"SEB","turnyras":"Olybet vasara 2026","etapas":"","div":"3","varzovas":"Renato Margheritino","tel":"37060731910","s1":"7:5","s2":"6:1","s3":"","rez":"W","pastabos":""},{"id":"m127","data":"2026-06-15","kortai":"Widen","turnyras":"TP vasara 2026","etapas":"","div":"2","varzovas":"Marek Andrijevskij","tel":"37068128190","s1":"4:6","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"m128","data":"2026-06-16","kortai":"SEB","turnyras":"TP vasara 2026","etapas":"","div":"2","varzovas":"Karolis Saveikis","tel":"37062320494","s1":"6:4","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"m129","data":"2026-06-17","kortai":"SEB","turnyras":"Olybet vasara 2026","etapas":"","div":"3","varzovas":"Mantas Juočepys","tel":"37069309450","s1":"6:4","s2":"6:1","s3":"","rez":"W","pastabos":""},{"id":"m130","data":"2026-06-21","kortai":"SEB","turnyras":"Olybet vasara 2026","etapas":"","div":"3","varzovas":"Ignas Narmontas","tel":"37068576577","s1":"2:6","s2":"4:6","s3":"","rez":"L","pastabos":""},{"id":"m131","data":"2026-07-10","kortai":"SEB","turnyras":"TopSpin vasara 2026","etapas":"","div":"3","varzovas":"Mindaugas Sakalauskas","tel":"37065243323","s1":"6:4","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"m132","data":"2026-07-14","kortai":"SEB","turnyras":"TP vasara 2026","etapas":"","div":"2","varzovas":"Valdas Bukauskas","tel":"37060615093","s1":"4:6","s2":"6:4","s3":"7:10","rez":"L","pastabos":""},{"id":"m133","data":"2026-07-22","kortai":"SEB","turnyras":"TopSpin vasara 2026","etapas":"","div":"3","varzovas":"Andžejus Papsujevas","tel":"37061718425","s1":"6:7","s2":"6:7","s3":"","rez":"L","pastabos":""},{"id":"m134","data":"2026-08-06","kortai":"SEB","turnyras":"Olybet vasara 2026","etapas":"","div":"3","varzovas":"Algirdas Kulikauskas","tel":"37060091718","s1":"6:7","s2":"2:6","s3":"","rez":"L","pastabos":""}],"future":[{"id":"f1","varzovas":"Vytautas Mickevičius","tel":"37066352464","turnyras":"TopSpin vasara 2026","deadline":"","planData":"","laikas":"","aikstynas":"","mokejo":"","suma":"","pastabos":"trauma","tipas":"vienetai","partneris":""},{"id":"f2","varzovas":"Marius Zalensas","tel":"37067392391","turnyras":"TP vasara 2026","deadline":"","planData":"","laikas":"","aikstynas":"","mokejo":"","suma":"","pastabos":"","tipas":"vienetai","partneris":""}],"contacts":[{"vardas":"Irmantas Jurėnas","tel":"37062683867","pastabos":"","id":"c1"}],"doubles":[{"id":"d1","data":"2026-09-02","turnyras":"Olybet ruduo 2026","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"D. Diržius / J. Beganskis","s1":"6:3","s2":"2:6","s3":"2:6","rez":"L","pastabos":""},{"id":"d2","data":"2026-08-11","turnyras":"Rewo vasara 2026","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Kondrotas / A. Kisielis","s1":"6:3","s2":"3:6","s3":"4:6","rez":"L","pastabos":""},{"id":"d3","data":"2026-08-05","turnyras":"Rewo vasara 2026","vieta":"TENISO ERDVĖ","danga":"Gruntas","partneris":"V. Bražinskas","varzovai":"L. Viščinis / V. Kriauza","s1":"6:0","s2":"6:1","s3":"","rez":"W","pastabos":""},{"id":"d4","data":"2026-07-21","turnyras":"Rewo vasara 2026","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"E. Gladkij / A. Polinski","s1":"1:6","s2":"0:6","s3":"","rez":"L","pastabos":""},{"id":"d5","data":"2026-07-08","turnyras":"Rewo vasara 2026","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"D. Savickis / I. Kašnikov","s1":"7:6(7:2)","s2":"7:6(7:3)","s3":"","rez":"W","pastabos":""},{"id":"d6","data":"2026-06-22","turnyras":"Rewo vasara 2026","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"D. Mikaliūnas / L. Sederevičius","s1":"3:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"d7","data":"2026-05-25","turnyras":"Olybet pavasaris 2026","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"I. Pileckas / M. Čipkus","s1":"6:3","s2":"5:7","s3":"6:10","rez":"L","pastabos":""},{"id":"d8","data":"2026-05-21","turnyras":"Olybet pavasaris 2026","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"D. Andziulis / J. Kugis","s1":"3:6","s2":"6:3","s3":"10:5","rez":"W","pastabos":""},{"id":"d9","data":"2026-05-11","turnyras":"Olybet pavasaris 2026","vieta":"","danga":"","partneris":"V. Bražinskas","varzovai":"B. Lučiūnas / I. Kružikas","s1":"","s2":"","s3":"","rez":"","pastabos":"b/ž (be žaidimo)"},{"id":"d10","data":"2026-04-28","turnyras":"Olybet pavasaris 2026","vieta":"Teniso Sala","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"M. Daniškevičius / E. Petrulis","s1":"4:6","s2":"5:7","s3":"","rez":"L","pastabos":""},{"id":"d11","data":"2026-04-14","turnyras":"Olybet pavasaris 2026","vieta":"Baltictennis","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"K. Gasiūnas / G. Tijūnėlis","s1":"4:6","s2":"6:1","s3":"8:10","rez":"L","pastabos":""},{"id":"d12","data":"2026-04-06","turnyras":"Olybet pavasaris 2026","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"E. Gladkij / D. Kačanovski","s1":"7:5","s2":"7:5","s3":"","rez":"W","pastabos":""},{"id":"d13","data":"2026-03-30","turnyras":"Olybet pavasaris 2026","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"P. Kairavičius / K. Šimonis","s1":"6:4","s2":"7:6(7:5)","s3":"","rez":"W","pastabos":""},{"id":"d14","data":"2026-03-23","turnyras":"Olybet pavasaris 2026","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"P. Sipavičius / M. Barisas","s1":"6:3","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"d15","data":"2026-03-09","turnyras":"Olybet pavasaris 2026","vieta":"TENISO ERDVĖ","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Baliukevičius / V. Kniuras","s1":"1:6","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"d16","data":"2026-02-16","turnyras":"Activus žiema 2025/26","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"J. Krugelis / R. Juršėnas","s1":"1:6","s2":"5:7","s3":"","rez":"L","pastabos":""},{"id":"d17","data":"2026-02-03","turnyras":"Activus žiema 2025/26","vieta":"DELFI","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"A. Čelkis / V. Pletas","s1":"7:6(7:4)","s2":"3:6","s3":"8:10","rez":"L","pastabos":""},{"id":"d18","data":"2026-01-26","turnyras":"Activus žiema 2025/26","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"K. Eimutis / G. Eimutis","s1":"4:6","s2":"1:6","s3":"","rez":"L","pastabos":""},{"id":"d19","data":"2026-01-13","turnyras":"Activus žiema 2025/26","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"E. Leskauskas / M. Rudaitis","s1":"5:7","s2":"3:6","s3":"","rez":"L","pastabos":""},{"id":"d20","data":"2025-12-27","turnyras":"Activus žiema 2025/26","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"R. Vozbutas / A. Dūmanas","s1":"3:6","s2":"6:3","s3":"6:4","rez":"W","pastabos":""},{"id":"d21","data":"2025-11-11","turnyras":"Olybet ruduo 2025","vieta":"","danga":"","partneris":"V. Bražinskas","varzovai":"Š. Račkauskas / T. Eigėlis","s1":"","s2":"","s3":"","rez":"","pastabos":"b/ž (be žaidimo)"},{"id":"d22","data":"2025-10-23","turnyras":"Olybet ruduo 2025","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"V. Skarulskis / M. Skarulskis","s1":"6:3","s2":"4:6","s3":"4:10","rez":"L","pastabos":""},{"id":"d23","data":"2025-10-11","turnyras":"Olybet ruduo 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"D. Čerjazdanovas / E. Paleckis","s1":"6:4","s2":"4:6","s3":"10:5","rez":"W","pastabos":""},{"id":"d24","data":"2025-10-11","turnyras":"Olybet ruduo 2025","vieta":"WIDEN Arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"G. Muznikas / P. Ramanavičius","s1":"1:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"d25","data":"2025-10-05","turnyras":"Olybet ruduo 2025","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"V. Ramanauskas / P. Simenas","s1":"5:7","s2":"7:6(7:5)","s3":"7:10","rez":"L","pastabos":""},{"id":"d26","data":"2025-09-09","turnyras":"Olybet ruduo 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"E. Stundys / T. Stundys","s1":"5:7","s2":"7:6(7:3)","s3":"11:9","rez":"W","pastabos":""},{"id":"d27","data":"2025-09-07","turnyras":"Olybet ruduo 2025","vieta":"TENISO ERDVĖ","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"M. Mikutavičius / E. Belickas","s1":"3:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"d28","data":"2025-08-25","turnyras":"Activus vasara 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Jonaitis / K. Jaciunskas","s1":"6:7(3:7)","s2":"1:6","s3":"","rez":"L","pastabos":""},{"id":"d29","data":"2025-08-06","turnyras":"Activus vasara 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Kaminskas / T. Songaila","s1":"3:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"d30","data":"2025-07-28","turnyras":"Activus vasara 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"E. Gladkij / A. Polinski","s1":"6:4","s2":"5:7","s3":"10:8","rez":"W","pastabos":""},{"id":"d31","data":"2025-07-04","turnyras":"Activus vasara 2025","vieta":"Bernardinai","danga":"Gruntas","partneris":"V. Bražinskas","varzovai":"V. Kniuras / T. Jukna","s1":"0:6","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"d32","data":"2025-06-27","turnyras":"Activus vasara 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"M. Glebovas / M. Andrijevskij","s1":"6:3","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"d33","data":"2025-06-05","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"D. Mironas / Š. Akelaitis","s1":"6:4","s2":"6:7(2:7)","s3":"8:10","rez":"L","pastabos":""},{"id":"d34","data":"2025-05-25","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"A. Kondrotas / A. Kisielis","s1":"6:4","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"d35","data":"2025-05-20","turnyras":"Olybet pavasaris 2025","vieta":"TENISO ERDVĖ","danga":"Gruntas","partneris":"V. Bražinskas","varzovai":"R. Juška / D. Garuckas","s1":"2:6","s2":"6:0","s3":"6:4","rez":"W","pastabos":""},{"id":"d36","data":"2025-05-18","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Šeščila / V. Krivickas","s1":"6:4","s2":"7:6(8:6)","s3":"","rez":"W","pastabos":""},{"id":"d37","data":"2025-05-07","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Čelkis / T. Stundys","s1":"7:5","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"d38","data":"2025-03-27","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"A. Sadzevičius / E. Ribokas","s1":"6:1","s2":"6:1","s3":"","rez":"W","pastabos":""},{"id":"d39","data":"2025-03-26","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"E. Varoneckas / E. Zaleskis","s1":"6:4","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"d40","data":"2025-03-16","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Bolotnikov / P. Usovich","s1":"6:4","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"d41","data":"2025-03-06","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Paškevičius / D. Skunčikas","s1":"6:1","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"d42","data":"2025-03-05","turnyras":"Olybet pavasaris 2025","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"R. Simaška / R. Stanisauskas","s1":"6:2","s2":"6:3","s3":"","rez":"W","pastabos":""},{"id":"d43","data":"2025-02-12","turnyras":"Activus žiema 2024/25","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"D. Rastenis / L. Lingė","s1":"5:7","s2":"2:6","s3":"","rez":"L","pastabos":""},{"id":"d44","data":"2025-02-04","turnyras":"Activus žiema 2024/25","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"E. Radzevič / (partneris be vardo)","s1":"6:3","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"d45","data":"2025-01-18","turnyras":"Activus žiema 2024/25","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"J. Paknys / A. Šilalnikas","s1":"6:2","s2":"6:7(5:7)","s3":"10:5","rez":"W","pastabos":""},{"id":"d46","data":"2025-01-07","turnyras":"Activus žiema 2024/25","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Sadzevičius / E. Ribokas","s1":"6:0","s2":"6:4","s3":"","rez":"W","pastabos":""},{"id":"d47","data":"2024-12-22","turnyras":"Activus žiema 2024/25","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"I. Zasimavicius / M. Dromantas","s1":"6:4","s2":"3:6","s3":"8:10","rez":"L","pastabos":""},{"id":"d48","data":"2024-08-07","turnyras":"Activus vasara 2024","vieta":"SEB arena","danga":"Kilimas","partneris":"V. Bražinskas","varzovai":"D. Rastenis / L. Lingė","s1":"6:3","s2":"3:6","s3":"10:6","rez":"W","pastabos":""},{"id":"d49","data":"2024-08-02","turnyras":"Activus vasara 2024","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"L. Urbonavičius / A. Krupovičius","s1":"5:7","s2":"6:4","s3":"10:12","rez":"L","pastabos":""},{"id":"d50","data":"2024-07-22","turnyras":"Activus vasara 2024","vieta":"Bernardinai","danga":"Gruntas","partneris":"V. Bražinskas","varzovai":"M. Alūza / J. Alūza","s1":"6:3","s2":"5:7","s3":"7:10","rez":"L","pastabos":""},{"id":"d51","data":"2024-07-09","turnyras":"Activus vasara 2024","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"G. Kavoliūnas / A. Markevičius","s1":"6:2","s2":"6:2","s3":"","rez":"W","pastabos":""},{"id":"d52","data":"2024-06-30","turnyras":"Activus vasara 2024","vieta":"SEB arena","danga":"Akrilas","partneris":"V. Bražinskas","varzovai":"A. Romanovskis / T. Mikelskas","s1":"6:7(4:7)","s2":"4:6","s3":"","rez":"L","pastabos":""}]};
-const KEY='tenis_karjera_v1';
-let D; // {matches, future, contacts, doubles}
-
-/* ===== FIREBASE – įklijuok savo firebaseConfig žemiau ===== */
-const firebaseConfig = {
+/* ---------- diagnostics: show errors instead of a blank screen ---------- */
+window.addEventListener('error',e=>{const m=document.querySelector('main');if(m)m.insertAdjacentHTML('afterbegin','<p style="padding:16px;color:#B4302B">Klaida: '+(e.message||e)+'</p>')});
+if(typeof firebase==='undefined'){document.querySelector('main').innerHTML='<p style="padding:16px;color:#B4302B">Nepavyko užkrauti Firebase. Patikrinkite interneto ryšį arba atidarykite programėlę per interneto adresą, o ne iš failo.</p>';throw new Error('firebase not loaded')}
+/* ---------- Firebase ---------- */
+firebase.initializeApp({
   apiKey: "AIzaSyDDDOtGU7Au8sLkoJ-u7glbG52LlBn7B5w",
   authDomain: "trucks-and-trailers-efbf8.firebaseapp.com",
   projectId: "trucks-and-trailers-efbf8",
   storageBucket: "trucks-and-trailers-efbf8.firebasestorage.app",
   messagingSenderId: "805660424968",
   appId: "1:805660424968:web:f292e8b77425a151908abd"
-};
-/* =========================================================== */
-let auth=null, db=null, docRef=null, unsub=null, unsubP=null, syncTimer=null;
-const cloudOk=firebaseConfig.apiKey!=='PASTE_API_KEY' && typeof firebase!=='undefined';
-if(cloudOk){ firebase.initializeApp(firebaseConfig); auth=firebase.auth(); db=firebase.firestore(); try{ db.enablePersistence({synchronizeTabs:true}).catch(()=>{}); }catch(e){} }
-
-/* ---------- nuotraukos ---------- */
-const PKEY='tenis_karjera_photos';
-let PH={}; try{ PH=JSON.parse(localStorage.getItem(PKEY)||'{}'); }catch(e){ PH={}; }
-let pendingPhoto=undefined; // undefined = nekeista, null = pašalinti, string = nauja
-function pkey(name){ return encodeURIComponent(name.trim().toLowerCase()).replace(/%/g,'_'); }
-function photo(name){ return PH[pkey(name||'')]||''; }
-function initials(name){ return (name||'').split(/[\s\/]+/).filter(Boolean).slice(0,2).map(s=>s[0].toUpperCase()).join(''); }
-function avatar(name,cls){ const p=photo(name); return `<div class="av ${cls||''}" ${p?`style="background-image:url(${p})"`:''}>${p?'':initials(name)}</div>`; }
-function savePhotoLocal(){ try{ localStorage.setItem(PKEY,JSON.stringify(PH)); }catch(e){ toast('Vietinė atmintis pilna – nuotrauka saugoma tik debesyje'); } }
-function setPhoto(name,img){
-  const k=pkey(name);
-  if(img){ PH[k]=img; } else { delete PH[k]; }
-  savePhotoLocal();
-  if(docRef){ const ref=docRef.collection('photos').doc(k); (img?ref.set({vardas:name,img}):ref.delete()).catch(e=>toast('Nuotraukos nepavyko išsaugoti debesyje: '+e.message)); }
-}
-function photoPicked(inp){
-  const f=inp.files[0]; if(!f) return; const img=new Image(); const url=URL.createObjectURL(f);
-  img.onload=()=>{ const S=320; const s=Math.max(S/img.width,S/img.height); const w=Math.round(img.width*s), h=Math.round(img.height*s);
-    const cv=document.createElement('canvas'); cv.width=S; cv.height=S; const ctx=cv.getContext('2d'); ctx.drawImage(img,(S-w)/2,(S-h)/2,w,h);
-    pendingPhoto=cv.toDataURL('image/jpeg',0.8); $('c_av').style.backgroundImage=`url(${pendingPhoto})`; $('c_av').textContent=''; $('c_photoDel').style.display=''; URL.revokeObjectURL(url); inp.value=''; };
-  img.onerror=()=>toast('Nepavyko atidaryti nuotraukos'); img.src=url;
-}
-function removePhoto(){ pendingPhoto=null; $('c_av').style.backgroundImage=''; $('c_av').textContent=initials($('c_vardas').value); $('c_photoDel').style.display='none'; }
-
-function normalize(d){ d=d||{}; return {matches:d.matches||[],future:d.future||[],contacts:d.contacts||[],doubles:d.doubles||[]}; }
-function loadLocal(){
-  try{ const s=localStorage.getItem(KEY); if(s){ D=normalize(JSON.parse(s)); return true; } }catch(e){}
-  D=JSON.parse(JSON.stringify(SEED)); return false;
-}
-function setSync(t){ $('syncInfo').textContent=t; }
-function save(){
-  try{ localStorage.setItem(KEY, JSON.stringify(D)); }catch(e){}
-  if(docRef){
-    setSync('Siunčiama…');
-    docRef.set(Object.assign({},D,{updated:new Date().toISOString()})).then(()=>setSync('Sinchronizuota '+new Date().toLocaleTimeString('lt-LT',{hour:'2-digit',minute:'2-digit'}))).catch(e=>{ setSync('Sinchronizacijos klaida'); toast('Nepavyko įrašyti į debesį: '+e.message); });
-  }
-}
-function login(){
-  if(!cloudOk) return;
-  const e=$('l_email').value.trim(), p=$('l_pass').value; $('l_err').textContent='';
-  if(!e||!p){ $('l_err').textContent='Įvesk el. paštą ir slaptažodį'; return; }
-  auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(()=>auth.signInWithEmailAndPassword(e,p)).catch(err=>{
-    const m={'auth/invalid-credential':'Neteisingas el. paštas arba slaptažodis','auth/wrong-password':'Neteisingas slaptažodis','auth/user-not-found':'Toks vartotojas neegzistuoja','auth/network-request-failed':'Nėra interneto ryšio','auth/too-many-requests':'Per daug bandymų, pabandyk vėliau'};
-    $('l_err').textContent=m[err.code]||err.message; });
-}
-function logout(){ if(!confirm('Atsijungti? Duomenys liks debesyje.')) return; if(unsub){unsub();unsub=null;} if(unsubP){unsubP();unsubP=null;} docRef=null; auth.signOut(); closeOv('ovMenu'); }
-function startCloud(user){
-  docRef=db.collection('tenis').doc(user.uid);
-  $('userInfo').textContent=user.email; setSync('Jungiamasi…');
-  if(unsub) unsub();
-  if(unsubP) unsubP();
-  unsubP=docRef.collection('photos').onSnapshot(qs=>{ qs.docChanges().forEach(ch=>{ if(ch.type==='removed') delete PH[ch.doc.id]; else PH[ch.doc.id]=ch.doc.data().img; }); savePhotoLocal(); renderContacts(); renderMatches(); renderFuture(); },()=>{});
-  let first=true;
-  unsub=docRef.onSnapshot(snap=>{
-    if(!snap.exists){
-      if(first){ loadLocal(); save(); refreshAll(); } // pirmą kartą – įkelk vietinius / pradinius duomenis
-    } else {
-      D=normalize(snap.data());
-      try{ localStorage.setItem(KEY, JSON.stringify(D)); }catch(e){}
-      refreshAll();
-      setSync(snap.metadata.hasPendingWrites?'Siunčiama…':(snap.metadata.fromCache?'Neprisijungta – rodoma vietinė kopija':'Sinchronizuota'));
-    }
-    first=false;
-  },err=>{ setSync('Klaida: '+err.message); toast('Firestore klaida: '+err.message); });
-}
-
-function uid(p){ return p+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
-function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('on'),2200); }
-function esc(s){ return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-const $=id=>document.getElementById(id);
-function today(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
-function fmtD(s){ if(!s) return ''; const [y,m,d]=s.split('-'); return `${y}-${m}-${d}`; }
-function fmtTel(t){ t=String(t||'').replace(/\D/g,''); if(!t) return ''; return t.startsWith('370')?'+'+t:t; }
-function telHref(t){ t=String(t||'').replace(/\D/g,''); return t?('tel:'+(t.startsWith('370')?'+'+t:t)):''; }
+});
+const auth=firebase.auth();
+const fs=firebase.firestore();
+fs.settings({experimentalAutoDetectLongPolling:true,merge:true});
+fs.enablePersistence({synchronizeTabs:true}).catch(()=>{});
+let col=null,unsub=null;
 
 /* ---------- helpers ---------- */
-function setWon(s){ const m=String(s||'').trim().match(/^(\d+)(?:\([\d:\-]+\))?[:\-](\d+)(?:\([\d:\-]+\))?$/); if(!m) return null; const a=+m[1],b=+m[2]; if(a===b) return null; return a>b; }
-function deriveRes(s1,s2,s3){ const w=[s1,s2,s3].map(setWon).filter(x=>x!==null); if(!w.length) return ''; const ww=w.filter(x=>x).length; return ww>w.length/2?'W':(ww<w.length/2?'L':''); }
-function scoreStr(m){ return [m.s1,m.s2,m.s3].filter(Boolean).join('  '); }
-function years(){ const s=new Set(D.matches.map(m=>m.data.slice(0,4))); D.future.forEach(f=>{ if(f.planData) s.add(f.planData.slice(0,4)); }); return [...s].sort().reverse(); }
-function tournaments(){ const s=new Set(D.matches.map(m=>m.turnyras)); D.future.forEach(f=>f.turnyras&&s.add(f.turnyras)); return [...s].sort((a,b)=>b.localeCompare(a,'lt')); }
-function courts(){ const s=new Set(D.matches.map(m=>m.kortai).filter(Boolean)); D.future.forEach(f=>f.aikstynas&&s.add(f.aikstynas)); return [...s].sort(); }
-function opponents(){ const map={}; D.matches.forEach(m=>{ if(m.varzovas){ map[m.varzovas]=map[m.varzovas]||m.tel; if(m.tel) map[m.varzovas]=m.tel; } }); D.future.forEach(f=>{ if(f.varzovas&&f.tipas!=='dvejetai') map[f.varzovas]=map[f.varzovas]||f.tel; }); D.contacts.forEach(c=>{ if(c.vardas) map[c.vardas]=map[c.vardas]||c.tel; }); return map; }
-function tournamentSortKey(t){ const m=t.match(/(\d{4})/); return m?m[1]:'0'; }
+const $=id=>document.getElementById(id);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const fmt=d=>new Date(d).toLocaleString('lt-LT',{dateStyle:'medium',timeStyle:'short'});
+function fmtKm(v){return String(v).replace(/\B(?=(\d{3})+(?!\d))/g,' ')}
+let toastT;function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2600)}
+const busy=on=>$('busy').classList.toggle('hidden',!on);
+const src=b64=>'data:image/jpeg;base64,'+b64;
 
-function fillSelect(id, opts, allLabel, keep){
-  const el=$(id); const cur=keep?el.value:''; el.innerHTML=`<option value="">${allLabel}</option>`+opts.map(o=>`<option value="${esc(o)}">${esc(o)}</option>`).join('');
-  if(keep && [...el.options].some(o=>o.value===cur)) el.value=cur;
+function loadImg(srcUrl){return new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=srcUrl})}
+function draw(img,max,q){let w=img.width,h=img.height;const k=Math.min(1,max/Math.max(w,h));w=Math.round(w*k);h=Math.round(h*k);
+  const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);return c.toDataURL('image/jpeg',q).split(',')[1]}
+// compress a File to base64 JPEG, keep under ~700 KB (Firestore doc limit is 1 MB)
+async function compress(file){
+  const url=URL.createObjectURL(file);
+  try{const img=await loadImg(url);
+    let b=draw(img,1400,.8);
+    if(b.length>700000)b=draw(img,1100,.7);
+    if(b.length>700000)b=draw(img,900,.6);
+    return b;
+  }finally{URL.revokeObjectURL(url)}
 }
-function fillDatalists(){
-  $('dlOpp').innerHTML=Object.keys(opponents()).sort().map(n=>`<option value="${esc(n)}">`).join('');
-  $('dlTurn').innerHTML=tournaments().map(n=>`<option value="${esc(n)}">`).join('');
-  $('dlCourt').innerHTML=courts().map(n=>`<option value="${esc(n)}">`).join('');
-  const dl=(id,arr)=>$(id).innerHTML=[...new Set(arr.filter(Boolean))].sort().map(n=>`<option value="${esc(n)}">`).join('');
-  dl('dlDOpp',D.doubles.map(m=>m.varzovai)); dl('dlPartner',D.doubles.map(m=>m.partneris)); dl('dlDTurn',D.doubles.map(m=>m.turnyras)); dl('dlVieta',D.doubles.map(m=>m.vieta)); dl('dlDanga',D.doubles.map(m=>m.danga));
-}
-function refreshAll(){
-  fillSelect('fYear',years(),'Visi metai',true); fillSelect('fTurn',tournaments(),'Visi turnyrai',true);
-  fillSelect('sYear',years(),'Visi metai',true); fillSelect('sTurn',tournaments(),'Visi turnyrai',true);
-  fillSelect('dYear',[...new Set(D.doubles.map(m=>m.data.slice(0,4)))].sort().reverse(),'Visi metai',true);
-  fillSelect('dTurn',[...new Set(D.doubles.map(m=>m.turnyras))].sort((a,b)=>b.localeCompare(a,'lt')),'Visi turnyrai',true);
-  fillDatalists(); renderHeader(); renderMatches(); renderFuture(); renderCal(); renderStats(); renderContacts(); renderDoubles();
-}
-function renderHeader(){
-  const sg=D.matches; const w=sg.filter(m=>m.rez==='W').length, l=sg.filter(m=>m.rez==='L').length;
-  const y=new Date().getFullYear()+''; const yy=sg.filter(m=>m.data.startsWith(y)); const yw=yy.filter(m=>m.rez==='W').length, yl=yy.filter(m=>m.rez==='L').length;
-  const dw=D.doubles.filter(m=>m.rez==='W').length, dl=D.doubles.filter(m=>m.rez==='L').length;
-  $('hdrRec').innerHTML=`Vienetai <b class="num">${w}–${l}</b> &nbsp;·&nbsp; Dvejetai <b class="num">${dw}–${dl}</b> &nbsp;·&nbsp; Būsimų ${D.future.length}`;
-}
+async function thumbOf(b64){const img=await loadImg(src(b64));return draw(img,360,.7)}
 
-/* ---------- views ---------- */
-function showView(v){
-  document.querySelectorAll('.view').forEach(e=>e.classList.toggle('on',e.id==='v-'+v));
-  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
-  $('fab').style.display=(v==='matchai'||v==='kal'||v==='dvej')?'block':'none';
-  $('fab').onclick=v==='dvej'?()=>openDouble():()=>openMatch();
+/* ---------- state ---------- */
+let trucks=[],cur=null,curPhotos=[],removed=[];
+
+/* ---------- auth ---------- */
+function showLogin(on){
+  $('loginView').classList.toggle('hidden',!on);
+  $('listView').classList.toggle('hidden',on);$('editView').classList.add('hidden');
+  $('fab').classList.toggle('hidden',on);$('menuBtn').classList.toggle('hidden',on);$('sync').classList.toggle('hidden',on);
+  $('backBtn').classList.add('hidden');$('title').textContent='Trucks-Trailers';
+}
+$('loginBtn').onclick=async()=>{
+  const e=$('lEmail').value.trim(),p=$('lPass').value;$('lErr').textContent='';$('loginBtn').disabled=true;
+  try{await auth.signInWithEmailAndPassword(e,p)}
+  catch(err){const c=err.code||'';$('lErr').textContent=
+    c.includes('network')?'Nėra interneto ryšio':
+    c.includes('too-many')?'Per daug bandymų, palaukite':
+    'Neteisingas el. paštas arba slaptažodis'}
+  $('loginBtn').disabled=false;
+};
+$('lPass').onkeydown=e=>{if(e.key==='Enter')$('loginBtn').click()};
+$('logoutBtn').onclick=async()=>{$('sheet').classList.add('hidden');await auth.signOut()};
+
+auth.onAuthStateChanged(u=>{
+  if(unsub){unsub();unsub=null}
+  if(!u){col=null;trucks=[];showLogin(true);return}
+  col=fs.collection('users').doc(u.uid).collection('trucks');
+  $('sheetUser').textContent=u.email;
+  showLogin(false);
+  unsub=col.orderBy('updated','desc').onSnapshot(snap=>{
+    trucks=snap.docs.map(d=>({id:d.id,...d.data()}));
+    $('loading').classList.add('hidden');
+    $('sync').classList.toggle('off',snap.metadata.fromCache);
+    if(!cur)renderList();
+  },err=>{$('loading').textContent='Nepavyko įkelti: '+(err.code||err.message);});
+});
+window.addEventListener('online',()=>$('sync').classList.remove('off'));
+window.addEventListener('offline',()=>$('sync').classList.add('off'));
+
+/* ---------- list ---------- */
+function yearOf(t){const m=String(t.year||'').match(/\d{4}/);return m?m[0]:''}
+function fillSelect(id,values,current){const sel=$(id);const first=sel.options[0].outerHTML;sel.innerHTML=first+values.map(v=>`<option value="${v.replace(/"/g,'&quot;')}">${v}</option>`).join('');sel.value=values.includes(current)?current:''}
+function renderList(){
+  const q=$('q').value.trim().toLowerCase();
+  const brands=[...new Set(trucks.map(t=>(t.brand||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'lt'));
+  const years=[...new Set(trucks.map(yearOf).filter(Boolean))].sort().reverse();
+  fillSelect('fltBrand',brands,$('fltBrand').value);fillSelect('fltYear',years,$('fltYear').value);
+  const fb=$('fltBrand').value,fy=$('fltYear').value;
+  const list=trucks.filter(t=>
+    (!fb||(t.brand||'').trim()===fb)&&(!fy||yearOf(t)===fy)&&
+    (!q||[t.brand,t.title,t.year,t.km,t.vin,t.desc,t.company,t.code,t.location,t.note].map(v=>v||'').join(' ').toLowerCase().includes(q)));
+  $('count').textContent=trucks.length||'';
+  $('empty').classList.toggle('hidden',trucks.length>0||!$('loading').classList.contains('hidden'));
+  const g=$('grid');g.innerHTML='';
+  list.forEach(t=>{
+    const c=document.createElement('button');c.className='card';
+    const th=document.createElement('div');th.className='thumb';
+    if(t.thumb){th.style.backgroundImage=`url(${src(t.thumb)})`;const n=document.createElement('span');n.className='n';n.textContent=t.photoCount||'';th.appendChild(n)}
+    else th.textContent='Be nuotraukos';
+    const tt=document.createElement('div');tt.className='t';tt.innerHTML='<b></b><span></span>';
+    tt.querySelector('b').textContent=[t.brand,t.title].filter(Boolean).join(' ')||'Be pavadinimo';
+    tt.querySelector('span').textContent=[t.year,t.km?fmtKm(t.km)+' km':''].filter(Boolean).join(' · ')||fmt(t.updated);
+    if(t.company){const co=document.createElement('span');co.className='co';co.textContent=t.company;tt.appendChild(co)}
+    c.append(th,tt);c.onclick=()=>openEdit(t);g.appendChild(c);
+  });
+}
+$('q').oninput=renderList;$('fltBrand').onchange=renderList;$('fltYear').onchange=renderList;
+
+/* ---------- edit ---------- */
+function show(view){
+  const edit=view==='edit';
+  $('listView').classList.toggle('hidden',edit);$('editView').classList.toggle('hidden',!edit);
+  $('backBtn').classList.toggle('hidden',!edit);$('fab').classList.toggle('hidden',edit);$('menuBtn').classList.toggle('hidden',edit);
+  $('title').textContent=edit?([cur.brand,cur.title].filter(Boolean).join(' ')||'Naujas vilkikas'):'Trucks-Trailers';
   window.scrollTo(0,0);
 }
-function openOv(id){ $(id).classList.add('on'); }
-function closeOv(id){ $(id).classList.remove('on'); }
-document.querySelectorAll('.ov').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('on'); }));
-
-/* ---------- matches list ---------- */
-function matchRow(m, showTurn=true){
-  const res=m.rez||'';
-  const who=avatar(m.varzovas,'sm')+'<span>'+esc(m.varzovas)+'</span>';
-  const sub=[fmtD(m.data), showTurn?m.turnyras:'', m.div?'div. '+m.div:'', m.kortai].filter(Boolean).map(esc).join(' · ');
-  const note='';
-  const sets=[m.s1,m.s2,m.s3].filter(Boolean).map(s=>`<span class="set${setWon(s)?' won':''}">${esc(s)}</span>`).join('');
-  return `<div class="m ${res}" onclick="openMatch('${m.id}')">
-    ${m.etapas?`<span class="tag">${esc(m.etapas)}</span>`:''}
-    <div class="who">${who}</div><div class="sub">${sub}</div>
-    <div class="score num">${res?`<small>${res==='W'?'L':'P'}</small>`:''}<span>${sets}</span></div>${note}
-  </div>`;
+async function openEdit(t){
+  cur=t?{...t}:{id:uid(),brand:'',title:'',year:'',km:'',vin:'',desc:'',company:'',code:'',location:'',note:'',created:Date.now(),updated:Date.now(),isNew:true};
+  curPhotos=[];removed=[];
+  $('fBrand').value=cur.brand||'';$('fCode').value=cur.code||'';$('fLoc').value=cur.location||'';$('fNote').value=cur.note||'';$('fTitle').value=cur.title||'';$('fYear').value=cur.year||'';$('fKm').value=cur.km||'';$('fVin').value=cur.vin||'';$('fDesc').value=cur.desc||'';$('fCompany').value=cur.company||'';
+  $('delBtn').classList.toggle('hidden',!t);
+  $('meta').textContent=t?`Sukurta ${fmt(t.created)} · pakeista ${fmt(t.updated)}`:'';
+  renderPhotos();show('edit');history.pushState({edit:1},'');
+  if(!t){setTimeout(()=>$('fTitle').focus(),50);return}
+  busy(true);
+  try{const snap=await col.doc(t.id).collection('photos').orderBy('order').get();
+    curPhotos=snap.docs.map(d=>({id:d.id,data:d.data().data,saved:true}));
+  }catch(e){toast('Nepavyko įkelti nuotraukų')}
+  busy(false);if(cur)renderPhotos();
 }
-function filteredMatches(){
-  const y=$('fYear').value, t=$('fTurn').value, r=$('fRes').value, n=$('fName').value.trim().toLowerCase();
-  return D.matches.filter(m=>(!y||m.data.startsWith(y))&&(!t||m.turnyras===t)&&(!r||m.rez===r)&&(!n||(m.varzovas||'').toLowerCase().includes(n)||(m.pastabos||'').toLowerCase().includes(n)))
-    .sort((a,b)=>b.data.localeCompare(a.data));
-}
-function renderMatches(){
-  const list=filteredMatches(); const w=list.filter(m=>m.rez==='W').length, l=list.filter(m=>m.rez==='L').length;
-  $('mCount').innerHTML=`${list.length} matchai · <span style="color:var(--win)">${w} laimėta</span> · <span style="color:var(--loss)">${l} pralaimėta</span>`;
-  if(!list.length){ $('mList').innerHTML='<div class="empty">Nėra matchų pagal šį filtrą.</div>'; return; }
-  // group by tournament (in date order)
-  const groups={}, order=[];
-  list.forEach(m=>{ if(!groups[m.turnyras]){ groups[m.turnyras]=[]; order.push(m.turnyras); } groups[m.turnyras].push(m); }); // list is date-desc, so order = most recent tournament first
-  $('mList').innerHTML=order.map(t=>{ const grp=groups[t]; const gw=grp.filter(m=>m.rez==='W').length, gl=grp.filter(m=>m.rez==='L').length;
-    return `<div class="group"><b>${esc(t)}</b><span class="num">${gw}–${gl}</span></div>`+grp.map(m=>matchRow(m,false)).join(''); }).join('');
-}
-['fYear','fTurn','fRes'].forEach(id=>$(id).addEventListener('change',renderMatches));
-$('fName').addEventListener('input',renderMatches);
-
-/* ---------- match modal ---------- */
-let mRez='';
-function segInit(id, cb){ $(id).querySelectorAll('button').forEach(b=>b.onclick=()=>{ $(id).querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); cb(b.dataset.v); }); }
-function segSet(id,v){ $(id).querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===v)); }
-segInit('m_rez',v=>{ mRez=v; });
-['m_s1','m_s2','m_s3'].forEach(id=>$(id).addEventListener('input',()=>{ const r=deriveRes($('m_s1').value,$('m_s2').value,$('m_s3').value); if(r){ mRez=r; segSet('m_rez',r); } }));
-$('m_varzovas').addEventListener('change',()=>{ const t=opponents()[$('m_varzovas').value.trim()]; if(t&&!$('m_tel').value) $('m_tel').value=t; });
-$('f_varzovas').addEventListener('change',()=>{ const t=opponents()[$('f_varzovas').value.trim()]; if(t&&!$('f_tel').value) $('f_tel').value=t; });
-
-let fromFutureId=null, fromFutureIdD=null, fTipas='vienetai';
-function fSetTipas(v){ fTipas=v; segSet('f_tipas',v); const d=v==='dvejetai'; $('f_telBox').style.display=d?'none':''; $('f_partBox').style.display=d?'':'none'; $('f_lblV').textContent=d?'Varžovų pora':'Vardas Pavardė'; $('f_varzovas').placeholder=d?'pvz. A. Kondrotas / A. Kisielis':'Varžovas'; $('f_varzovas').setAttribute('list',d?'dlDOpp':'dlOpp'); $('f_turnyras').setAttribute('list',d?'dlDTurn':'dlTurn'); }
-segInit('f_tipas',fSetTipas);
-function openMatch(id, prefill){
-  fromFutureId=null;
-  const m=id?D.matches.find(x=>x.id===id):null;
-  $('mTitle').textContent=m?'Redaguoti matchą':'Naujas matchas';
-  $('m_id').value=m?m.id:'';
-  const v=m||Object.assign({varzovas:'',tel:'',data:today(),kortai:'',turnyras:'',div:'',etapas:'',s1:'',s2:'',s3:'',rez:'',pastabos:''},prefill||{});
-  ['varzovas','tel','data','kortai','turnyras','div','etapas','s1','s2','s3','pastabos'].forEach(k=>$('m_'+k).value=v[k]||'');
-  mRez=v.rez||''; segSet('m_rez',mRez);
-  $('m_del').style.display=m?'':'none';
-  if(!m && !prefill){ // suggest last used tournament / division
-    const last=[...D.matches].sort((a,b)=>b.data.localeCompare(a.data))[0]; if(last){ $('m_turnyras').value=''; $('m_div').value=last.div||''; }
-  }
-  openOv('ovMatch');
-}
-function saveMatch(){
-  const g=k=>$('m_'+k).value.trim();
-  if(!g('varzovas')) return toast('Įvesk varžovo vardą');
-  if(!g('data')) return toast('Įvesk datą');
-  if(!g('turnyras')) return toast('Įvesk turnyrą');
-  let rez=mRez||deriveRes(g('s1'),g('s2'),g('s3'));
-  if(!rez) return toast('Pažymėk rezultatą');
-  const obj={id:g('id')||uid('m'),varzovas:g('varzovas'),tel:g('tel').replace(/\D/g,''),data:g('data'),kortai:g('kortai'),turnyras:g('turnyras'),div:g('div'),etapas:g('etapas'),s1:g('s1'),s2:g('s2'),s3:g('s3'),rez,pastabos:g('pastabos')};
-  const i=D.matches.findIndex(x=>x.id===obj.id); if(i>=0) D.matches[i]=obj; else D.matches.push(obj);
-  // propagate phone to same opponent
-  if(obj.tel) D.matches.forEach(x=>{ if(x.varzovas===obj.varzovas&&!x.tel) x.tel=obj.tel; });
-  const moved=!!fromFutureId;
-  if(fromFutureId){ D.future=D.future.filter(f=>f.id!==fromFutureId); fromFutureId=null; }
-  save(); closeOv('ovMatch'); refreshAll();
-  if(moved){ showView('matchai'); toast('Perkelta į sužaistus matchus'); } else toast('Išsaugota');
-}
-function deleteMatch(){ const id=$('m_id').value; if(!id||!confirm('Ištrinti šį matchą?')) return; D.matches=D.matches.filter(x=>x.id!==id); save(); closeOv('ovMatch'); refreshAll(); toast('Ištrinta'); }
-
-/* ---------- future ---------- */
-function dlInfo(dl){
-  if(!dl) return '';
-  const days=Math.round((new Date(dl)-new Date(today()))/86400000);
-  let cls='', txt='';
-  if(days<0){ cls='over'; txt=`vėluoja ${-days} d.`; } else if(days===0){ cls='soon'; txt='šiandien'; } else if(days<=7){ cls='soon'; txt=`liko ${days} d.`; } else txt=`iki ${fmtD(dl)}`;
-  return `<span class="dl ${cls}">${txt}</span>`;
-}
-function renderFuture(){
-  const list=[...D.future].sort((a,b)=>(a.planData||a.deadline||'9999').localeCompare(b.planData||b.deadline||'9999'));
-  if(!list.length){ $('fList').innerHTML='<div class="empty">Nėra būsimų matchų. Pridėk varžovus, su kuriais dar nesužaista.</div>'; }
-  else $('fList').innerHTML=list.map(f=>{
-    const dbl=f.tipas==='dvejetai';
-    const h2h=dbl?D.doubles.filter(m=>m.varzovai===f.varzovas):D.matches.filter(m=>m.varzovas===f.varzovas); const hw=h2h.filter(m=>m.rez==='W').length, hl=h2h.filter(m=>m.rez==='L').length;
-    const planned=f.planData||f.laikas||f.aikstynas||f.mokejo;
-    return `<div class="f">
-      <div class="who"><span style="display:flex;align-items:center;gap:8px">${dbl?'':avatar(f.varzovas,'sm')}${esc(f.varzovas)}</span>${dlInfo(f.deadline)}</div>
-      <div class="info">${dbl?`<span style="color:var(--plan);font-weight:600">Dvejetai${f.partneris?' su '+esc(f.partneris):''}</span>`:''}${f.turnyras?`<span>${esc(f.turnyras)}</span>`:''}${f.tel?`<a href="${telHref(f.tel)}" style="color:var(--court);text-decoration:none"><b>${fmtTel(f.tel)}</b></a>`:''}${h2h.length?`<span>anksčiau: <b class="num">${hw}–${hl}</b></span>`:'<span>dar nežaista</span>'}${f.pastabos?`<span>${esc(f.pastabos)}</span>`:''}</div>
-      <div class="planned">${planned?[
-        f.planData?`<span>📅 <b>${fmtD(f.planData)}</b>${f.laikas?' '+esc(f.laikas):''}</span>`:'',
-        f.aikstynas?`<span>📍 <b>${esc(f.aikstynas)}</b></span>`:'',
-        f.mokejo?`<span>💶 ${esc(f.mokejo)}${f.suma?' '+esc(f.suma)+' €':''}</span>`:''
-      ].filter(Boolean).join(''):'<span class="none">Dar nesuplanuota – nėra datos ir aikštyno</span>'}</div>
-      <div class="acts"><button onclick="openFuture('${f.id}')">Koreguoti</button><button class="pri" onclick="futureToResult('${f.id}')">Sužaista – įvesti rezultatą</button></div>
-    </div>`; }).join('');
-}
-function openFuture(id){
-  const f=id?D.future.find(x=>x.id===id):null;
-  $('fTitle').textContent=f?'Koreguoti būsimą matchą':'Naujas būsimas matchas';
-  $('f_id').value=f?f.id:'';
-  const lastP=[...D.doubles].sort((a,b)=>b.data.localeCompare(a.data))[0];
-  const v=f||{tipas:'vienetai',varzovas:'',tel:'',partneris:lastP?lastP.partneris:'',turnyras:'',deadline:'',planData:'',laikas:'',aikstynas:'',mokejo:'',suma:'',pastabos:''};
-  ['varzovas','tel','partneris','turnyras','deadline','planData','laikas','aikstynas','mokejo','suma','pastabos'].forEach(k=>$('f_'+k).value=v[k]||'');
-  fSetTipas(v.tipas||'vienetai');
-  $('f_del').style.display=f?'':'none'; $('f_toRes').style.display=f?'':'none';
-  openOv('ovFuture');
-}
-function saveFuture(){
-  const g=k=>$('f_'+k).value.trim();
-  if(!g('varzovas')) return toast('Įvesk varžovo vardą');
-  const obj={id:g('id')||uid('f'),tipas:fTipas,varzovas:g('varzovas'),tel:fTipas==='dvejetai'?'':g('tel').replace(/\D/g,''),partneris:fTipas==='dvejetai'?g('partneris'):'',turnyras:g('turnyras'),deadline:g('deadline'),planData:g('planData'),laikas:g('laikas'),aikstynas:g('aikstynas'),mokejo:g('mokejo'),suma:g('suma'),pastabos:g('pastabos')};
-  const i=D.future.findIndex(x=>x.id===obj.id); if(i>=0) D.future[i]=obj; else D.future.push(obj);
-  save(); closeOv('ovFuture'); refreshAll(); toast('Išsaugota');
-}
-function deleteFuture(){ const id=$('f_id').value; if(!id||!confirm('Ištrinti būsimą matchą?')) return; D.future=D.future.filter(x=>x.id!==id); save(); closeOv('ovFuture'); refreshAll(); toast('Ištrinta'); }
-function futureToResult(id){
-  id=id||$('f_id').value; const f=D.future.find(x=>x.id===id); if(!f) return;
-  closeOv('ovFuture');
-  if(f.tipas==='dvejetai'){
-    openDouble(null,{varzovai:f.varzovas,partneris:f.partneris,turnyras:f.turnyras,data:f.planData||today(),vieta:f.aikstynas,pastabos:f.mokejo?('Kortas: '+f.mokejo+(f.suma?' '+f.suma+' €':'')):''});
-    fromFutureIdD=id; $('dTitle').textContent='Rezultatas: '+f.varzovas; return;
-  }
-  const last=D.matches.filter(m=>m.turnyras===f.turnyras).sort((a,b)=>b.data.localeCompare(a.data))[0];
-  openMatch(null,{varzovas:f.varzovas,tel:f.tel,turnyras:f.turnyras,data:f.planData||today(),kortai:f.aikstynas,div:last?last.div:'',pastabos:f.mokejo?('Kortas: '+f.mokejo+(f.suma?' '+f.suma+' €':'')):''});
-  fromFutureId=id; $('mTitle').textContent='Rezultatas: '+f.varzovas;
-}
-
-/* ---------- calendar ---------- */
-let calY, calM, calSel=null;
-(function(){ const d=new Date(); calY=d.getFullYear(); calM=d.getMonth(); })();
-const MON=['Sausis','Vasaris','Kovas','Balandis','Gegužė','Birželis','Liepa','Rugpjūtis','Rugsėjis','Spalis','Lapkritis','Gruodis'];
-function calMove(n){ calM+=n; if(calM<0){calM=11;calY--;} if(calM>11){calM=0;calY++;} calSel=null; renderCal(); }
-function renderCal(){
-  $('calTitle').textContent=`${MON[calM]} ${calY}`;
-  const first=new Date(calY,calM,1); const startDow=(first.getDay()+6)%7; const days=new Date(calY,calM+1,0).getDate(); const prevDays=new Date(calY,calM,0).getDate();
-  const ev={}; const add=(d,t)=>{ (ev[d]=ev[d]||[]).push(t); };
-  D.matches.forEach(m=>add(m.data,m.rez||'L')); D.doubles.forEach(m=>{ if(m.rez) add(m.data,m.rez); }); D.future.forEach(f=>{ if(f.planData) add(f.planData,'P'); if(f.deadline) add(f.deadline,'D'); });
-  let h='<div class="dow">Pr</div><div class="dow">An</div><div class="dow">Tr</div><div class="dow">Kt</div><div class="dow">Pn</div><div class="dow">Št</div><div class="dow">Sk</div>';
-  const td=today();
-  const cell=(y,m,d,out)=>{ const key=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; const e=ev[key]||[]; const dots=[...new Set(e)].slice(0,4).map(t=>`<i class="dot-${t}"></i>`).join('');
-    return `<div class="d ${out?'out':''} ${key===td?'today':''} ${key===calSel?'sel':''}" onclick="calPick('${key}')">${d}<div class="dots">${dots}</div></div>`; };
-  for(let i=startDow-1;i>=0;i--) h+=cell(calM===0?calY-1:calY, calM===0?11:calM-1, prevDays-i, true);
-  for(let d=1;d<=days;d++) h+=cell(calY,calM,d,false);
-  const total=startDow+days; const rest=(7-total%7)%7; for(let d=1;d<=rest;d++) h+=cell(calM===11?calY+1:calY, calM===11?0:calM+1, d, true);
-  $('cal').innerHTML=h;
-  renderCalDay();
-}
-function calPick(key){ calSel=key; const [y,m]=key.split('-').map(Number); if(y!==calY||m-1!==calM){ calY=y; calM=m-1; } renderCal(); }
-function renderCalDay(){
-  if(!calSel){
-    // upcoming list for this month
-    const key=`${calY}-${String(calM+1).padStart(2,'0')}`;
-    const ms=D.matches.filter(m=>m.data.startsWith(key)).sort((a,b)=>a.data.localeCompare(b.data));
-    const ds=D.doubles.filter(m=>m.data.startsWith(key)).sort((a,b)=>a.data.localeCompare(b.data));
-    const fs=D.future.filter(f=>(f.planData||'').startsWith(key)||(f.deadline||'').startsWith(key));
-    let h='';
-    if(fs.length) h+='<div class="sect">Suplanuota / deadline</div>'+fs.map(futRow).join('');
-    if(ms.length) h+=`<div class="sect">Sužaista šį mėnesį <span class="num" style="font-weight:600;color:var(--mute)">${ms.filter(m=>m.rez==='W').length}–${ms.filter(m=>m.rez==='L').length}</span></div>`+ms.map(m=>matchRow(m)).join('');
-    if(ds.length) h+=`<div class="sect">Dvejetai šį mėnesį <span class="num" style="font-weight:600;color:var(--mute)">${ds.filter(m=>m.rez==='W').length}–${ds.filter(m=>m.rez==='L').length}</span></div>`+ds.map(m=>doubleRow(m)).join('');
-    $('calDay').innerHTML=h||'<div class="empty">Šį mėnesį matchų nėra.</div>'; return;
-  }
-  const ms=D.matches.filter(m=>m.data===calSel); const ds=D.doubles.filter(m=>m.data===calSel); const fs=D.future.filter(f=>f.planData===calSel||f.deadline===calSel);
-  let h=`<div class="sect">${fmtD(calSel)} <span><button onclick="openMatch(null,{data:'${calSel}'})">+ Vienetai</button> <button onclick="openDouble(null,{data:'${calSel}'})">+ Dvejetai</button></span></div>`;
-  h+=fs.map(futRow).join('')+ms.map(m=>matchRow(m)).join('')+ds.map(m=>doubleRow(m)).join('');
-  if(!fs.length&&!ms.length&&!ds.length) h+='<div class="empty">Šią dieną nieko nėra.</div>';
-  $('calDay').innerHTML=h;
-}
-function futRow(f){ const isDl=f.deadline&&(!f.planData||calSel===f.deadline); return `<div class="m F" onclick="openFuture('${f.id}')"><div class="who">${esc(f.varzovas)}${f.tipas==='dvejetai'?' <span style="font-size:11px;color:var(--plan)">dvejetai</span>':''}</div><div class="sub">${[f.turnyras,f.planData?('📅 '+fmtD(f.planData)+' '+(f.laikas||'')):'',f.aikstynas,f.deadline?('deadline '+fmtD(f.deadline)):''].filter(Boolean).map(esc).join(' · ')}</div><div class="score"><small style="background:${isDl&&!f.planData?'#E0A100':'var(--plan)'}">${f.planData?'planas':'deadline'}</small></div></div>`; }
-
-/* ---------- stats ---------- */
-['sYear','sTurn'].forEach(id=>$(id).addEventListener('change',renderStats));
-function pct(w,n){ return n?Math.round(w/n*100)+'%':'–'; }
-function statTable(title, rows, keyLabel){
-  if(!rows.length) return '';
-  return `<div class="h2">${title}</div><table><tr><th>${keyLabel}</th><th class="n">Sužaista</th><th class="n">L</th><th class="n">P</th><th class="n">%</th></tr>`+
-    rows.map(r=>`<tr><td>${esc(r.k)}<div class="mini"><i style="width:${r.n?r.w/r.n*100:0}%"></i></div></td><td class="n">${r.n}</td><td class="n" style="color:var(--win)">${r.w}</td><td class="n" style="color:var(--loss)">${r.l}</td><td class="n">${pct(r.w,r.n)}</td></tr>`).join('')+'</table>';
-}
-function groupBy(list, fn, sortFn){
-  const g={}; list.forEach(m=>{ const k=fn(m); if(k==null||k==='') return; g[k]=g[k]||{k,n:0,w:0,l:0,last:''}; g[k].n++; if(m.rez==='W') g[k].w++; if(m.rez==='L') g[k].l++; if(m.data>g[k].last) g[k].last=m.data; });
-  return Object.values(g).sort(sortFn||((a,b)=>b.last.localeCompare(a.last)));
-}
-function renderStats(){
-  const y=$('sYear').value, t=$('sTurn').value;
-  const list=D.matches.filter(m=>(!y||m.data.startsWith(y))&&(!t||m.turnyras===t));
-  $('stats').innerHTML=statsHtml(list,{y,t,singles:true});
-}
-function statsHtml(list,o){
-  const n=list.length, w=list.filter(m=>m.rez==='W').length, l=list.filter(m=>m.rez==='L').length;
-  if(!n) return '<div class="empty">Nėra duomenų pagal šį filtrą.</div>';
-  const y=o.y, t=o.t;
-  // sets
-  let sw=0,sl=0,three=0,threeW=0,twoZero=0; list.forEach(m=>{ [m.s1,m.s2,m.s3].forEach(s=>{ const r=setWon(s); if(r===true) sw++; if(r===false) sl++; }); if(m.s3){ three++; if(m.rez==='W') threeW++; } else if(m.rez==='W') twoZero++; });
-  // streaks
-  const chron=[...list].sort((a,b)=>a.data.localeCompare(b.data)); let cur=0,curT='',best=0,worst=0,run=0,runT='';
-  chron.forEach(m=>{ if(m.rez===runT) run++; else { run=1; runT=m.rez; } if(runT==='W') best=Math.max(best,run); if(runT==='L') worst=Math.max(worst,run); }); cur=run; curT=runT;
-  let h=`<div class="kpi"><div><b class="num">${n}</b><span>Sužaista</span></div><div class="w"><b class="num">${w}</b><span>Laimėta</span></div><div class="l"><b class="num">${l}</b><span>Pralaimėta</span></div><div><b class="num">${pct(w,n)}</b><span>Laimėjimų</span></div></div>
-  <div class="bar"><i style="width:${n?w/n*100:0}%"></i></div>
-  <table><tr><td>Setai laimėti / pralaimėti</td><td class="n"><span style="color:var(--win)">${sw}</span> / <span style="color:var(--loss)">${sl}</span></td></tr>
-  <tr><td>Trijų setų matchai</td><td class="n">${three} (laimėta ${threeW}, ${pct(threeW,three)})</td></tr>
-  <tr><td>Laimėta 2:0</td><td class="n">${twoZero}</td></tr>
-  <tr><td>Ilgiausia pergalių serija</td><td class="n" style="color:var(--win)">${best}</td></tr>
-  <tr><td>Ilgiausia pralaimėjimų serija</td><td class="n" style="color:var(--loss)">${worst}</td></tr>
-  <tr><td>Dabartinė serija</td><td class="n">${cur} ${curT==='W'?'pergalės':'pralaimėjimai'} iš eilės</td></tr>${o.bz?`<tr><td>Be žaidimo (b/ž)</td><td class="n">${o.bz}</td></tr>`:''}</table>`;
-  if(!y) h+=statTable('Pagal metus', groupBy(list,m=>m.data.slice(0,4),(a,b)=>b.k.localeCompare(a.k)), 'Metai');
-  if(!t) h+=statTable('Pagal turnyrus', groupBy(list,m=>m.turnyras), 'Turnyras');
-  h+=statTable('Pagal turnyrų serijas', groupBy(list,m=>m.turnyras.split(' ')[0],(a,b)=>b.n-a.n), 'Serija');
-  if(o.singles){
-    h+=statTable('Pagal divizioną', groupBy(list,m=>m.div?('Div. '+m.div):'',(a,b)=>a.k.localeCompare(b.k)), 'Divizionas');
-    h+=statTable('Pagal aikštyną', groupBy(list,m=>m.kortai,(a,b)=>b.n-a.n), 'Aikštynas');
-  } else {
-    h+=statTable('Pagal partnerį', groupBy(list,m=>m.partneris,(a,b)=>b.n-a.n), 'Partneris');
-    h+=statTable('Pagal vietą', groupBy(list,m=>m.vieta,(a,b)=>b.n-a.n), 'Vieta');
-    h+=statTable('Pagal dangą', groupBy(list,m=>m.danga,(a,b)=>b.n-a.n), 'Danga');
-  }
-  h+=statTable('Pagal mėnesį', groupBy(list,m=>MON[+m.data.slice(5,7)-1],(a,b)=>MON.indexOf(a.k)-MON.indexOf(b.k)), 'Mėnuo');
-  const opp=groupBy(list,m=>o.singles?m.varzovas:m.varzovai,(a,b)=>b.n-a.n||b.last.localeCompare(a.last)).filter(x=>x.n>1);
-  if(opp.length) h+=statTable(o.singles?'Varžovai, su kuriais žaista daugiau nei kartą':'Poros, su kuriomis žaista daugiau nei kartą', opp, o.singles?'Varžovas':'Pora');
-  if(o.singles){ const et=groupBy(list.filter(m=>m.etapas),m=>m.etapas,(a,b)=>b.n-a.n); if(et.length) h+=statTable('Playoff etapai', et, 'Etapas'); }
-  return h;
-}
-
-/* ---------- doubles ---------- */
-let dMode='list', dRez='';
-segInit('dMode',v=>{ dMode=v; renderDoubles(); });
-segInit('d_rez',v=>{ dRez=v; });
-['d_s1','d_s2','d_s3'].forEach(id=>$(id).addEventListener('input',()=>{ const r=deriveRes($('d_s1').value,$('d_s2').value,$('d_s3').value); if(r){ dRez=r; segSet('d_rez',r); } }));
-['dYear','dTurn','dRes'].forEach(id=>$(id).addEventListener('change',renderDoubles)); $('dName').addEventListener('input',renderDoubles);
-function doubleRow(m, showTurn=true){
-  const res=m.rez||'';
-  const sub=[fmtD(m.data), showTurn?m.turnyras:'', m.partneris?'su '+m.partneris:'', m.vieta, m.danga].filter(Boolean).map(esc).join(' · ');
-  const sets=[m.s1,m.s2,m.s3].filter(Boolean).map(s=>`<span class="set${setWon(s)?' won':''}">${esc(s)}</span>`).join('');
-  return `<div class="m ${res}" onclick="openDouble('${m.id}')"><div class="who">${esc(m.varzovai)}</div><div class="sub">${sub}</div>
-    <div class="score num">${res?`<small>${res==='W'?'L':'P'}</small>`:''}<span>${sets||`<span class="set" style="color:var(--mute);font-weight:500">${esc(m.pastabos||'–')}</span>`}</span></div></div>`;
-}
-function renderDoubles(){
-  const y=$('dYear').value, t=$('dTurn').value, r=$('dRes').value, q=$('dName').value.trim().toLowerCase();
-  const list=D.doubles.filter(m=>(!y||m.data.startsWith(y))&&(!t||m.turnyras===t)&&(!r||m.rez===r)&&(!q||(m.varzovai||'').toLowerCase().includes(q)||(m.partneris||'').toLowerCase().includes(q))).sort((a,b)=>b.data.localeCompare(a.data));
-  const isStat=dMode==='stat';
-  $('dListWrap').style.display=isStat?'none':''; $('dStats').style.display=isStat?'':'none'; $('dRes').style.display=isStat?'none':''; $('dName').style.display=isStat?'none':'';
-  if(isStat){ const played=list.filter(m=>m.rez); $('dStats').innerHTML=statsHtml(played,{y,t,singles:false,bz:list.length-played.length}); return; }
-  const w=list.filter(m=>m.rez==='W').length, l=list.filter(m=>m.rez==='L').length;
-  $('dCount').innerHTML=`${list.length} matchai · <span style="color:var(--win)">${w} laimėta</span> · <span style="color:var(--loss)">${l} pralaimėta</span>`;
-  if(!list.length){ $('dList').innerHTML='<div class="empty">Nėra dvejetų matchų pagal šį filtrą.</div>'; return; }
-  const groups={}, order=[];
-  list.forEach(m=>{ if(!groups[m.turnyras]){ groups[m.turnyras]=[]; order.push(m.turnyras); } groups[m.turnyras].push(m); });
-  $('dList').innerHTML=order.map(tt=>{ const g=groups[tt]; return `<div class="group"><b>${esc(tt)}</b><span class="num">${g.filter(m=>m.rez==='W').length}–${g.filter(m=>m.rez==='L').length}</span></div>`+g.map(m=>doubleRow(m,false)).join(''); }).join('');
-}
-function openDouble(id, prefill){
-  fromFutureIdD=null;
-  const m=id?D.doubles.find(x=>x.id===id):null;
-  $('dTitle').textContent=m?'Redaguoti dvejetų matchą':'Naujas dvejetų matchas';
-  $('d_id').value=m?m.id:'';
-  const lastP=[...D.doubles].sort((a,b)=>b.data.localeCompare(a.data))[0];
-  const v=m||Object.assign({varzovai:'',partneris:lastP?lastP.partneris:'',data:today(),turnyras:'',vieta:'',danga:'',s1:'',s2:'',s3:'',rez:'',pastabos:''},prefill||{});
-  ['varzovai','partneris','data','turnyras','vieta','danga','s1','s2','s3','pastabos'].forEach(k=>$('d_'+k).value=v[k]||'');
-  dRez=v.rez||''; segSet('d_rez',dRez); $('d_del').style.display=m?'':'none';
-  openOv('ovDouble');
-}
-function saveDouble(){
-  const g=k=>$('d_'+k).value.trim();
-  if(!g('varzovai')) return toast('Įvesk varžovų porą'); if(!g('data')) return toast('Įvesk datą'); if(!g('turnyras')) return toast('Įvesk turnyrą');
-  const rez=dRez||deriveRes(g('s1'),g('s2'),g('s3'));
-  if(!rez && !g('pastabos')) return toast('Pažymėk rezultatą arba įrašyk pastabą (pvz. b/ž)');
-  const obj={id:g('id')||uid('d'),varzovai:g('varzovai'),partneris:g('partneris'),data:g('data'),turnyras:g('turnyras'),vieta:g('vieta'),danga:g('danga'),s1:g('s1'),s2:g('s2'),s3:g('s3'),rez,pastabos:g('pastabos')};
-  const i=D.doubles.findIndex(x=>x.id===obj.id); if(i>=0) D.doubles[i]=obj; else D.doubles.push(obj);
-  const moved=!!fromFutureIdD;
-  if(fromFutureIdD){ D.future=D.future.filter(f=>f.id!==fromFutureIdD); fromFutureIdD=null; }
-  save(); closeOv('ovDouble'); refreshAll();
-  if(moved){ showView('dvej'); toast('Perkelta į dvejetų matchus'); } else toast('Išsaugota');
-}
-function deleteDouble(){ const id=$('d_id').value; if(!id||!confirm('Ištrinti šį dvejetų matchą?')) return; D.doubles=D.doubles.filter(x=>x.id!==id); save(); closeOv('ovDouble'); refreshAll(); toast('Ištrinta'); }
-
-/* ---------- contacts ---------- */
-$('cSearch').addEventListener('input',renderContacts);
-function allContacts(){
-  const map={};
-  D.matches.forEach(m=>{ if(!m.varzovas) return; const c=map[m.varzovas]=map[m.varzovas]||{vardas:m.varzovas,tel:'',n:0,w:0,l:0,last:'',src:'match'}; c.n++; if(m.rez==='W')c.w++; if(m.rez==='L')c.l++; if(m.tel) c.tel=m.tel; if(m.data>c.last) c.last=m.data; });
-  D.future.forEach(f=>{ if(!f.varzovas||f.tipas==='dvejetai') return; const c=map[f.varzovas]=map[f.varzovas]||{vardas:f.varzovas,tel:'',n:0,w:0,l:0,last:'',src:'future'}; if(f.tel&&!c.tel) c.tel=f.tel; c.fut=true; });
-  D.contacts.forEach(k=>{ const c=map[k.vardas]=map[k.vardas]||{vardas:k.vardas,tel:'',n:0,w:0,l:0,last:'',src:'contact'}; if(k.tel) c.tel=k.tel; c.cid=k.id; c.pastabos=k.pastabos; });
-  return Object.values(map).sort((a,b)=>a.vardas.localeCompare(b.vardas,'lt'));
-}
-function renderContacts(){
-  const q=$('cSearch').value.trim().toLowerCase();
-  const list=allContacts().filter(c=>!q||c.vardas.toLowerCase().includes(q)||(c.tel||'').includes(q));
-  $('cList').innerHTML=list.map(c=>`<div class="c" data-n="${esc(c.vardas)}" onclick="openContact(this.dataset.n)">${avatar(c.vardas)}<div style="flex:1;min-width:0"><div class="nm">${esc(c.vardas)}</div><div class="st">${c.n?`<span class="rec"><span class="w">${c.w}</span>–<span class="l">${c.l}</span></span> · ${c.n} matchai · paskutinis ${fmtD(c.last)}`:'dar nežaista'}${c.fut?' · <span style="color:var(--plan)">būsimas</span>':''}${c.pastabos?' · '+esc(c.pastabos):''}</div></div>${c.tel?`<a href="${telHref(c.tel)}" onclick="event.stopPropagation()">${fmtTel(c.tel)}</a>`:'<span class="st">nėra nr.</span>'}</div>`).join('')||'<div class="empty">Kontaktų nerasta.</div>';
-}
-function openContact(name){
-  const c=name?allContacts().find(x=>x.vardas===name):null;
-  $('c_id').value=c?(c.cid||''):''; $('c_vardas').value=c?c.vardas:''; $('c_tel').value=c?c.tel:''; $('c_pastabos').value=c?(c.pastabos||''):'';
-  $('c_vardas').dataset.orig=c?c.vardas:'';
-  pendingPhoto=undefined; const p=c?photo(c.vardas):''; $('c_av').style.backgroundImage=p?`url(${p})`:''; $('c_av').textContent=p?'':initials(c?c.vardas:''); $('c_photoDel').style.display=p?'':'none';
-  $('c_hint').textContent=c&&c.n?'Vardo ir numerio pakeitimas atsinaujins visuose šio žaidėjo matchuose.':'';
-  $('c_del').style.display=(c&&c.cid&&!c.n&&!c.fut)?'':'none';
-  openOv('ovContact');
-}
-function saveContact(){
-  const v=$('c_vardas').value.trim(), t=$('c_tel').value.replace(/\D/g,''), p=$('c_pastabos').value.trim(), orig=$('c_vardas').dataset.orig, id=$('c_id').value;
-  if(!v) return toast('Įvesk vardą');
-  if(orig){ D.matches.forEach(m=>{ if(m.varzovas===orig){ m.varzovas=v; if(t) m.tel=t; } }); D.future.forEach(f=>{ if(f.varzovas===orig){ f.varzovas=v; if(t) f.tel=t; } });
-    if(orig!==v && photo(orig) && pendingPhoto===undefined){ const old=photo(orig); setPhoto(orig,null); setPhoto(v,old); } }
-  if(pendingPhoto!==undefined){ if(orig&&orig!==v) setPhoto(orig,null); setPhoto(v,pendingPhoto); pendingPhoto=undefined; }
-  const i=D.contacts.findIndex(x=>x.id===id||x.vardas===orig);
-  const obj={id:id||uid('c'),vardas:v,tel:t,pastabos:p};
-  if(i>=0) D.contacts[i]=obj; else D.contacts.push(obj);
-  save(); closeOv('ovContact'); refreshAll(); toast('Išsaugota');
-}
-function deleteContact(){ const id=$('c_id').value; if(!id||!confirm('Ištrinti kontaktą?')) return; D.contacts=D.contacts.filter(x=>x.id!==id); save(); closeOv('ovContact'); refreshAll(); }
-
-/* ---------- menu / data ---------- */
-function openMenu(){ $('storInfo').textContent=`Vienetų: ${D.matches.length} · dvejetų: ${D.doubles.length} · būsimų: ${D.future.length}` + (docRef?' · saugoma Firebase debesyje ir šiame įrenginyje.':' · saugoma tik šioje naršyklėje. Reguliariai eksportuok kopiją.'); openOv('ovMenu'); }
-function exportExcel(){
-  const go=()=>{
-    const wb=XLSX.utils.book_new();
-    const rezLt=r=>r==='W'?'Laimėta':(r==='L'?'Pralaimėta':'');
-    const s1=[...D.matches].sort((a,b)=>a.data.localeCompare(b.data)).map(m=>({'Data':m.data,'Turnyras':m.turnyras,'Etapas':m.etapas,'Divizionas':m.div,'Aikštynas':m.kortai,'Varžovas':m.varzovas,'Telefonas':m.tel,'1 setas':m.s1,'2 setas':m.s2,'3 setas':m.s3,'Rezultatas':rezLt(m.rez),'Pastabos':m.pastabos}));
-    const s2=[...D.doubles].sort((a,b)=>a.data.localeCompare(b.data)).map(m=>({'Data':m.data,'Turnyras':m.turnyras,'Vieta':m.vieta,'Danga':m.danga,'Partneris':m.partneris,'Varžovai':m.varzovai,'1 setas':m.s1,'2 setas':m.s2,'3 setas':m.s3,'Rezultatas':rezLt(m.rez),'Pastabos':m.pastabos}));
-    const s3=D.future.map(f=>({'Tipas':f.tipas==='dvejetai'?'Dvejetai':'Vienetai','Varžovas':f.varzovas,'Partneris':f.partneris,'Telefonas':f.tel,'Turnyras':f.turnyras,'Deadline':f.deadline,'Matcho data':f.planData,'Laikas':f.laikas,'Aikštynas':f.aikstynas,'Kas mokėjo':f.mokejo,'Suma':f.suma,'Pastabos':f.pastabos}));
-    const s4=allContacts().map(c=>({'Vardas Pavardė':c.vardas,'Telefonas':c.tel,'Sužaista':c.n,'Laimėta':c.w,'Pralaimėta':c.l,'Paskutinis matchas':c.last,'Pastabos':c.pastabos||''}));
-    const yrs=groupBy(D.matches,m=>m.data.slice(0,4),(a,b)=>a.k.localeCompare(b.k)).map(r=>({'Metai':r.k,'Sužaista':r.n,'Laimėta':r.w,'Pralaimėta':r.l,'Laimėjimų %':r.n?Math.round(r.w/r.n*100):0}));
-    const trn=groupBy(D.matches,m=>m.turnyras,(a,b)=>a.last.localeCompare(b.last)).map(r=>({'Turnyras':r.k,'Sužaista':r.n,'Laimėta':r.w,'Pralaimėta':r.l,'Laimėjimų %':r.n?Math.round(r.w/r.n*100):0}));
-    const add=(rows,name,widths)=>{ const ws=XLSX.utils.json_to_sheet(rows.length?rows:[{}]); ws['!cols']=widths.map(w=>({wch:w})); XLSX.utils.book_append_sheet(wb,ws,name); };
-    add(s1,'Vienetai',[11,22,10,10,10,24,13,9,9,9,12,40]); add(s2,'Dvejetai',[11,22,14,10,16,28,9,9,9,12,40]); add(s3,'Būsimi',[9,24,16,13,22,11,12,7,14,11,7,30]); add(s4,'Kontaktai',[26,14,9,9,11,18,30]);
-    add(yrs,'Stat. pagal metus',[8,10,10,12,12]); add(trn,'Stat. pagal turnyrus',[26,10,10,12,12]);
-    XLSX.writeFile(wb,`Teniso_karjera_${today()}.xlsx`); toast('Excel failas paruoštas');
-  };
-  if(window.XLSX) return go();
-  toast('Kraunama…'); const s=document.createElement('script'); s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'; s.onload=go; s.onerror=()=>toast('Nepavyko įkelti Excel bibliotekos – patikrink internetą'); document.head.appendChild(s);
-}
-function exportData(){
-  const blob=new Blob([JSON.stringify(D,null,1)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`teniso_karjera_${today()}.json`; document.body.appendChild(a); a.click(); a.remove(); toast('Failas paruoštas');
-}
-function importData(inp){
-  const f=inp.files[0]; if(!f) return; const r=new FileReader();
-  r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!Array.isArray(d.matches)) throw new Error('blogas formatas'); if(!confirm(`Importuoti ${d.matches.length} matchų? Dabartiniai duomenys bus pakeisti.`)) return; D=normalize(d); save(); closeOv('ovMenu'); refreshAll(); toast('Importuota'); }catch(e){ toast('Nepavyko importuoti: '+e.message); } inp.value=''; };
-  r.readAsText(f);
-}
-function resetData(){ if(!confirm('Atstatyti pradinius duomenis iš Excel? Visi vėliau įvesti matchai bus ištrinti.')) return; D=JSON.parse(JSON.stringify(SEED)); save(); closeOv('ovMenu'); refreshAll(); toast('Atstatyta'); }
-function openRename(){ closeOv('ovMenu'); fillSelect('r_from',tournaments(),'– pasirink –'); $('r_to').value=''; openOv('ovRename'); }
-function doRename(){ const a=$('r_from').value, b=$('r_to').value.trim(); if(!a||!b) return toast('Pasirink turnyrą ir įvesk naują pavadinimą'); let n=0; D.matches.forEach(m=>{ if(m.turnyras===a){ m.turnyras=b; n++; } }); D.future.forEach(f=>{ if(f.turnyras===a) f.turnyras=b; }); save(); closeOv('ovRename'); refreshAll(); toast(`Pervadinta ${n} matchų`); }
-
-/* ---------- init ---------- */
-loadLocal(); refreshAll();
-if(cloudOk){
-  auth.onAuthStateChanged(u=>{
-    if(u){ $('login').style.display='none'; startCloud(u); }
-    else { $('login').style.display='flex'; loadLocal(); refreshAll(); }
+function renderPhotos(){
+  const p=$('photos');p.innerHTML='';
+  curPhotos.forEach((ph,i)=>{
+    const d=document.createElement('div');d.className='ph'+(i===0?' cover':'')+(ph.saved?'':' new');d.style.backgroundImage=`url(${src(ph.data)})`;
+    d.onclick=()=>openViewer(curPhotos,i);
+    const x=document.createElement('button');x.textContent='×';x.setAttribute('aria-label','Pašalinti');
+    x.onclick=e=>{e.stopPropagation();if(ph.saved)removed.push(ph.id);curPhotos.splice(i,1);renderPhotos()};
+    d.appendChild(x);p.appendChild(d);
   });
-} else {
-  $('login').querySelector('p').textContent='Firebase nepasiekiamas arba dar nesukonfigūruotas (faile reikia įklijuoti firebaseConfig). Kol kas duomenys saugomi tik šioje naršyklėje.';
-  $('login').querySelector('.btns').innerHTML='<button class="btn-s" onclick="$(\'login\').style.display=\'none\'">Tęsti be prisijungimo</button>';
+  const add=document.createElement('button');add.className='addph';add.innerHTML='<div><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><br>Pridėti</div>';add.onclick=()=>$('galIn').click();p.appendChild(add);
 }
-$('l_pass').addEventListener('keydown',e=>{ if(e.key==='Enter') login(); });
+async function addFiles(files){
+  if(!files.length)return;busy(true);
+  try{for(const f of files){curPhotos.push({id:uid(),data:await compress(f),saved:false})}}
+  catch(e){toast('Nepavyko apdoroti nuotraukos')}
+  busy(false);renderPhotos();
+}
+$('camBtn').onclick=()=>$('camIn').click();
+$('galBtn').onclick=()=>$('galIn').click();
+$('camIn').onchange=e=>{addFiles([...e.target.files]);e.target.value=''};
+$('galIn').onchange=e=>{addFiles([...e.target.files]);e.target.value=''};
+
+$('saveBtn').onclick=async()=>{
+  const title=$('fTitle').value.trim(),desc=$('fDesc').value.trim(),year=$('fYear').value.trim(),km=$('fKm').value.replace(/\D/g,''),vin=$('fVin').value.trim().toUpperCase(),company=$('fCompany').value.trim(),brand=$('fBrand').value.trim(),code=$('fCode').value.trim(),location=$('fLoc').value.trim(),note=$('fNote').value.trim();
+  if(!title&&!brand&&!desc&&!year&&!km&&!vin&&!company&&!code&&!location&&!note&&!curPhotos.length){toast('Įrašas tuščias');return}
+  busy(true);$('busy').textContent='Saugoma…';
+  try{
+    const ref=col.doc(cur.id);
+    const thumb=curPhotos.length?await thumbOf(curPhotos[0].data):'';
+    // photos first, so the truck doc never points to missing photos
+    for(const id of removed)await ref.collection('photos').doc(id).delete();
+    for(let i=0;i<curPhotos.length;i++){const ph=curPhotos[i];
+      if(!ph.saved)await ref.collection('photos').doc(ph.id).set({data:ph.data,order:i,created:Date.now()});
+      else await ref.collection('photos').doc(ph.id).set({order:i},{merge:true});
+    }
+    await ref.set({brand,title,year,km,vin,desc,company,code,location,note,thumb,photoCount:curPhotos.length,created:cur.created||Date.now(),updated:Date.now()});
+    toast('Išsaugota');goBack();
+  }catch(e){toast('Nepavyko išsaugoti: '+(e.code||e.message))}
+  busy(false);$('busy').textContent='Apdorojama…';
+};
+$('delBtn').onclick=async()=>{
+  if(!confirm('Ištrinti šį vilkiką su visomis nuotraukomis?'))return;
+  busy(true);
+  try{const ref=col.doc(cur.id);
+    const snap=await ref.collection('photos').get();for(const d of snap.docs)await d.ref.delete();
+    await ref.delete();toast('Ištrinta');goBack();
+  }catch(e){toast('Nepavyko ištrinti')}
+  busy(false);
+};
+function goBack(){cur=null;curPhotos=[];removed=[];show('list');renderList()}
+$('backBtn').onclick=()=>history.back();
+window.onpopstate=()=>{if(!$('viewer').classList.contains('hidden'))closeViewer();else if(cur)goBack()};
+$('fab').onclick=()=>openEdit(null);
+
+/* ---------- viewer ---------- */
+let vList=[],vIdx=0;
+function openViewer(list,i){vList=list;vIdx=i;$('viewer').classList.remove('hidden');history.pushState({v:1},'');showV()}
+function showV(){$('vimg').src=src(vList[vIdx].data);$('vnav').textContent=`${vIdx+1} / ${vList.length}`}
+function closeViewer(){$('viewer').classList.add('hidden')}
+$('vclose').onclick=()=>history.back();
+let sx=0;$('viewer').ontouchstart=e=>sx=e.touches[0].clientX;
+$('viewer').ontouchend=e=>{const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50){vIdx=(vIdx+(dx<0?1:-1)+vList.length)%vList.length;showV()}};
+
+/* ---------- menu / backup ---------- */
+$('menuBtn').onclick=()=>$('sheet').classList.remove('hidden');
+$('closeSheet').onclick=()=>$('sheet').classList.add('hidden');
+$('sheet').onclick=e=>{if(e.target.id==='sheet')$('sheet').classList.add('hidden')};
+$('expBtn').onclick=async()=>{
+  busy(true);
+  try{const out=[];
+    for(const t of trucks){const snap=await col.doc(t.id).collection('photos').orderBy('order').get();
+      out.push({id:t.id,brand:t.brand||'',title:t.title,year:t.year||'',km:t.km||'',vin:t.vin||'',desc:t.desc,company:t.company||'',code:t.code||'',location:t.location||'',note:t.note||'',created:t.created,updated:t.updated,photos:snap.docs.map(d=>d.data().data)})}
+    const json=JSON.stringify({app:'vilkikai',v:1,exported:Date.now(),trucks:out});
+    const file=new File([json],`vilkikai-${new Date().toISOString().slice(0,10)}.json`,{type:'application/json'});
+    busy(false);
+    if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:'Trucks-Trailers'});return}catch(e){if(e.name==='AbortError')return}}
+    const a=document.createElement('a');a.href=URL.createObjectURL(file);a.download=file.name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),5000);
+  }catch(e){toast('Nepavyko sukurti kopijos')}
+  busy(false);
+};
 </script>
 </body>
 </html>
