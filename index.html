@@ -127,6 +127,13 @@ td .pct{display:inline-block;min-width:44px;text-align:right}
 .m .who{display:flex;align-items:center;gap:8px}
 .m .note{grid-column:1/-1;font-size:13px;color:var(--ink);opacity:.8;margin-top:4px;white-space:pre-wrap;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 textarea{min-height:120px;resize:vertical;line-height:1.45}
+.c.sel{outline:2px solid var(--court)}
+.c .chk{width:22px;height:22px;border-radius:6px;border:2px solid var(--line);flex:0 0 22px;display:none;align-items:center;justify-content:center;color:#fff;font-size:14px}
+.selmode .c .chk{display:flex}.c.sel .chk{background:var(--court);border-color:var(--court)}
+.smsbar{position:fixed;left:12px;right:12px;bottom:calc(76px + env(safe-area-inset-bottom));background:var(--court);color:#fff;border-radius:12px;padding:10px 14px;display:none;justify-content:space-between;align-items:center;z-index:19;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.smsbar.on{display:flex}.smsbar button{color:#fff;font-weight:600;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.18)}
+.rcp{background:#fff;border-radius:10px;padding:8px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;font-size:14px}
+.rcp a{background:#E6EFE9;color:var(--court);font-weight:600;padding:6px 10px;border-radius:8px;text-decoration:none;font-size:13px}
 .photoBox{text-align:center;margin-bottom:12px}
 .photoBox button{font-size:13px;font-weight:600;color:var(--court);background:#E6EFE9;padding:7px 12px;border-radius:8px;margin:0 3px}
 .c a{color:var(--court);text-decoration:none;font-weight:600;font-size:14px;white-space:nowrap;background:#E6EFE9;padding:7px 10px;border-radius:8px}
@@ -202,7 +209,7 @@ textarea{min-height:120px;resize:vertical;line-height:1.45}
 
 <!-- BUSIMI -->
 <section class="view" id="v-busimi">
-  <div class="sect">Būsimi matchai <button onclick="openFuture()">+ Pridėti</button></div>
+  <div class="sect">Būsimi matchai <span><button onclick="smsFutureAll()">SMS visiems</button> <button onclick="openFuture()">+ Pridėti</button></span></div>
   <div id="fList"></div>
 </section>
 
@@ -239,8 +246,9 @@ textarea{min-height:120px;resize:vertical;line-height:1.45}
 <!-- KONTAKTAI -->
 <section class="view" id="v-kont">
   <div class="filters"><input class="full" id="cSearch" placeholder="Ieškoti kontakto..." autocomplete="off"></div>
-  <div class="sect">Kontaktai <button onclick="openContact()">+ Pridėti</button></div>
+  <div class="sect">Kontaktai <span><button onclick="toggleSel()" id="selBtn">Pasirinkti</button> <button onclick="openContact()">+ Pridėti</button></span></div>
   <div id="cList"></div>
+  <div class="smsbar" id="smsbar"><span id="selCount">0 pasirinkta</span><span><button onclick="selAll()">Visi</button> <button onclick="smsSelected()">Rašyti SMS</button></span></div>
 </section>
 </main>
 
@@ -322,6 +330,15 @@ textarea{min-height:120px;resize:vertical;line-height:1.45}
   <div class="fg"><div class="seg" id="d_rez"><button data-v="W" class="w">Laimėta</button><button data-v="L" class="l">Pralaimėta</button></div></div>
   <div class="fg"><label>Pastabos</label><textarea id="d_pastabos" placeholder="Matcho aprašymas, arba b/ž (be žaidimo)"></textarea></div>
   <div class="btns"><button class="btn-d" id="d_del" onclick="deleteDouble()">Ištrinti</button><button class="btn-p" onclick="saveDouble()">Išsaugoti</button></div>
+</div></div>
+
+<!-- MODAL: sms -->
+<div class="ov" id="ovSms"><div class="md">
+  <h2><span>SMS žinutė</span><button onclick="closeOv('ovSms')">Uždaryti</button></h2>
+  <div class="fg"><label>Tekstas (galima naudoti {vardas}, {turnyras}, {data}, {aikstynas})</label><textarea id="s_text" style="min-height:90px"></textarea></div>
+  <div class="btns" style="margin-top:0;margin-bottom:12px"><button class="btn-p" id="s_group" onclick="smsGroup()">Siųsti visiems vienu SMS</button></div>
+  <div class="hint" style="margin-bottom:8px">Arba siųsk kiekvienam atskirai (tekstas su įrašytu vardu):</div>
+  <div id="s_list"></div>
 </div></div>
 
 <!-- MODAL: contact -->
@@ -601,7 +618,7 @@ function renderFuture(){
         f.aikstynas?`<span>📍 <b>${esc(f.aikstynas)}</b></span>`:'',
         f.mokejo?`<span>💶 ${esc(f.mokejo)}${f.suma?' '+esc(f.suma)+' €':''}</span>`:''
       ].filter(Boolean).join(''):'<span class="none">Dar nesuplanuota – nėra datos ir aikštyno</span>'}</div>
-      <div class="acts"><button onclick="openFuture('${f.id}')">Koreguoti</button><button class="pri" onclick="futureToResult('${f.id}')">Sužaista – įvesti rezultatą</button></div>
+      <div class="acts">${f.tel?`<button onclick="smsFuture('${f.id}')" style="flex:0 0 auto">SMS</button>`:''}<button onclick="openFuture('${f.id}')">Koreguoti</button><button class="pri" onclick="futureToResult('${f.id}')">Sužaista – įvesti rezultatą</button></div>
     </div>`; }).join('');
 }
 function openFuture(id){
@@ -792,7 +809,7 @@ function allContacts(){
 function renderContacts(){
   const q=$('cSearch').value.trim().toLowerCase();
   const list=allContacts().filter(c=>!q||c.vardas.toLowerCase().includes(q)||(c.tel||'').includes(q));
-  $('cList').innerHTML=list.map(c=>`<div class="c" data-n="${esc(c.vardas)}" onclick="openContact(this.dataset.n)">${avatar(c.vardas)}<div style="flex:1;min-width:0"><div class="nm">${esc(c.vardas)}</div><div class="st">${c.n?`<span class="rec"><span class="w">${c.w}</span>–<span class="l">${c.l}</span></span> · ${c.n} matchai · paskutinis ${fmtD(c.last)}`:'dar nežaista'}${c.fut?' · <span style="color:var(--plan)">būsimas</span>':''}${c.pastabos?' · '+esc(c.pastabos):''}</div></div>${c.tel?`<a href="${telHref(c.tel)}" onclick="event.stopPropagation()">${fmtTel(c.tel)}</a>`:'<span class="st">nėra nr.</span>'}</div>`).join('')||'<div class="empty">Kontaktų nerasta.</div>';
+  $('cList').innerHTML=list.map(c=>`<div class="c ${selSet.has(c.vardas)?'sel':''}" data-n="${esc(c.vardas)}" data-t="${esc(c.tel||'')}" onclick="cTap(this)"><div class="chk">✓</div>${avatar(c.vardas)}<div style="flex:1;min-width:0"><div class="nm">${esc(c.vardas)}</div><div class="st">${c.n?`<span class="rec"><span class="w">${c.w}</span>–<span class="l">${c.l}</span></span> · ${c.n} matchai · paskutinis ${fmtD(c.last)}`:'dar nežaista'}${c.fut?' · <span style="color:var(--plan)">būsimas</span>':''}${c.pastabos?' · '+esc(c.pastabos):''}</div></div>${c.tel?`<a href="${telHref(c.tel)}" onclick="event.stopPropagation()">${fmtTel(c.tel)}</a>`:'<span class="st">nėra nr.</span>'}</div>`).join('')||'<div class="empty">Kontaktų nerasta.</div>';
 }
 function openContact(name){
   const c=name?allContacts().find(x=>x.vardas===name):null;
@@ -815,6 +832,25 @@ function saveContact(){
   save(); closeOv('ovContact'); refreshAll(); toast('Išsaugota');
 }
 function deleteContact(){ const id=$('c_id').value; if(!id||!confirm('Ištrinti kontaktą?')) return; D.contacts=D.contacts.filter(x=>x.id!==id); save(); closeOv('ovContact'); refreshAll(); }
+
+/* ---------- SMS ---------- */
+let selMode=false; const selSet=new Set(); let smsRcp=[];
+function toggleSel(){ selMode=!selMode; if(!selMode) selSet.clear(); $('v-kont').classList.toggle('selmode',selMode); $('selBtn').textContent=selMode?'Atšaukti':'Pasirinkti'; $('smsbar').classList.toggle('on',selMode); $('fab').style.display=selMode?'none':''; renderContacts(); updSel(); }
+function updSel(){ $('selCount').textContent=`${selSet.size} pasirinkta`; }
+function cTap(el){ const n=el.dataset.n; if(!selMode) return openContact(n); if(!el.dataset.t) return toast('Šis kontaktas neturi numerio'); if(selSet.has(n)) selSet.delete(n); else selSet.add(n); el.classList.toggle('sel',selSet.has(n)); updSel(); }
+function selAll(){ const q=$('cSearch').value.trim().toLowerCase(); allContacts().filter(c=>c.tel&&(!q||c.vardas.toLowerCase().includes(q))).forEach(c=>selSet.add(c.vardas)); renderContacts(); updSel(); }
+function smsNum(t){ t=String(t||'').replace(/\D/g,''); return t.startsWith('370')?'+'+t:t; }
+function fill(tpl,r){ return tpl.replace(/\{vardas\}/g,(r.vardas||'').split(' ')[0]).replace(/\{turnyras\}/g,r.turnyras||'').replace(/\{data\}/g,r.data||'').replace(/\{aikstynas\}/g,r.aikstynas||''); }
+function openSms(rcps,tpl){
+  smsRcp=rcps.filter(r=>r.tel); if(!smsRcp.length) return toast('Nė vienas pasirinktas kontaktas neturi numerio');
+  $('s_text').value=tpl; renderSmsList(); $('s_group').style.display=smsRcp.length>1?'':'none'; openOv('ovSms');
+}
+function renderSmsList(){ const tpl=$('s_text').value; $('s_list').innerHTML=smsRcp.map(r=>`<div class="rcp"><span>${esc(r.vardas)}<br><small style="color:var(--mute)">${fmtTel(r.tel)}</small></span><a href="sms:${smsNum(r.tel)}?body=${encodeURIComponent(fill(tpl,r))}">Siųsti</a></div>`).join(''); }
+$('s_text').addEventListener('input',renderSmsList);
+function smsGroup(){ const tpl=$('s_text').value; const nums=smsRcp.map(r=>smsNum(r.tel)).join(','); location.href=`sms:${nums}?body=${encodeURIComponent(fill(tpl,{}))}`; }
+function smsSelected(){ if(!selSet.size) return toast('Pasirink bent vieną kontaktą'); const cs=allContacts().filter(c=>selSet.has(c.vardas)); openSms(cs.map(c=>({vardas:c.vardas,tel:c.tel})),'Labas, {vardas}! '); }
+function smsFuture(id){ const f=D.future.find(x=>x.id===id); if(!f) return; openSms([{vardas:f.varzovas,tel:f.tel,turnyras:f.turnyras,data:f.planData?fmtD(f.planData)+(f.laikas?' '+f.laikas:''):'',aikstynas:f.aikstynas}], f.planData?'Labas, {vardas}! Primenu mūsų matchą {turnyras}: {data}, {aikstynas}.':'Labas, {vardas}! Kada galėtume sužaisti {turnyras} matchą? '); }
+function smsFutureAll(){ const fs=D.future.filter(f=>f.tel); if(!fs.length) return toast('Būsimuose matchuose nėra kontaktų su numeriais'); openSms(fs.map(f=>({vardas:f.varzovas,tel:f.tel,turnyras:f.turnyras,data:f.planData?fmtD(f.planData)+(f.laikas?' '+f.laikas:''):'',aikstynas:f.aikstynas})),'Labas, {vardas}! Kada galėtume sužaisti {turnyras} matchą? '); }
 
 /* ---------- menu / data ---------- */
 function openMenu(){ $('storInfo').textContent=`Vienetų: ${D.matches.length} · dvejetų: ${D.doubles.length} · būsimų: ${D.future.length}` + (docRef?' · saugoma Firebase debesyje ir šiame įrenginyje.':' · saugoma tik šioje naršyklėje. Reguliariai eksportuok kopiją.'); openOv('ovMenu'); }
