@@ -422,7 +422,19 @@ function photoPicked(inp){
 }
 function removePhoto(){ pendingPhoto=null; $('c_av').style.backgroundImage=''; $('c_av').textContent=initials($('c_vardas').value); $('c_photoDel').style.display='none'; }
 
-function normalize(d){ d=d||{}; return {matches:d.matches||[],future:d.future||[],contacts:d.contacts||[],doubles:d.doubles||[]}; }
+function normalize(d){ d=d||{}; return {matches:d.matches||[],future:d.future||[],contacts:d.contacts||[],doubles:d.doubles||[],applied:d.applied||[]}; }
+/* Vienkartinis būsimų matchų įkėlimas (pridedama tik vieną kartą, pažymima D.applied) */
+const PENDING_FUTURE=[
+ ['pf_tp2627_kalanta','Elvinas Kalanta','37062016563'],
+ ['pf_tp2627_papreckis','Paulius Papreckis','37067358592'],
+ ['pf_tp2627_fernandez','Jose Maria Fernandez','37069435377'],
+ ['pf_tp2627_maciulaitis','Rokas Mačiulaitis','37064172039']
+].map(([id,v,t])=>({id,tipas:'vienetai',varzovas:v,tel:t,partneris:'',turnyras:'TP žiema 2026/27',deadline:'2027-01-04',planData:'',laikas:'',aikstynas:'',mokejo:'',suma:'',pastabos:'PROSPORT.LT – ŽIEMA \'26, Vilnius · Grupės · Vienetai (vyrai) · Hard'}));
+function applyPending(){
+  let ch=false;
+  PENDING_FUTURE.forEach(f=>{ if(D.applied.includes(f.id)) return; D.applied.push(f.id); ch=true; if(!D.future.some(x=>x.id===f.id)) D.future.push(Object.assign({},f)); });
+  return ch;
+}
 function loadLocal(){
   try{ const s=localStorage.getItem(KEY); if(s){ D=normalize(JSON.parse(s)); return true; } }catch(e){}
   D=JSON.parse(JSON.stringify(SEED)); return false;
@@ -453,9 +465,10 @@ function startCloud(user){
   let first=true;
   unsub=docRef.onSnapshot(snap=>{
     if(!snap.exists){
-      if(first){ loadLocal(); save(); refreshAll(); } // pirmą kartą – įkelk vietinius / pradinius duomenis
+      if(first){ loadLocal(); applyPending(); save(); refreshAll(); } // pirmą kartą – įkelk vietinius / pradinius duomenis
     } else {
       D=normalize(snap.data());
+      if(applyPending()){ save(); }
       try{ localStorage.setItem(KEY, JSON.stringify(D)); }catch(e){}
       refreshAll();
       setSync(snap.metadata.hasPendingWrites?'Siunčiama…':(snap.metadata.fromCache?'Neprisijungta – rodoma vietinė kopija':'Sinchronizuota'));
